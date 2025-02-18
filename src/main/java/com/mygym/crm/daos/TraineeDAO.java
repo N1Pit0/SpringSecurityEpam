@@ -40,7 +40,7 @@ public class TraineeDAO {
         if (trainee != null) {
             return trainee;
         }
-        throw new NoTrainerException();
+        throw new NoTrainerException("Your trainee is not in the base");
     }
 
 }
