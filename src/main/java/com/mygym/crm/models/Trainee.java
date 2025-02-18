@@ -3,6 +3,10 @@ package com.mygym.crm.models;
 import java.util.Date;
 
 public class Trainee extends User {
+    private Date dateOfBirth;
+    private String address;
+
+
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
@@ -18,8 +22,5 @@ public class Trainee extends User {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    private Date dateOfBirth;
-    private String address;
 
 }

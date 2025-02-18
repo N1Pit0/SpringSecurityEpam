@@ -1,7 +1,10 @@
 package com.mygym.crm.models;
 
 
-public class Trainer extends User{
+public class Trainer extends User {
+    private TrainingTypeEnum trainingType;
+    private int TrainerId;
+
     public TrainingTypeEnum getTrainingType() {
         return trainingType;
     }
@@ -10,6 +13,12 @@ public class Trainer extends User{
         this.trainingType = trainingType;
     }
 
-    private TrainingTypeEnum trainingType;
+    public int getTrainerId() {
+        return TrainerId;
+    }
+
+    public void setTrainerId(int trainerId) {
+        TrainerId = trainerId;
+    }
 }
 

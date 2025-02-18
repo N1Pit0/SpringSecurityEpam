@@ -1,6 +1,15 @@
 package com.mygym.crm.models;
 
 public abstract class User {
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    private int userId;
     private String firstName;
     private String lastName;
     private String userName;
