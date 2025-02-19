@@ -1,7 +1,5 @@
 package com.mygym.crm.daos.trainerdao;
 
-import com.mygym.crm.exceptions.NoTrainerException;
-import com.mygym.crm.models.Trainee;
 import com.mygym.crm.models.Trainer;
 import com.mygym.crm.repositories.daorepositories.TrainerDAO;
 import com.mygym.crm.storages.TrainerStorage;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 
-@Repository()
+@Repository
 public class TrainerDAOIMPL implements TrainerDAO {
 
     private final TrainerStorage trainerStorage;
@@ -44,6 +42,7 @@ public class TrainerDAOIMPL implements TrainerDAO {
 
         return Optional.ofNullable(removedTrainer); // Returns Optional.empty() if not present.
     }
+
     @Override
     public Optional<Trainer> select(Integer trainerId) {
         Trainer trainer = trainerStorage.getStorage().get(trainerId);

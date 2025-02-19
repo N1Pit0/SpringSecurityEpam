@@ -2,6 +2,7 @@ package com.mygym.crm.storages;
 
 import com.mygym.crm.models.Trainee;
 import com.mygym.crm.models.Training;
+import com.mygym.crm.models.TrainingKey;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +11,9 @@ import java.util.Map;
 
 @Repository
 public class TrainingStorage {
-    private final Map<Integer, Training> storage = new HashMap<>();
+    private final Map<TrainingKey, Training> storage = new HashMap<>();
 
-    public Map<Integer, Training> getStorage() {
+    public Map<TrainingKey, Training> getStorage() {
         return storage;
     }
 }

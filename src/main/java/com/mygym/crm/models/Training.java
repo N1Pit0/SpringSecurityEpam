@@ -1,11 +1,13 @@
 package com.mygym.crm.models;
 
+import jakarta.persistence.Embedded;
+
 import java.util.Date;
 
 public class Training {
-    private int TraineeId;
 
-    private int TrainerId;
+    @Embedded
+    private TrainingKey trainingKey;
 
     private String TrainingName;
 
@@ -15,12 +17,20 @@ public class Training {
 
     private int TrainingDuration;
 
-    public int getTrainerId() {
-        return TrainerId;
+    // Constructors
+    public Training() {}
+
+    public Training(TrainingKey trainingKey) {
+        this.trainingKey = trainingKey;
     }
 
-    public void setTrainerId(int trainerId) {
-        TrainerId = trainerId;
+    // Getters and setters
+    public TrainingKey getTrainingKey() {
+        return trainingKey;
+    }
+
+    public void setId(TrainingKey trainingKey) {
+        this.trainingKey = trainingKey;
     }
 
     public String getTrainingName() {
@@ -55,11 +65,4 @@ public class Training {
         TrainingDuration = trainingDuration;
     }
 
-    public int getTraineeId() {
-        return TraineeId;
-    }
-
-    public void setTraineeId(int traineeId) {
-        TraineeId = traineeId;
-    }
 }
