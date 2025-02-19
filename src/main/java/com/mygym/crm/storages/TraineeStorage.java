@@ -12,7 +12,6 @@ public class TraineeStorage {
 
     private final Map<Integer, Trainee> storage = new HashMap<>();
 
-    @Bean
     public Map<Integer, Trainee> getStorage() {
         return storage;
     }

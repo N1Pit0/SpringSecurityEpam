@@ -1,46 +1,48 @@
-package com.mygym.crm.daos;
+package com.mygym.crm.daos.traineedao;
 
-import com.mygym.crm.exceptions.NoTrainerException;
+import com.mygym.crm.exceptions.NoTraineeException;
 import com.mygym.crm.models.Trainee;
+import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.storages.TraineeStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Repository
-public class TraineeDAO {
+public class TraineeDAOIMPL implements TraineeDAO {
 
     private final TraineeStorage traineeStorage;
 
     @Autowired
-    public TraineeDAO(TraineeStorage traineeStorage) {
+    public TraineeDAOIMPL(TraineeStorage traineeStorage) {
         this.traineeStorage = traineeStorage;
     }
 
-    public boolean createTrainee(Trainee trainee) {
+    @Override
+    public boolean create(Trainee trainee) {
 
-        traineeStorage.getStorage().putIfAbsent(trainee.getUserId(), trainee);
-
-       return traineeStorage.getStorage().putIfAbsent(trainee.getUserId(), trainee) != null;
+        System.out.println("TraineeDAOIMPL.create");
+        return traineeStorage.getStorage().putIfAbsent(trainee.getUserId(), trainee) != null;
     }
 
-    public boolean updateTrainee(Trainee trainee) {
+    @Override
+    public boolean update(Trainee trainee) {
         return traineeStorage.getStorage().replace(trainee.getUserId(), trainee) != null;
     }
 
-    public boolean deleteTrainee(int traineeId) {
+    @Override
+    public boolean delete(Integer traineeId) {
         return traineeStorage.getStorage().remove(traineeId) != null;
     }
 
+    @Override
     //could have used Optional to redirect null checking to caller. Will try later...
-    public Trainee getTrainee(int traineeId) {
+    public Trainee select(Integer traineeId) {
         Trainee trainee = traineeStorage.getStorage().get(traineeId);
         if (trainee != null) {
             return trainee;
         }
-        throw new NoTrainerException("Your trainee is not in the base");
+        throw new NoTraineeException("Your trainee is not in the base");
     }
 
 }

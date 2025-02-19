@@ -1,17 +1,18 @@
 package com.mygym.crm.models;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Trainee extends User {
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
+
     private String address;
 
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
