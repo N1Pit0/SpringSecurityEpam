@@ -7,6 +7,8 @@ import com.mygym.crm.storages.TraineeStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public class TraineeDAOIMPL implements TraineeDAO {
@@ -19,30 +21,34 @@ public class TraineeDAOIMPL implements TraineeDAO {
     }
 
     @Override
-    public boolean create(Trainee trainee) {
+    public Optional<Trainee> create(Trainee trainee) {
+        Trainee previous =  traineeStorage.getStorage()
+                .putIfAbsent(trainee.getUserId(),trainee);
 
-        System.out.println("TraineeDAOIMPL.create");
-        return traineeStorage.getStorage().putIfAbsent(trainee.getUserId(), trainee) != null;
+        return (previous == null)? Optional.of(trainee) //Successfully added
+            : Optional.empty();// Trainee already exists.
     }
 
     @Override
-    public boolean update(Trainee trainee) {
-        return traineeStorage.getStorage().replace(trainee.getUserId(), trainee) != null;
+    public Optional<Trainee> update(Trainee trainee) {
+        Trainee previous = traineeStorage.getStorage().replace(trainee.getUserId(), trainee);
+
+        return (previous != null)? Optional.of(trainee) //Successfully added
+                : Optional.empty();// Trainee already exists.
     }
 
     @Override
-    public boolean delete(Integer traineeId) {
-        return traineeStorage.getStorage().remove(traineeId) != null;
+    public Optional<Trainee> delete(Integer traineeId) {
+        Trainee removedTrainer  = traineeStorage.getStorage().remove(traineeId);
+
+        return Optional.ofNullable(removedTrainer); // Returns Optional.empty() if not present.
     }
 
     @Override
-    //could have used Optional to redirect null checking to caller. Will try later...
-    public Trainee select(Integer traineeId) {
+    public Optional<Trainee> select(Integer traineeId) {
         Trainee trainee = traineeStorage.getStorage().get(traineeId);
-        if (trainee != null) {
-            return trainee;
-        }
-        throw new NoTraineeException("Your trainee is not in the base");
+
+        return Optional.ofNullable(trainee); // Returns Optional.empty() if not present.
     }
 
 }

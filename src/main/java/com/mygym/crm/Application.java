@@ -2,6 +2,7 @@ package com.mygym.crm;
 
 import com.mygym.crm.config.Configs;
 import com.mygym.crm.daos.traineedao.TraineeDAOIMPL;
+import com.mygym.crm.exceptions.NoTraineeException;
 import com.mygym.crm.models.Trainee;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -23,7 +24,7 @@ public class Application {
 
         TraineeDAOIMPL traineeDAO = (TraineeDAOIMPL) context.getBean("traineeDAOIMPL");
 
-        traineeDAO.create(trainee);
-        System.out.println(traineeDAO.select(1).getAddress());
+        System.out.println(traineeDAO.create(trainee));
+        System.out.println(traineeDAO.select(1).orElseThrow(() -> new NoTraineeException("")).getFirstName());
     }
 }

@@ -5,3 +5,4 @@ public class NoTraineeException extends NullPointerException{
         super(message);
     }
 }
+

@@ -1,12 +1,15 @@
 package com.mygym.crm.repositories.daorepositories;
 
+import java.util.Optional;
+
 public interface BaseDAO <T, ID>{
-    boolean create(T model);
+    Optional<T> create(T model);
 
-    boolean update(T model);
+    Optional<T> update(T model);
 
-    boolean delete(ID UserId);
+    Optional<T> delete(ID UserId);
 
-    T select(ID UserId);
+    Optional<T> select(ID UserId);
 
 }
+
