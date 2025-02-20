@@ -12,10 +12,10 @@ import java.util.Optional;
 @Repository
 public class TrainingDAOIMPL implements TrainingDAO {
 
-    private final TrainingStorage trainingStorage;
+    private TrainingStorage trainingStorage;
 
     @Autowired
-    public TrainingDAOIMPL(TrainingStorage trainingStorage) {
+    public void setTrainingStorage(TrainingStorage trainingStorage) {
         this.trainingStorage = trainingStorage;
     }
 

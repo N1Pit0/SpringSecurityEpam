@@ -12,19 +12,19 @@ import java.util.Optional;
 @Repository
 public class TrainerDAOIMPL implements TrainerDAO {
 
-    private final TrainerStorage trainerStorage;
+    private TrainerStorage trainerStorage;
 
     @Autowired
-    public TrainerDAOIMPL(TrainerStorage trainerStorage) {
+    public void setTrainerStorage(TrainerStorage trainerStorage) {
         this.trainerStorage = trainerStorage;
     }
 
     @Override
     public Optional<Trainer> create(Trainer trainer) {
-        Trainer previous =  trainerStorage.getStorage()
-                .putIfAbsent(trainer.getUserId(),trainer);
+        Trainer previous = trainerStorage.getStorage()
+                .putIfAbsent(trainer.getUserId(), trainer);
 
-        return (previous == null)? Optional.of(trainer) //Successfully added
+        return (previous == null) ? Optional.of(trainer) //Successfully added
                 : Optional.empty();// Trainee already exists.
     }
 
@@ -32,13 +32,13 @@ public class TrainerDAOIMPL implements TrainerDAO {
     public Optional<Trainer> update(Trainer trainer) {
         Trainer previous = trainerStorage.getStorage().replace(trainer.getUserId(), trainer);
 
-        return (previous != null)? Optional.of(trainer) //Successfully added
+        return (previous != null) ? Optional.of(trainer) //Successfully added
                 : Optional.empty();// Trainee already exists.
     }
 
     @Override
     public Optional<Trainer> delete(Integer trainerId) {
-        Trainer removedTrainer  = trainerStorage.getStorage().remove(trainerId);
+        Trainer removedTrainer = trainerStorage.getStorage().remove(trainerId);
 
         return Optional.ofNullable(removedTrainer); // Returns Optional.empty() if not present.
     }

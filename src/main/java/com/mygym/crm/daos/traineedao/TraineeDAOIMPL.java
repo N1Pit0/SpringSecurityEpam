@@ -1,6 +1,5 @@
 package com.mygym.crm.daos.traineedao;
 
-import com.mygym.crm.exceptions.NoTraineeException;
 import com.mygym.crm.models.Trainee;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.storages.TraineeStorage;
@@ -13,10 +12,10 @@ import java.util.Optional;
 @Repository
 public class TraineeDAOIMPL implements TraineeDAO {
 
-    private final TraineeStorage traineeStorage;
+    private TraineeStorage traineeStorage;
 
     @Autowired
-    public TraineeDAOIMPL(TraineeStorage traineeStorage) {
+    public void setTraineeStorage(TraineeStorage traineeStorage) {
         this.traineeStorage = traineeStorage;
     }
 
