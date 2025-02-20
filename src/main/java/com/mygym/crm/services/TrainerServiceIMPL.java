@@ -2,19 +2,19 @@ package com.mygym.crm.services;
 
 import com.mygym.crm.models.Trainer;
 import com.mygym.crm.repositories.daorepositories.TrainerDAO;
-import com.mygym.crm.repositories.services.BaseService;
+import com.mygym.crm.repositories.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class TrainerService implements BaseService<Trainer, Integer> {
+public class TrainerServiceIMPL implements TrainerService {
 
     private final TrainerDAO trainerDAO;
 
     @Autowired
-    public TrainerService(TrainerDAO trainerDAO) {
+    public TrainerServiceIMPL(TrainerDAO trainerDAO) {
         this.trainerDAO = trainerDAO;
     }
 
@@ -26,11 +26,6 @@ public class TrainerService implements BaseService<Trainer, Integer> {
     @Override
     public void update(Trainer trainer) {
         trainerDAO.update(trainer);
-    }
-
-    @Override
-    public void delete(Integer id) {
-
     }
 
     @Override

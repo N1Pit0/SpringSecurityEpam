@@ -4,34 +4,25 @@ import com.mygym.crm.models.Training;
 import com.mygym.crm.models.TrainingKey;
 import com.mygym.crm.repositories.daorepositories.TrainingDAO;
 import com.mygym.crm.repositories.services.BaseService;
+import com.mygym.crm.repositories.services.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class TrainingService implements BaseService<Training, TrainingKey> {
+public class TrainingServiceIMPL implements TrainingService {
 
     private final TrainingDAO trainingDAO;
 
     @Autowired
-    public TrainingService(TrainingDAO trainingDAO) {
+    public TrainingServiceIMPL(TrainingDAO trainingDAO) {
         this.trainingDAO = trainingDAO;
     }
 
     @Override
     public void create(Training training) {
         trainingDAO.create(training);
-    }
-
-    @Override
-    public void update(Training training) {
-
-    }
-
-    @Override
-    public void delete(TrainingKey id) {
-
     }
 
     @Override
