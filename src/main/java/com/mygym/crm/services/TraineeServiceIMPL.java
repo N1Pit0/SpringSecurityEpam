@@ -1,6 +1,6 @@
 package com.mygym.crm.services;
 
-import com.mygym.crm.models.Trainee;
+import com.mygym.crm.domain.models.Trainee;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;

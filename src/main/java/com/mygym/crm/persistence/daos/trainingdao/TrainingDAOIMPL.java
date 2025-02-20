@@ -1,9 +1,9 @@
-package com.mygym.crm.daos.trainingdao;
+package com.mygym.crm.persistence.daos.trainingdao;
 
-import com.mygym.crm.models.Training;
-import com.mygym.crm.models.TrainingKey;
+import com.mygym.crm.domain.models.Training;
+import com.mygym.crm.domain.models.TrainingKey;
 import com.mygym.crm.repositories.daorepositories.TrainingDAO;
-import com.mygym.crm.storages.TrainingStorage;
+import com.mygym.crm.persistence.storages.TrainingStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

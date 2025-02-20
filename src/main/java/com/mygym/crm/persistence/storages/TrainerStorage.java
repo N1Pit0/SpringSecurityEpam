@@ -1,6 +1,6 @@
-package com.mygym.crm.storages;
+package com.mygym.crm.persistence.storages;
 
-import com.mygym.crm.models.Trainer;
+import com.mygym.crm.domain.models.Trainer;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.mygym.crm.models;
+package com.mygym.crm.domain.models;
 
 import jakarta.persistence.Embeddable;
 

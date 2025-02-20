@@ -1,4 +1,4 @@
-package com.mygym.crm.models;
+package com.mygym.crm.domain.models;
 
 public enum TrainingTypeEnum {
     PLYOMETRIC,

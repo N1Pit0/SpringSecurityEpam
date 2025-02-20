@@ -1,6 +1,6 @@
 package com.mygym.crm.repositories.services;
 
-import com.mygym.crm.models.Trainee;
+import com.mygym.crm.domain.models.Trainee;
 
 public interface TraineeService extends BaseService<Trainee, Integer>{
 
