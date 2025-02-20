@@ -11,4 +11,5 @@ import java.util.Map;
 @ComponentScan("com.mygym.crm")
 @PropertySource("classpath:application.properties")
 public class Configs {
+
 }

@@ -6,30 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/daos/traineedao/TraineeDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/traineedao/TraineeDAOIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/daos/trainerdao/TrainerDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/trainerdao/TrainerDAOIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/daos/trainingdao/TrainingDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/trainingdao/TrainingDAOIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/Trainee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Trainee.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Trainer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/TrainingKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/TrainingTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingTypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/models/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TraineeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TraineeDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainerDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainingDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TraineeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TraineeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainingService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TraineeServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TraineeServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TrainerServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TrainingServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/services/TrainingServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/storages/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/storages/TrainerStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/storages/TrainingStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +101,7 @@
       <workItem from="1739889073443" duration="10270000" />
       <workItem from="1739951103579" duration="6080000" />
       <workItem from="1739978582298" duration="9597000" />
-      <workItem from="1740039537635" duration="11368000" />
+      <workItem from="1740039537635" duration="13730000" />
     </task>
     <servers />
   </component>
