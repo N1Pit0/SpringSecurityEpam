@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class TrainingStorage {
+public class TrainingStorage implements UserStorage<TrainingKey, Training> {
     private final Map<TrainingKey, Training> storage = new HashMap<>();
 
+    @Override
     public Map<TrainingKey, Training> getStorage() {
         return storage;
     }

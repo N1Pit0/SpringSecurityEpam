@@ -30,7 +30,7 @@ public class Application {
 
         trainerService.create(trainerDTO);
 
-        System.out.println(trainerService.getById(1).orElse(null).getFirstName());
+        System.out.println(trainerService.getById(1).orElse(null));
 
     }
 }

@@ -7,9 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class TrainerStorage {
+public class TrainerStorage implements UserStorage<Integer, Trainer> {
     private final Map<Integer, Trainer> storage = new HashMap<>();
 
+    @Override
     public Map<Integer, Trainer> getStorage() {
         return storage;
     }

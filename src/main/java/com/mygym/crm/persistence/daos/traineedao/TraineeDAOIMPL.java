@@ -3,13 +3,14 @@ package com.mygym.crm.persistence.daos.traineedao;
 import com.mygym.crm.domain.models.Trainee;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.persistence.storages.TraineeStorage;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 
-@Repository
+@Repository("traineeServiceIMPL")
 public class TraineeDAOIMPL implements TraineeDAO {
 
     private TraineeStorage traineeStorage;
@@ -50,4 +51,7 @@ public class TraineeDAOIMPL implements TraineeDAO {
         return Optional.ofNullable(trainee); // Returns Optional.empty() if not present.
     }
 
+    public TraineeStorage getTraineeStorage() {
+        return traineeStorage;
+    }
 }

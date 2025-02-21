@@ -7,10 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class TraineeStorage {
+public class TraineeStorage implements UserStorage<Integer, Trainee> {
 
     private final Map<Integer, Trainee> storage = new HashMap<>();
 
+    @Override
     public Map<Integer, Trainee> getStorage() {
         return storage;
     }

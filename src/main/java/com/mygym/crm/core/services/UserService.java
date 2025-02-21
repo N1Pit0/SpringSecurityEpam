@@ -1,8 +1,42 @@
 package com.mygym.crm.core.services;
 
+import com.mygym.crm.core.services.dtos.common.UserDTO;
+import com.mygym.crm.domain.models.common.User;
+import com.mygym.crm.persistence.storages.UserStorage;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
+@Service
+@Scope("prototype")
+public class UserService<T,E>{
+    public static int uniqueID = 0;
+
+    private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();
+
+    public String generateUserName(UserStorage<Integer, User> storage, UserDTO userDTO){
+        String baseUserName = userDTO.getFirstName() + "." + userDTO.getLastName();
+
+        int count = usernameCounter.getOrDefault(baseUserName, 0);
+
+        String newUserName = (count == 0) ? baseUserName : baseUserName + "." + uniqueID++;
+
+        usernameCounter.put(baseUserName, count + 1);
+
+        return newUserName;
+    }
+
+    public String generatePassword(){
+        StringBuilder password = new StringBuilder();
+        Random random = new Random();
+        for(int i = 0; i < 10; i++){
+            char c = (char) (random.nextInt(33,127)); //ASCII representation of symbols for password
+            password.append(c);
+        }
+
+        return password.toString();
+    }
 }

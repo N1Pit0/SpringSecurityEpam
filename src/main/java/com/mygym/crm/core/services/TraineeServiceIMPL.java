@@ -6,6 +6,7 @@ import com.mygym.crm.exceptions.NoTraineeException;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -14,17 +15,20 @@ import java.util.Optional;
 public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
 
     private final TraineeDAO traineeDAO;
+    private final UserService<Integer, Trainee> userService;
 
     @Autowired
-    public TraineeServiceIMPL(TraineeDAO traineeDAO) {
+    public TraineeServiceIMPL(@Qualifier("traineeServiceIMPL") TraineeDAO traineeDAO, UserService<Integer, Trainee> userService) {
         this.traineeDAO = traineeDAO;
+        this.userService = userService;
     }
 
     @Override
     public void create(TraineeDTO traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
         newTrainee.setUserId(1);//ID generation is not implemented yet
-        //password and username as well
+        newTrainee.setPassword(userService.generatePassword());
+
         traineeDAO.create(newTrainee);
     }
 
