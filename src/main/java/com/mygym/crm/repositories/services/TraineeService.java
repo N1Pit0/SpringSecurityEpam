@@ -1,10 +1,12 @@
 package com.mygym.crm.repositories.services;
 
+
 import com.mygym.crm.domain.models.Trainee;
 
-public interface TraineeService extends BaseService<Trainee, Integer>{
+public interface TraineeService <T> extends BaseService<Trainee, Integer>{
+    void create(T t);
 
-    void update(Trainee t);
+    void update(Integer id,T t);
 
     void delete(Integer id);
 }

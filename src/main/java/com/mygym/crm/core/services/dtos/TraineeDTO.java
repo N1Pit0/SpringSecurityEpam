@@ -1,16 +1,16 @@
-package com.mygym.crm.domain.models;
+package com.mygym.crm.core.services.dtos;
 
-import com.mygym.crm.domain.models.common.User;
+import com.mygym.crm.core.services.dtos.common.UserDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class Trainee extends User {
+public class TraineeDTO extends UserDTO{
 
     private LocalDate dateOfBirth;
 
     private String address;
-
 }
