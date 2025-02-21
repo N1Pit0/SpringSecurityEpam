@@ -47,7 +47,7 @@ public class Application {
 
         System.out.println(traineeService.getById(0).orElse(null).toString());
         System.out.println(traineeService.getById(1).orElse(null).toString());
-        System.out.println(trainerService.getById(0).orElse(null).toString());
+        System.out.println(trainerService.getById(2).orElse(null).toString());
 
 
     }

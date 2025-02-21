@@ -15,17 +15,22 @@ import java.util.Optional;
 public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
 
     private final TrainerDAO trainerDAO;
+    private final UserService userService;
 
     @Autowired
-    public TrainerServiceIMPL(TrainerDAO trainerDAO) {
+    public TrainerServiceIMPL(TrainerDAO trainerDAO, UserService userService) {
         this.trainerDAO = trainerDAO;
+        this.userService = userService;
     }
 
     @Override
     public void create(TrainerDTO trainerDTO) {
         Trainer newTrainer = map(trainerDTO);
-        newTrainer.setUserId(1); //ID generation is not implemented yet
-        //password and username as well
+
+        newTrainer.setUserId(UserService.uniqueID);
+        UserService.uniqueID++;
+        newTrainer.setPassword(userService.generatePassword());
+        newTrainer.setUserName(userService.generateUserName(trainerDTO));
 
         trainerDAO.create(newTrainer);
     }
@@ -50,9 +55,11 @@ public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
 
     private Trainer map(TrainerDTO trainerDTO){
         Trainer trainer = new Trainer();
+
         trainer.setFirstName(trainerDTO.getFirstName());
         trainer.setLastName(trainerDTO.getLastName());
         trainer.setActive(trainerDTO.isActive());
+        trainer.setTrainingType(trainerDTO.getTrainingType());
 
         return trainer;
     }
