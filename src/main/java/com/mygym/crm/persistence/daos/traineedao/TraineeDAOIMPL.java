@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 
-@Repository("traineeServiceIMPL")
+@Repository("traineeDAOIMPL")
 public class TraineeDAOIMPL implements TraineeDAO {
 
     private TraineeStorage traineeStorage;

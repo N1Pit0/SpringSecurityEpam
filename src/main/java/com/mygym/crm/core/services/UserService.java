@@ -11,18 +11,17 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-@Scope("prototype")
-public class UserService<T,E>{
+public class UserService{
     public static int uniqueID = 0;
 
     private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();
 
-    public String generateUserName(UserStorage<Integer, User> storage, UserDTO userDTO){
+    public String generateUserName(UserDTO userDTO){
         String baseUserName = userDTO.getFirstName() + "." + userDTO.getLastName();
 
         int count = usernameCounter.getOrDefault(baseUserName, 0);
 
-        String newUserName = (count == 0) ? baseUserName : baseUserName + "." + uniqueID++;
+        String newUserName = (count == 0) ? baseUserName : baseUserName + count;
 
         usernameCounter.put(baseUserName, count + 1);
 

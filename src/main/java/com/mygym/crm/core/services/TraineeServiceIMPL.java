@@ -3,6 +3,7 @@ package com.mygym.crm.core.services;
 import com.mygym.crm.core.services.dtos.TraineeDTO;
 import com.mygym.crm.domain.models.Trainee;
 import com.mygym.crm.exceptions.NoTraineeException;
+import com.mygym.crm.persistence.daos.traineedao.TraineeDAOIMPL;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import java.util.Optional;
 public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
 
     private final TraineeDAO traineeDAO;
-    private final UserService<Integer, Trainee> userService;
+    private final UserService userService;
 
     @Autowired
-    public TraineeServiceIMPL(@Qualifier("traineeServiceIMPL") TraineeDAO traineeDAO, UserService<Integer, Trainee> userService) {
+    public TraineeServiceIMPL(@Qualifier("traineeDAOIMPL") TraineeDAO traineeDAO, UserService userService) {
         this.traineeDAO = traineeDAO;
         this.userService = userService;
     }
@@ -26,8 +27,11 @@ public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
     @Override
     public void create(TraineeDTO traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
-        newTrainee.setUserId(1);//ID generation is not implemented yet
+
+        newTrainee.setUserId(UserService.uniqueID);
+        UserService.uniqueID++;
         newTrainee.setPassword(userService.generatePassword());
+        newTrainee.setUserName(userService.generateUserName(traineeDTO));
 
         traineeDAO.create(newTrainee);
     }
