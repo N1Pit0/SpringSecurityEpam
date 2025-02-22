@@ -2,7 +2,7 @@ package com.mygym.crm.domain.models;
 
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class Training {
@@ -13,7 +13,7 @@ public class Training {
 
     private TrainingTypeEnum trainingType;
 
-    private Date trainingDate;
+    private LocalDate trainingDate;
 
     private int trainingDuration;
 

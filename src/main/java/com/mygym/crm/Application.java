@@ -2,9 +2,11 @@ package com.mygym.crm;
 
 import com.mygym.crm.config.Configs;
 import com.mygym.crm.core.services.TrainerServiceIMPL;
+import com.mygym.crm.core.services.TrainingServiceIMPL;
 import com.mygym.crm.core.services.dtos.TraineeDTO;
 import com.mygym.crm.core.services.dtos.TrainerDTO;
 import com.mygym.crm.domain.models.Trainer;
+import com.mygym.crm.domain.models.TrainingKey;
 import com.mygym.crm.persistence.daos.traineedao.TraineeDAOIMPL;
 import com.mygym.crm.domain.models.Trainee;
 import com.mygym.crm.repositories.daorepositories.TrainerDAO;
@@ -40,14 +42,20 @@ public class Application {
 
         TraineeServiceIMPL traineeService = (TraineeServiceIMPL) context.getBean("traineeServiceIMPL");
         TrainerServiceIMPL trainerService = (TrainerServiceIMPL) context.getBean("trainerServiceIMPL");
+        TrainingServiceIMPL trainingServiceIMPL = context.getBean(TrainingServiceIMPL.class);
 
-        traineeService.create(traineeDTO);
-        traineeService.create(traineeDTO1);
-        trainerService.create(trainerDTO);
+        TrainingKey trainingKey = new TrainingKey();
+        trainingKey.setTraineeId(6);
+        trainingKey.setTrainerId(18);
 
-        System.out.println(traineeService.getById(0).orElse(null).toString());
+//        traineeService.create(traineeDTO);
+//        traineeService.create(traineeDTO1);
+//        trainerService.create(trainerDTO);
+
         System.out.println(traineeService.getById(1).orElse(null).toString());
-        System.out.println(trainerService.getById(2).orElse(null).toString());
+        System.out.println(traineeService.getById(2).orElse(null).toString());
+        System.out.println(trainerService.getById(4).orElse(null).toString());
+        System.out.println(trainingServiceIMPL.getById(trainingKey).orElse(null).toString());
 
 
     }

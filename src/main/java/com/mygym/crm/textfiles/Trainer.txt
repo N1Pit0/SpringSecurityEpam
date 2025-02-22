@@ -1,0 +1,11 @@
+userId;firstName;lastName;userName;password;isActive;trainingType
+18;Fiona;Taylor;Fiona.Taylor;Wu^sN5g>5Z;False;FLEXIBILITY
+7;Alice;Martin;Alice.Martin;ZHvqvPD9hV;False;WEIGHT
+11;Ian;Harris;Ian.Harris;lQA8'(G6W5;True;WEIGHT
+16;Ian;Thompson;Ian.Thompson;\WN\yy9mWD;False;WEIGHT
+20;Bob;Brown;Bob.Brown;0zXRXV='Zv;True;WEIGHT
+17;David;White;David.White;7gN,9mEvyo;False;WEIGHT
+8;Charlie;Martin;Charlie.Martin;%2}CT|y3`u;True;WEIGHT
+15;David;White;David.White;C&J-W:Du4A;False;FLEXIBILITY
+4;Ian;Harris;Ian.Harris;64/BJ6(ZOr;False;PLYOMETRIC
+9;Alice;Johnson;Alice.Johnson;*g~%,Gp^A';True;PLYOMETRIC

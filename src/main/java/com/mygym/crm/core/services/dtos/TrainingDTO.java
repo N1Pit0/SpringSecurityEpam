@@ -4,7 +4,7 @@ import com.mygym.crm.domain.models.TrainingKey;
 import com.mygym.crm.domain.models.TrainingTypeEnum;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 public class TrainingDTO{
@@ -15,7 +15,7 @@ public class TrainingDTO{
 
     private TrainingTypeEnum trainingType;
 
-    private Date trainingDate;
+    private LocalDate trainingDate;
 
     private int trainingDuration;
 

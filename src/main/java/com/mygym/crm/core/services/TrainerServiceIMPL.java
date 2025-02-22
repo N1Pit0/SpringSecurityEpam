@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+@Service("trainerServiceIMPL")
 public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
 
     private final TrainerDAO trainerDAO;

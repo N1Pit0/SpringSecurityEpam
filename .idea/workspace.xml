@@ -6,6 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +65,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\N1Pit0\IdeaProjects\customerRelationshipManager\src\main\java\com\mygym\crm\textfiles" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.mygym.crm.repositories.services" />
       <recent name="com.mygym.crm.exceptions" />
@@ -104,6 +118,7 @@
       <workItem from="1740128210902" duration="1659000" />
       <workItem from="1740136584607" duration="10529000" />
       <workItem from="1740152099309" duration="3123000" />
+      <workItem from="1740205014780" duration="7958000" />
     </task>
     <servers />
   </component>
@@ -112,5 +127,15 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
