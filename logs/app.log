@@ -1,0 +1,2 @@
+2025-02-22 19:54:12 [main] INFO  com.mygym.crm.core.services.TraineeServiceIMPL - Trainee created: Trainee(super=User(userId=0, firstName=John, lastName=Doe, userName=null, password=null, isActive=true), dateOfBirth=null, address=null)
+2025-02-22 19:54:12 [main] INFO  com.mygym.crm.core.services.TraineeServiceIMPL - Trainee set with: ID: 21

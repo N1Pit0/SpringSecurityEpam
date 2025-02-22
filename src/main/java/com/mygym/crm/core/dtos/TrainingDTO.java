@@ -1,4 +1,4 @@
-package com.mygym.crm.core.services.dtos;
+package com.mygym.crm.core.dtos;
 
 import com.mygym.crm.domain.models.TrainingKey;
 import com.mygym.crm.domain.models.TrainingTypeEnum;

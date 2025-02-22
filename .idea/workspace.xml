@@ -8,14 +8,15 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TraineeServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TraineeServiceIMPL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainingServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainingServiceIMPL.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TraineeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TraineeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/common/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/common/UserDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -118,7 +119,7 @@
       <workItem from="1740128210902" duration="1659000" />
       <workItem from="1740136584607" duration="10529000" />
       <workItem from="1740152099309" duration="3123000" />
-      <workItem from="1740205014780" duration="7958000" />
+      <workItem from="1740205014780" duration="13308000" />
     </task>
     <servers />
   </component>

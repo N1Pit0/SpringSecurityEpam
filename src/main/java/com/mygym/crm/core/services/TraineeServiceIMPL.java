@@ -1,11 +1,12 @@
 package com.mygym.crm.core.services;
 
-import com.mygym.crm.core.services.dtos.TraineeDTO;
+import com.mygym.crm.core.dtos.TraineeDTO;
 import com.mygym.crm.domain.models.Trainee;
 import com.mygym.crm.exceptions.NoTraineeException;
-import com.mygym.crm.persistence.daos.traineedao.TraineeDAOIMPL;
 import com.mygym.crm.repositories.daorepositories.TraineeDAO;
 import com.mygym.crm.repositories.services.TraineeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
 
     private final TraineeDAO traineeDAO;
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceIMPL.class);
 
     @Autowired
     public TraineeServiceIMPL(@Qualifier("traineeDAOIMPL") TraineeDAO traineeDAO, UserService userService) {
@@ -28,10 +30,14 @@ public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
     public void create(TraineeDTO traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
 
+        logger.info("Trainee created: {}", newTrainee);
+
         newTrainee.setUserId(UserService.uniqueID);
         UserService.uniqueID++;
         newTrainee.setPassword(userService.generatePassword());
         newTrainee.setUserName(userService.generateUserName(traineeDTO));
+
+        logger.info("Trainee set with: ID: {}", UserService.uniqueID);
 
         traineeDAO.create(newTrainee);
     }

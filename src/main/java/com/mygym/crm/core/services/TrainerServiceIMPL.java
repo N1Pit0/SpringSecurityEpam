@@ -1,7 +1,6 @@
 package com.mygym.crm.core.services;
 
-import com.mygym.crm.core.services.dtos.TrainerDTO;
-import com.mygym.crm.domain.models.Trainee;
+import com.mygym.crm.core.dtos.TrainerDTO;
 import com.mygym.crm.domain.models.Trainer;
 import com.mygym.crm.exceptions.NoTrainerException;
 import com.mygym.crm.repositories.daorepositories.TrainerDAO;

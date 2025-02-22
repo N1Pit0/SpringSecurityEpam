@@ -1,9 +1,6 @@
 package com.mygym.crm.core.services;
 
-import com.mygym.crm.core.services.dtos.common.UserDTO;
-import com.mygym.crm.domain.models.common.User;
-import com.mygym.crm.persistence.storages.UserStorage;
-import org.springframework.context.annotation.Scope;
+import com.mygym.crm.core.dtos.common.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

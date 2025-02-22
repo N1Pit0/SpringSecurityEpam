@@ -1,4 +1,4 @@
-package com.mygym.crm.core.services.dtos.common;
+package com.mygym.crm.core.dtos.common;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

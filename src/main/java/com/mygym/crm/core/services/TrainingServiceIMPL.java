@@ -1,6 +1,6 @@
 package com.mygym.crm.core.services;
 
-import com.mygym.crm.core.services.dtos.TrainingDTO;
+import com.mygym.crm.core.dtos.TrainingDTO;
 import com.mygym.crm.domain.models.Training;
 import com.mygym.crm.domain.models.TrainingKey;
 import com.mygym.crm.repositories.daorepositories.TrainingDAO;
