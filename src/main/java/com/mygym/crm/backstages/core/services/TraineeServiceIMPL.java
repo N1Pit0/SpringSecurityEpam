@@ -1,0 +1,92 @@
+package com.mygym.crm.backstages.core.services;
+
+import com.mygym.crm.backstages.core.dtos.TraineeDTO;
+import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.repositories.daorepositories.TraineeDAO;
+import com.mygym.crm.backstages.repositories.services.TraineeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+
+@Service
+public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
+
+    private final TraineeDAO traineeDAO;
+    private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceIMPL.class);
+
+    @Autowired
+    public TraineeServiceIMPL(@Qualifier("traineeDAOIMPL") TraineeDAO traineeDAO, UserService userService) {
+        this.traineeDAO = traineeDAO;
+        this.userService = userService;
+    }
+
+    @Override
+    public void create(TraineeDTO traineeDTO) {
+        Trainee newTrainee = map(traineeDTO);
+
+        newTrainee.setUserId(UserService.uniqueID);
+        logger.info("new Trainee set with ID: {}", UserService.uniqueID);
+
+        UserService.uniqueID++;
+
+        newTrainee.setPassword(userService.generatePassword());
+        logger.info("new Trainee password has been created");
+
+        newTrainee.setUserName(userService.generateUserName(traineeDTO));
+        logger.info("new Trainee userName has been created");
+
+        logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
+        traineeDAO.create(newTrainee);
+        logger.info("new Trainee created with ID: {}", UserService.uniqueID);
+    }
+
+    @Override
+    public void update(Integer id,TraineeDTO traineeDTO) {
+        Trainee oldTrainee = getById(id).orElseThrow(() -> {
+            logger.error("Trainee with ID: {} not found", id);
+            return new NoTraineeException("could not find trainee with id " + id);
+        });
+        Trainee newTrainee = map(traineeDTO);
+
+        logger.info("Setting with old UserId Password and UserName");
+        newTrainee.setUserId(oldTrainee.getUserId());
+        newTrainee.setPassword(oldTrainee.getPassword());
+        newTrainee.setUserName(oldTrainee.getUserName());
+        logger.info("new Trainee set with: ID: {} has been set successfully", UserService.uniqueID);
+
+        logger.info("Trying to update Trainee with ID: {}", id);
+        traineeDAO.update(newTrainee);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        logger.info("Trying to delete Trainee with ID: {}", id);
+        traineeDAO.delete(id);
+    }
+
+    @Override
+    public Optional<Trainee> getById(Integer id) {
+        logger.info("Trying to find Trainee with ID: {}", id);
+        return traineeDAO.select(id);
+    }
+
+    private Trainee map(TraineeDTO traineeDTO) {
+        Trainee trainee = new Trainee();
+        logger.info("New Trainee, populating it with given traineeDTO");
+
+        trainee.setFirstName(traineeDTO.getFirstName());
+        trainee.setLastName(traineeDTO.getLastName());
+        trainee.setActive(traineeDTO.isActive());
+        trainee.setDateOfBirth(traineeDTO.getDateOfBirth());
+        trainee.setAddress(traineeDTO.getAddress());
+
+        logger.info("New Trainee has been successfully populated with given traineeDTO");
+        return trainee;
+    }
+}

@@ -1,2 +1,8 @@
-2025-02-22 19:54:12 [main] INFO  com.mygym.crm.core.services.TraineeServiceIMPL - Trainee created: Trainee(super=User(userId=0, firstName=John, lastName=Doe, userName=null, password=null, isActive=true), dateOfBirth=null, address=null)
-2025-02-22 19:54:12 [main] INFO  com.mygym.crm.core.services.TraineeServiceIMPL - Trainee set with: ID: 21
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainee by id: 6
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to create new trainee
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to update trainee with id 6
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to delete trainee with id 6
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainer by id: 18
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to create new trainer
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to update trainer with id 18
+2025-02-23 21:12:21 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a training by trainingKey: TrainingKey(traineeId=6, trainerId=18)

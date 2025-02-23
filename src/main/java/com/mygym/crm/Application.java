@@ -1,18 +1,18 @@
 package com.mygym.crm;
 
-import com.mygym.crm.config.Configs;
-import com.mygym.crm.core.services.TrainerServiceIMPL;
-import com.mygym.crm.core.services.TrainingServiceIMPL;
-import com.mygym.crm.core.dtos.TraineeDTO;
-import com.mygym.crm.core.dtos.TrainerDTO;
-import com.mygym.crm.domain.models.TrainingKey;
-import com.mygym.crm.core.services.TraineeServiceIMPL;
+import com.mygym.crm.backstages.ApplicationFacade;
+import com.mygym.crm.backstages.config.Configs;
+import com.mygym.crm.backstages.core.dtos.TraineeDTO;
+import com.mygym.crm.backstages.core.dtos.TrainerDTO;
+import com.mygym.crm.backstages.core.dtos.TrainingDTO;
+import com.mygym.crm.backstages.domain.models.TrainingKey;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(Configs.class);
+        ApplicationFacade facade = context.getBean(ApplicationFacade.class);
 
         TraineeDTO traineeDTO = new TraineeDTO();
 
@@ -32,23 +32,30 @@ public class Application {
         trainerDTO.setLastName("Doe");
         trainerDTO.setActive(true);
 
-        TraineeServiceIMPL traineeService = (TraineeServiceIMPL) context.getBean("traineeServiceIMPL");
-        TrainerServiceIMPL trainerService = (TrainerServiceIMPL) context.getBean("trainerServiceIMPL");
-        TrainingServiceIMPL trainingServiceIMPL = context.getBean(TrainingServiceIMPL.class);
+        TrainerDTO trainerDTO1 = new TrainerDTO();
+
+        trainerDTO1.setFirstName("sad");
+        trainerDTO1.setLastName("sadasd");
+        trainerDTO1.setActive(true);
 
         TrainingKey trainingKey = new TrainingKey();
         trainingKey.setTraineeId(6);
         trainingKey.setTrainerId(18);
 
-        traineeService.create(traineeDTO);
-//        traineeService.create(traineeDTO1);
-//        trainerService.create(trainerDTO);
+        TrainingDTO trainingDTO = new TrainingDTO();
+        trainingDTO.setTrainingKey(trainingKey);
+        trainingDTO.setTrainingDuration(2);
+        trainingDTO.setTrainingName("adasdsad");
 
-        System.out.println(traineeService.getById(1).orElse(null).toString());
-        System.out.println(traineeService.getById(2).orElse(null).toString());
-        System.out.println(trainerService.getById(4).orElse(null).toString());
-        System.out.println(trainingServiceIMPL.getById(trainingKey).orElse(null).toString());
+        System.out.println(facade.selectTrainee(6));
+        facade.createTrainee(traineeDTO);
+        facade.updateTrainee(6, traineeDTO1);
+        facade.deleteTrainee(6);
 
+        System.out.println(facade.selectTrainer(18));
+        facade.createTrainer(trainerDTO);
+        facade.updateTrainer(18, trainerDTO1);
 
+        System.out.println(facade.selectTraining(trainingKey));
     }
 }

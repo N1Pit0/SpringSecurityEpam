@@ -6,18 +6,47 @@
   <component name="ChangeListManager">
     <list default="true" id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TraineeServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TraineeServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainingServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainingServiceIMPL.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TraineeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TraineeDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainingDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/dtos/common/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/common/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/config/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/config/Configs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TraineeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TraineeDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainingDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/dtos/common/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/common/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TraineeServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TraineeServiceIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/TrainingServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainingServiceIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Trainee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/Trainee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Trainer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/Trainer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/Training.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/Training.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/TrainingKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/TrainingTypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/TrainingTypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/domain/models/common/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/common/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/exceptions/NoTraineeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/exceptions/NoTraineeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/exceptions/NoTrainerException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/exceptions/NoTrainerException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/exceptions/NoTrainingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/exceptions/NoTrainingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/traineedao/TraineeDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDAOIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/trainerdao/TrainerDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainerdao/TrainerDAOIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/daos/trainingdao/TrainingDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainingdao/TrainingDAOIMPL.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/TraineeStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainerStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/TrainerStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/TrainingStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/TrainingStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/persistence/storages/UserStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/UserStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/BaseDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/BaseDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TraineeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TraineeDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainerDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/daorepositories/TrainingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainingDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/BaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/services/BaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TraineeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/services/TraineeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/services/TrainerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/repositories/services/TrainingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/services/TrainingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/textfiles/Trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/textfiles/Trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Trainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/textfiles/Training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Training.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/log4j2.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,7 +111,7 @@
       <module name="customerRelationshipManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.mygym.crm.*" />
+          <option name="PATTERN" value="com.mygym.crm.backstages.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -119,7 +148,8 @@
       <workItem from="1740128210902" duration="1659000" />
       <workItem from="1740136584607" duration="10529000" />
       <workItem from="1740152099309" duration="3123000" />
-      <workItem from="1740205014780" duration="13308000" />
+      <workItem from="1740205014780" duration="13377000" />
+      <workItem from="1740318170268" duration="12390000" />
     </task>
     <servers />
   </component>

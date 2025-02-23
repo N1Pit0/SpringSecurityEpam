@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+<!--I have set configuration based on assumption that the project is in production, if it were in
+development we could use a lot of debugs and even traces
+change them if u want to see more logs-->
     <Appenders>
         <!-- Console Appender -->
         <Console name="Console" target="SYSTEM_OUT">
@@ -7,34 +10,51 @@
         </Console>
 
         <!-- File Appender -->
+
         <File name="FileLogger" fileName="logs/app.log" createOnDemand="true">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
 
-<!--        <File name="FileLogger" fileName="logs/app.log" createOnDemand="true">-->
-<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>-->
-<!--        </File>-->
+        <File name="FileLoggerServices" fileName="logs/services/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
 
-<!--        <File name="FileLogger" fileName="logs/app.log" createOnDemand="true">-->
-<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>-->
-<!--        </File>-->
+        <File name="FileLoggerDAOs" fileName="logs/dao/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
 
-<!--        <File name="FileLogger" fileName="logs/app.log" createOnDemand="true">-->
-<!--            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>-->
-<!--        </File>-->
+        <File name="FileLoggerStorages" fileName="logs/storage/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
 
     </Appenders>
 
     <Loggers>
         <!-- Root Logger -->
-        <Root level="info">
+        <Root level="off">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="FileLogger"/>
+<!--            <AppenderRef ref="FileLogger"/>-->
         </Root>
 
-        <!-- Specific Logger Example -->
-        <Logger name="com.mygym.crm.services" level="debug" additivity="false">
+        <Logger name="com.mygym.crm" level="warn" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <Logger name="com.mygym.crm.backstages" level="info" additivity="false">
             <AppenderRef ref="FileLogger"/>
         </Logger>
+
+        <Logger name="com.mygym.crm.backstages.core.services" level="info" additivity="false">
+            <AppenderRef ref="FileLoggerServices"/>
+        </Logger>
+
+        <Logger name="com.mygym.crm.backstages.persistence.daos" level="info" additivity="false">
+            <AppenderRef ref="FileLoggerDAOs"/>
+        </Logger>
+
+        <Logger name="com.mygym.crm.backstages.persistence.storages" level="info" additivity="false">
+            <AppenderRef ref="FileLoggerStorages"/>
+        </Logger>
+
     </Loggers>
 </Configuration>
