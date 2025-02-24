@@ -2,9 +2,9 @@ package com.mygym.crm;
 
 import com.mygym.crm.backstages.ApplicationFacade;
 import com.mygym.crm.backstages.config.Configs;
-import com.mygym.crm.backstages.core.dtos.TraineeDTO;
-import com.mygym.crm.backstages.core.dtos.TrainerDTO;
-import com.mygym.crm.backstages.core.dtos.TrainingDTO;
+import com.mygym.crm.backstages.core.dtos.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.TrainingKey;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,47 +14,47 @@ public class Application {
         ApplicationContext context = new AnnotationConfigApplicationContext(Configs.class);
         ApplicationFacade facade = context.getBean(ApplicationFacade.class);
 
-        TraineeDTO traineeDTO = new TraineeDTO();
+        TraineeDto traineeDto = new TraineeDto();
 
-        traineeDTO.setFirstName("John");
-        traineeDTO.setLastName("Doe");
-        traineeDTO.setActive(true);
+        traineeDto.setFirstName("John");
+        traineeDto.setLastName("Doe");
+        traineeDto.setActive(true);
 
-        TraineeDTO traineeDTO1 = new TraineeDTO();
+        TraineeDto traineeDto1 = new TraineeDto();
 
-        traineeDTO1.setFirstName("John");
-        traineeDTO1.setLastName("Doe");
-        traineeDTO1.setActive(true);
+        traineeDto1.setFirstName("John");
+        traineeDto1.setLastName("Doe");
+        traineeDto1.setActive(true);
 
-        TrainerDTO trainerDTO = new TrainerDTO();
+        TrainerDto trainerDto = new TrainerDto();
 
-        trainerDTO.setFirstName("John");
-        trainerDTO.setLastName("Doe");
-        trainerDTO.setActive(true);
+        trainerDto.setFirstName("John");
+        trainerDto.setLastName("Doe");
+        trainerDto.setActive(true);
 
-        TrainerDTO trainerDTO1 = new TrainerDTO();
+        TrainerDto trainerDto1 = new TrainerDto();
 
-        trainerDTO1.setFirstName("sad");
-        trainerDTO1.setLastName("sadasd");
-        trainerDTO1.setActive(true);
+        trainerDto1.setFirstName("sad");
+        trainerDto1.setLastName("sadasd");
+        trainerDto1.setActive(true);
 
         TrainingKey trainingKey = new TrainingKey();
         trainingKey.setTraineeId(6);
         trainingKey.setTrainerId(18);
 
-        TrainingDTO trainingDTO = new TrainingDTO();
-        trainingDTO.setTrainingKey(trainingKey);
-        trainingDTO.setTrainingDuration(2);
-        trainingDTO.setTrainingName("adasdsad");
+        TrainingDto trainingDto = new TrainingDto();
+        trainingDto.setTrainingKey(trainingKey);
+        trainingDto.setTrainingDuration(2);
+        trainingDto.setTrainingName("adasdsad");
 
         System.out.println(facade.selectTrainee(6));
-        facade.createTrainee(traineeDTO);
-        facade.updateTrainee(6, traineeDTO1);
+        facade.createTrainee(traineeDto);
+        facade.updateTrainee(6, traineeDto1);
         facade.deleteTrainee(6);
 
         System.out.println(facade.selectTrainer(18));
-        facade.createTrainer(trainerDTO);
-        facade.updateTrainer(18, trainerDTO1);
+        facade.createTrainer(trainerDto);
+        facade.updateTrainer(18, trainerDto1);
 
         System.out.println(facade.selectTraining(trainingKey));
     }

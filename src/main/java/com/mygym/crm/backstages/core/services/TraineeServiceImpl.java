@@ -1,9 +1,9 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.TraineeDTO;
+import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
-import com.mygym.crm.backstages.repositories.daorepositories.TraineeDAO;
+import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,26 +14,24 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
+public class TraineeServiceImpl implements TraineeService<TraineeDto> {
 
-    private final TraineeDAO traineeDAO;
+    private final TraineeDao traineeDAO;
     private final UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceIMPL.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     @Autowired
-    public TraineeServiceIMPL(@Qualifier("traineeDAOIMPL") TraineeDAO traineeDAO, UserService userService) {
+    public TraineeServiceImpl(@Qualifier("traineeDAOIMPL") TraineeDao traineeDAO, UserService userService) {
         this.traineeDAO = traineeDAO;
         this.userService = userService;
     }
 
     @Override
-    public void create(TraineeDTO traineeDTO) {
+    public void create(TraineeDto traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
 
         newTrainee.setUserId(UserService.uniqueID);
         logger.info("new Trainee set with ID: {}", UserService.uniqueID);
-
-        UserService.uniqueID++;
 
         newTrainee.setPassword(userService.generatePassword());
         logger.info("new Trainee password has been created");
@@ -43,11 +41,10 @@ public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
 
         logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
         traineeDAO.create(newTrainee);
-        logger.info("new Trainee created with ID: {}", UserService.uniqueID);
     }
 
     @Override
-    public void update(Integer id,TraineeDTO traineeDTO) {
+    public void update(Integer id, TraineeDto traineeDTO) {
         Trainee oldTrainee = getById(id).orElseThrow(() -> {
             logger.error("Trainee with ID: {} not found", id);
             return new NoTraineeException("could not find trainee with id " + id);
@@ -76,7 +73,7 @@ public class TraineeServiceIMPL implements TraineeService<TraineeDTO> {
         return traineeDAO.select(id);
     }
 
-    private Trainee map(TraineeDTO traineeDTO) {
+    private Trainee map(TraineeDto traineeDTO) {
         Trainee trainee = new Trainee();
         logger.info("New Trainee, populating it with given traineeDTO");
 

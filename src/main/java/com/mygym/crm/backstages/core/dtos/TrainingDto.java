@@ -7,7 +7,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class TrainingDTO{
+public class TrainingDto {
 
     private TrainingKey trainingKey;
 

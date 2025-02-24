@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 @EqualsAndHashCode

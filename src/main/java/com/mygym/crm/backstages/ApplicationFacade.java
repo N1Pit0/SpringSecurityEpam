@@ -1,8 +1,8 @@
 package com.mygym.crm.backstages;
 
-import com.mygym.crm.backstages.core.dtos.TraineeDTO;
-import com.mygym.crm.backstages.core.dtos.TrainerDTO;
-import com.mygym.crm.backstages.core.dtos.TrainingDTO;
+import com.mygym.crm.backstages.core.dtos.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
@@ -20,31 +20,31 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ApplicationFacade {
-    private final TraineeService<TraineeDTO> traineeService;
-    private final TrainerService<TrainerDTO> trainerService;
-    private final TrainingService<TrainingDTO> trainingService;
+    private final TraineeService<TraineeDto> traineeService;
+    private final TrainerService<TrainerDto> trainerService;
+    private final TrainingService<TrainingDto> trainingService;
     private static final Logger logger = LoggerFactory.getLogger(ApplicationFacade.class);
 
     @Autowired
-    public ApplicationFacade(TraineeService<TraineeDTO> traineeService,
-                             TrainerService<TrainerDTO> trainerService,
-                             TrainingService<TrainingDTO> trainingService) {
+    public ApplicationFacade(TraineeService<TraineeDto> traineeService,
+                             TrainerService<TrainerDto> trainerService,
+                             TrainingService<TrainingDto> trainingService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.trainingService = trainingService;
     }
 
-    public void createTrainee(TraineeDTO traineeDTO){
+    public void createTrainee(TraineeDto traineeDTO){
         logger.info("Trying to create new trainee");
         traineeService.create(traineeDTO);
     }
 
-    public void createTrainer(TrainerDTO trainerDTO){
+    public void createTrainer(TrainerDto trainerDTO){
         logger.info("Trying to create new trainer");
         trainerService.create(trainerDTO);
     }
 
-    public void createTraining(TrainingDTO trainingDTO){
+    public void createTraining(TrainingDto trainingDTO){
         logger.info("Trying to create new training");
         trainingService.create(trainingDTO);
     }
@@ -76,12 +76,12 @@ public class ApplicationFacade {
                 });
     }
 
-    public void updateTrainee(Integer id, TraineeDTO traineeDTO){
+    public void updateTrainee(Integer id, TraineeDto traineeDTO){
         logger.info("Trying to update trainee with id {}", id);
         traineeService.update(id, traineeDTO);
     }
 
-    public void updateTrainer(Integer id, TrainerDTO trainerDTO){
+    public void updateTrainer(Integer id, TrainerDto trainerDTO){
         logger.info("Trying to update trainer with id {}", id);
         trainerService.update(id, trainerDTO);
     }

@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.dtos;
 
-import com.mygym.crm.backstages.core.dtos.common.UserDTO;
+import com.mygym.crm.backstages.core.dtos.common.UserDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class TraineeDTO extends UserDTO {
+public class TraineeDto extends UserDto {
 
     private LocalDate dateOfBirth;
 

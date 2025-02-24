@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.common.UserDTO;
+import com.mygym.crm.backstages.core.dtos.common.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class UserService{
 
     private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();
 
-    public String generateUserName(UserDTO userDTO){
+    public String generateUserName(UserDto userDTO){
         String baseUserName = userDTO.getFirstName() + "." + userDTO.getLastName();
 
         int count = usernameCounter.getOrDefault(baseUserName, 0);

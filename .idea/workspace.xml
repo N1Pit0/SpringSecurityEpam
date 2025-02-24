@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="" />
+    <list default="true" id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/ApplicationFacade.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/ApplicationFacade.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/config/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/config/Configs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TraineeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TraineeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainingDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/TrainingDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/common/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/dtos/common/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TraineeServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TraineeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainingServiceIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainingServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/TrainingKey.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/domain/models/TrainingKey.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainerdao/TrainerDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainerdao/TrainerDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainingdao/TrainingDAOIMPL.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/daos/trainingdao/TrainingDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/TraineeStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/persistence/storages/TraineeStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/BaseDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/BaseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TraineeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TraineeDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainerDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainingDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/repositories/daorepositories/TrainingDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Trainee.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/textfiles/Trainee.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Trainer.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/textfiles/Trainer.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/textfiles/Training.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/textfiles/Training.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,25 +58,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Application.executor": "Run",
-    "Maven.customerRelationshipManager [clean].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "onboarding.tips.debug.path": "C:/Users/N1Pit0/IdeaProjects/customerRelationshipManager/src/main/java/com/mygym/crm/Main.java",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Application.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.customerRelationshipManager [clean].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/N1Pit0/IdeaProjects/customerRelationshipManager/src/main/java/com/mygym/crm/Main.java&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\N1Pit0\IdeaProjects\customerRelationshipManager\src\main\java\com\mygym\crm\textfiles" />
@@ -107,6 +133,8 @@
       <workItem from="1740152099309" duration="3123000" />
       <workItem from="1740205014780" duration="13377000" />
       <workItem from="1740318170268" duration="12390000" />
+      <workItem from="1740379491258" duration="1199000" />
+      <workItem from="1740383975222" duration="1239000" />
     </task>
     <servers />
   </component>

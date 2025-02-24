@@ -1,9 +1,9 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.TrainingDTO;
+import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingKey;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainingDAO;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import com.mygym.crm.backstages.repositories.services.TrainingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,23 +13,22 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class TrainingServiceIMPL implements TrainingService<TrainingDTO>{
+public class TrainingServiceImpl implements TrainingService<TrainingDto>{
 
-    private final TrainingDAO trainingDAO;
-    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceIMPL.class);
+    private final TrainingDao trainingDAO;
+    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
 
     @Autowired
-    public TrainingServiceIMPL(TrainingDAO trainingDAO) {
+    public TrainingServiceImpl(TrainingDao trainingDAO) {
         this.trainingDAO = trainingDAO;
     }
 
     @Override
-    public void create(TrainingDTO trainingDTO) {
+    public void create(TrainingDto trainingDTO) {
         Training newTraining = map(trainingDTO);
 
         logger.info("Trying to new create training");
         trainingDAO.create(newTraining);
-        logger.info("new Trainee created with: ID: {}", trainingDTO.getTrainingKey().toString());
     }
 
     @Override
@@ -37,7 +36,7 @@ public class TrainingServiceIMPL implements TrainingService<TrainingDTO>{
         return trainingDAO.select(id);
     }
 
-    private Training map(TrainingDTO trainingDTO) {
+    private Training map(TrainingDto trainingDTO) {
         Training training = new Training();
         logger.info("New Training, populating it with given traineeDTO");
 

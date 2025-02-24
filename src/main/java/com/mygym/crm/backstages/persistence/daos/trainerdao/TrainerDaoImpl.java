@@ -1,9 +1,9 @@
 package com.mygym.crm.backstages.persistence.daos.trainerdao;
 
+import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainer;
-import com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDAOIMPL;
 import com.mygym.crm.backstages.persistence.storages.TrainerStorage;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainerDAO;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,10 @@ import java.util.Optional;
 
 
 @Repository
-public class TrainerDAOIMPL implements TrainerDAO {
+public class TrainerDaoImpl implements TrainerDao {
 
     private TrainerStorage trainerStorage;
-    private static final Logger logger = LoggerFactory.getLogger(TrainerDAOIMPL.class);
+    private static final Logger logger = LoggerFactory.getLogger(TrainerDaoImpl.class);
 
     @Autowired
     public void setTrainerStorage(TrainerStorage trainerStorage) {
@@ -30,6 +30,9 @@ public class TrainerDAOIMPL implements TrainerDAO {
 
         if (existingTrainer == null) {
             logger.info("Trainer created successfully with ID: {}", trainer.getUserId());
+
+            UserService.uniqueID++;
+
             return Optional.of(trainer);
         }
 

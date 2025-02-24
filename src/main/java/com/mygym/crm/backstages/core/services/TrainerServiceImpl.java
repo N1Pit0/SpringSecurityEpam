@@ -1,10 +1,9 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.TrainerDTO;
+import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
-import com.mygym.crm.backstages.exceptions.NoTrainerException;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainerDAO;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,26 +13,24 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service("trainerServiceIMPL")
-public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
+public class TrainerServiceImpl implements TrainerService<TrainerDto>{
 
-    private final TrainerDAO trainerDAO;
+    private final TrainerDao trainerDAO;
     private final UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceIMPL.class);
+    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    public TrainerServiceIMPL(TrainerDAO trainerDAO, UserService userService) {
+    public TrainerServiceImpl(TrainerDao trainerDAO, UserService userService) {
         this.trainerDAO = trainerDAO;
         this.userService = userService;
     }
 
     @Override
-    public void create(TrainerDTO trainerDTO) {
+    public void create(TrainerDto trainerDTO) {
         Trainer newTrainer = map(trainerDTO);
 
         newTrainer.setUserId(UserService.uniqueID);
         logger.info("new Trainer set with: ID: {}", UserService.uniqueID);
-
-        UserService.uniqueID++;
 
         newTrainer.setPassword(userService.generatePassword());
         logger.info("new Trainer password has been created");
@@ -43,11 +40,10 @@ public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
 
         logger.info("Trying to create new Trainer with ID: {}", UserService.uniqueID);
         trainerDAO.create(newTrainer);
-        logger.info("new Trainer created with: ID: {}", UserService.uniqueID);
     }
 
     @Override
-    public void update(Integer id, TrainerDTO trainerDTO) {
+    public void update(Integer id, TrainerDto trainerDTO) {
         Trainer oldTrainer = getById(id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
             return new NoTraineeException("could not find Trainer with id " + id);
@@ -70,7 +66,7 @@ public class TrainerServiceIMPL implements TrainerService<TrainerDTO>{
         return trainerDAO.select(id);
     }
 
-    private Trainer map(TrainerDTO trainerDTO){
+    private Trainer map(TrainerDto trainerDTO){
         Trainer trainer = new Trainer();
         logger.info("New Trainer, populating it with given trainerDTO");
 

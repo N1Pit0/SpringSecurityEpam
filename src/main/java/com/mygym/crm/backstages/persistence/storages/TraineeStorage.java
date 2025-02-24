@@ -1,7 +1,6 @@
 package com.mygym.crm.backstages.persistence.storages;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
-import com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDAOIMPL;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
