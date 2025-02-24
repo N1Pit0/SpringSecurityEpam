@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8e4bbc7-3131-4d30-8cd0-8cf8b913f46c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/dao/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/dao/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/ApplicationFacadeTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TraineeServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TraineeServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainerServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainerServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainingServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainingServiceImplTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDaoImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/services/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/services/app.log" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +74,7 @@
     "JUnit.TrainingStorageValidTest.testInit_withValidData_loadsTraineeCorrectly.executor": "Run",
     "Maven.customerRelationshipManager [clean].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature",
+    "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -105,79 +100,77 @@
       <recent name="com.mygym.crm.storages" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TrainingServiceImplTest">
-    <configuration name="TraineeServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.TrainingStorageValidTest">
+    <configuration name="TraineeStorageValidTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="customerRelationshipManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="PATTERN" value="com.mygym.crm.backstages.persistence.storages.traineestorage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
-      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TraineeServiceImplTest" />
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.persistence.storages.traineestorage" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.persistence.storages.traineestorage.TraineeStorageValidTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TraineeServiceImplTest.testUpdateTrainee_Fail_NotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrainerStorageIncompleteLineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="customerRelationshipManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="PATTERN" value="com.mygym.crm.backstages.persistence.storages.trainerstorage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
-      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TraineeServiceImplTest" />
-      <option name="METHOD_NAME" value="testUpdateTrainee_Fail_NotFound" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TrainerServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="customerRelationshipManager" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
-      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainerServiceImplTest" />
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.persistence.storages.trainerstorage" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.persistence.storages.trainerstorage.TrainerStorageIncompleteLineTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrainerServiceImplTest.testUpdateTrainer_Fail_NotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrainerStorageValidTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="customerRelationshipManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="PATTERN" value="com.mygym.crm.backstages.persistence.storages.trainerstorage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
-      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainerServiceImplTest" />
-      <option name="METHOD_NAME" value="testUpdateTrainer_Fail_NotFound" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.persistence.storages.trainerstorage" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.persistence.storages.trainerstorage.TrainerStorageValidTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TrainingServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TrainingStorageIncompleteLineTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="customerRelationshipManager" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="PATTERN" value="com.mygym.crm.backstages.persistence.storages.trainingstorage.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
-      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainingServiceImplTest" />
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.persistence.storages.trainingstorage" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.persistence.storages.trainingstorage.TrainingStorageIncompleteLineTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainingStorageValidTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.persistence.storages.trainingstorage.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.persistence.storages.trainingstorage" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.persistence.storages.trainingstorage.TrainingStorageValidTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -185,11 +178,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TrainingServiceImplTest" />
-        <item itemvalue="JUnit.TrainerServiceImplTest" />
-        <item itemvalue="JUnit.TrainerServiceImplTest.testUpdateTrainer_Fail_NotFound" />
-        <item itemvalue="JUnit.TraineeServiceImplTest.testUpdateTrainee_Fail_NotFound" />
-        <item itemvalue="JUnit.TraineeServiceImplTest" />
+        <item itemvalue="JUnit.TrainingStorageValidTest" />
+        <item itemvalue="JUnit.TrainingStorageIncompleteLineTest" />
+        <item itemvalue="JUnit.TrainerStorageValidTest" />
+        <item itemvalue="JUnit.TrainerStorageIncompleteLineTest" />
+        <item itemvalue="JUnit.TraineeStorageValidTest" />
       </list>
     </recent_temporary>
   </component>
