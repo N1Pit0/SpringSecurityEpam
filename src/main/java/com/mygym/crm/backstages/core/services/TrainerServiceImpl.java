@@ -2,7 +2,7 @@ package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
-import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.slf4j.Logger;
@@ -46,7 +46,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     public void update(Integer id, TrainerDto trainerDTO) {
         Trainer oldTrainer = getById(id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
-            return new NoTraineeException("could not find Trainer with id " + id);
+            return new NoTrainerException("could not find Trainer with id " + id);
         });
         Trainer newTrainer = map(trainerDTO);
 

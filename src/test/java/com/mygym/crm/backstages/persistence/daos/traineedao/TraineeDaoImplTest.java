@@ -2,7 +2,6 @@ package com.mygym.crm.backstages.persistence.daos.traineedao;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.persistence.daos.configs.DaoTestConfig;
-import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

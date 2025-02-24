@@ -67,3 +67,80 @@
 2025-02-24 19:53:24 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Training deleted successfully: TrainingKey(traineeId=1, trainerId=2)
 2025-02-24 19:53:24 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Training updated successfully: TrainingKey(traineeId=1, trainerId=2)
 2025-02-24 19:53:24 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Trainer with ID TrainingKey(traineeId=2, trainerId=2) does not exist, cant be found
+2025-02-24 20:11:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 20
+2025-02-24 20:11:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:12:02 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 20
+2025-02-24 20:12:02 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 1 does not exist, cant be found
+2025-02-24 20:14:00 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 20
+2025-02-24 20:14:00 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 20
+2025-02-24 20:18:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:18:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:18:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee updated successfully: 1
+2025-02-24 20:18:06 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:18:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:18:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:18:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee updated successfully: 1
+2025-02-24 20:18:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:19:57 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 999 does not exist, cant be found
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee deleted successfully: 1
+2025-02-24 20:19:57 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 1 does not exist, cant be found
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee updated successfully: 1
+2025-02-24 20:19:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:19:57 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 2 does not exist, cant be found
+2025-02-24 20:21:59 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 999 does not exist, cant be found
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee deleted successfully: 1
+2025-02-24 20:21:59 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 1 does not exist, cant be found
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee updated successfully: 1
+2025-02-24 20:21:59 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 1
+2025-02-24 20:21:59 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 2 does not exist, cant be found
+2025-02-24 20:23:38 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant update
+2025-02-24 20:23:38 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer deleted successfully: 1
+2025-02-24 20:23:38 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:23:38 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer updated successfully: 1
+2025-02-24 20:23:38 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant be found
+2025-02-24 20:23:38 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:23:38 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer already exists with ID: 1
+2025-02-24 20:23:38 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:23:38 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant delete
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:27:39 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 999 does not exist, cant be found
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer updated successfully: 1
+2025-02-24 20:27:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:27:39 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant be found
+2025-02-24 20:28:25 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee with ID 2 does not exist, cant be found
+2025-02-24 20:28:41 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant be found
+2025-02-24 20:29:24 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant be found
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:29:39 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 999 does not exist, cant be found
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer updated successfully: 1
+2025-02-24 20:29:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 1
+2025-02-24 20:29:39 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer with ID 2 does not exist, cant be found
+2025-02-24 20:36:57 [main] WARN  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Trainer with ID TrainingKey(traineeId=2, trainerId=2) does not exist, cant be found
+2025-02-24 20:36:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Training created successfully with ID: TrainingKey(traineeId=1, trainerId=2)
+2025-02-24 20:36:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Trainer found successfully: TrainingKey(traineeId=1, trainerId=2)
+2025-02-24 20:36:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Training created successfully with ID: TrainingKey(traineeId=1, trainerId=2)
+2025-02-24 20:36:57 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Trainer found successfully: TrainingKey(traineeId=1, trainerId=2)

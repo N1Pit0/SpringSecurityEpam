@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.common.UserDto;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -13,6 +14,7 @@ public class UserService{
                                     // on maximum userID for both trainee and
                                     // trainer file before starting
 
+    @Getter
     private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();
 
     public String generateUserName(UserDto userDTO){

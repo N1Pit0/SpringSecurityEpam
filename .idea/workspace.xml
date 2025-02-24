@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e8e4bbc7-3131-4d30-8cd0-8cf8b913f46c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/logs/dao/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/dao/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/TrainerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mygym/crm/backstages/core/services/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/ApplicationFacadeTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TraineeServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TraineeServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainerServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainerServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainingServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/core/services/TrainingServiceImplTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDaoImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/mygym/crm/backstages/persistence/daos/traineedao/TraineeDaoImplTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2tDaP79BMLu4R7UBTIzcUt5lZNR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Application.executor": "Run",
+    "JUnit.DaoTestConfig.testCreateTrainee_Success.executor": "Run",
+    "JUnit.TraineeDaoImplTest.executor": "Run",
+    "JUnit.TraineeDaoImplTest.testCreateTrainee_Fail_AlreadyExists.executor": "Run",
+    "JUnit.TraineeDaoImplTest.testCreateTrainee_Success.executor": "Run",
+    "JUnit.TraineeDaoImplTest.testDeleteTrainee_Success.executor": "Run",
+    "JUnit.TraineeDaoImplTest.testUpdateTrainee_Fail_NotExists.executor": "Run",
+    "JUnit.TraineeDaoImplTest.testUpdateTrainee_Success.executor": "Run",
+    "JUnit.TraineeDaoImplTest.test_AutowiringDao_NotNull.executor": "Run",
+    "JUnit.TraineeServiceImplTest.executor": "Run",
+    "JUnit.TraineeServiceImplTest.testCreateTrainee_Success.executor": "Run",
+    "JUnit.TraineeServiceImplTest.testUpdateTrainee_Fail_NotFound.executor": "Run",
+    "JUnit.TraineeServiceImplTest.testUpdateTrainee_Success.executor": "Run",
+    "JUnit.TraineeStorageIncompleteLineTest.testInit_withIncompleteData_skipsRecord.executor": "Run",
+    "JUnit.TraineeStorageTest.dummyTest.executor": "Run",
+    "JUnit.TraineeStorageTest.executor": "Run",
+    "JUnit.TraineeStorageTest.setStorage.executor": "Run",
+    "JUnit.TraineeStorageValidTest.executor": "Run",
+    "JUnit.TraineeStorageValidTest.testInit_withValidData_loadsTraineeCorrectly.executor": "Run",
+    "JUnit.TrainerDaoImplTest.executor": "Run",
+    "JUnit.TrainerServiceImplTest.executor": "Run",
+    "JUnit.TrainerServiceImplTest.testUpdateTrainer_Fail_NotFound.executor": "Run",
+    "JUnit.TrainerStorageIncompleteLineTest.executor": "Run",
+    "JUnit.TrainerStorageValidTest.executor": "Run",
+    "JUnit.TrainerStorageValidTest.testInit_withValidData_loadsTraineeCorrectly.executor": "Run",
+    "JUnit.TrainingDaoImplTest.executor": "Run",
+    "JUnit.TrainingDaoImplTest.testDeleteTraining_Success.executor": "Run",
+    "JUnit.TrainingDaoImplTest.testSelectTraining_Success.executor": "Run",
+    "JUnit.TrainingDaoImplTest.testUpdateTraining_Fail_NotExists.executor": "Run",
+    "JUnit.TrainingDaoImplTest.testUpdateTraining_Success.executor": "Run",
+    "JUnit.TrainingServiceImplTest.executor": "Run",
+    "JUnit.TrainingStorageIncompleteLineTest.executor": "Run",
+    "JUnit.TrainingStorageValidTest.executor": "Run",
+    "JUnit.TrainingStorageValidTest.testInit_withValidData_loadsTraineeCorrectly.executor": "Run",
+    "Maven.customerRelationshipManager [clean].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "onboarding.tips.debug.path": "C:/Users/N1Pit0/IdeaProjects/customerRelationshipManager/src/main/java/com/mygym/crm/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\N1Pit0\IdeaProjects\customerRelationshipManager\src\main\java\com\mygym\crm\textfiles" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.mygym.crm.backstages.persistence.storages" />
+      <recent name="com.mygym.crm.backstages.core.services" />
+      <recent name="com.mygym.crm.repositories.services" />
+      <recent name="com.mygym.crm.exceptions" />
+      <recent name="com.mygym.crm.storages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.TrainingServiceImplTest">
+    <configuration name="TraineeServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TraineeServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TraineeServiceImplTest.testUpdateTrainee_Fail_NotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TraineeServiceImplTest" />
+      <option name="METHOD_NAME" value="testUpdateTrainee_Fail_NotFound" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainerServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainerServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainerServiceImplTest.testUpdateTrainer_Fail_NotFound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainerServiceImplTest" />
+      <option name="METHOD_NAME" value="testUpdateTrainer_Fail_NotFound" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TrainingServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customerRelationshipManager" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.mygym.crm.backstages.core.services.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.mygym.crm.backstages.core.services" />
+      <option name="MAIN_CLASS_NAME" value="com.mygym.crm.backstages.core.services.TrainingServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.TrainingServiceImplTest" />
+        <item itemvalue="JUnit.TrainerServiceImplTest" />
+        <item itemvalue="JUnit.TrainerServiceImplTest.testUpdateTrainer_Fail_NotFound" />
+        <item itemvalue="JUnit.TraineeServiceImplTest.testUpdateTrainee_Fail_NotFound" />
+        <item itemvalue="JUnit.TraineeServiceImplTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1a78e6da-3aa5-4135-b7b3-06aa650561d7" name="Changes" comment="" />
+      <created>1739889072297</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1739889072297</updated>
+      <workItem from="1739889073443" duration="10270000" />
+      <workItem from="1739951103579" duration="6080000" />
+      <workItem from="1739978582298" duration="9597000" />
+      <workItem from="1740039537635" duration="15051000" />
+      <workItem from="1740128210902" duration="1659000" />
+      <workItem from="1740136584607" duration="10529000" />
+      <workItem from="1740152099309" duration="3123000" />
+      <workItem from="1740205014780" duration="13377000" />
+      <workItem from="1740318170268" duration="12390000" />
+      <workItem from="1740379491258" duration="1199000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
