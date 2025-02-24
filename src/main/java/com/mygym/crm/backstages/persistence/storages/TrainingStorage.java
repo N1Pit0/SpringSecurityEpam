@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Repository
 public class TrainingStorage implements UserStorage<TrainingKey, Training> {
-    private final Map<TrainingKey, Training> storage = new HashMap<>();
+    private  Map<TrainingKey, Training> storage;
     private static final Logger logger = LoggerFactory.getLogger(TrainingStorage.class);
 
     @Value("${training.data.path}")
@@ -31,6 +31,7 @@ public class TrainingStorage implements UserStorage<TrainingKey, Training> {
 
     @PostConstruct
     public void init(){
+        storage = new HashMap<>();
         try(BufferedReader br = new BufferedReader(new FileReader(trainingDataPath))) {
 
             String line;

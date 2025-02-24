@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("applicationFacade")
 public class ApplicationFacade {
     private final TraineeService<TraineeDto> traineeService;
     private final TrainerService<TrainerDto> trainerService;
