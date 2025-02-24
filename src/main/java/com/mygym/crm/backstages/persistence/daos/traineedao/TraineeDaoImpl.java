@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.persistence.storages.TraineeStorage;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Repository("traineeDAOIMPL")
 public class TraineeDaoImpl implements TraineeDao {
 
+    @Getter
     private TraineeStorage traineeStorage;
     private static final Logger logger = LoggerFactory.getLogger(TraineeDaoImpl.class);
 
