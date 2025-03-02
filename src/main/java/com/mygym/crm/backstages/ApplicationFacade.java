@@ -6,7 +6,6 @@ import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.domain.models.TrainingKey;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.exceptions.NoTrainingException;
@@ -49,7 +48,7 @@ public class ApplicationFacade {
         trainingService.create(trainingDTO);
     }
 
-    public Trainee selectTrainee(Integer id){
+    public Trainee selectTrainee(Long id){
         logger.info("Trying to get a trainee by id: {}", id);
         return traineeService.getById(id)
                 .orElseThrow(() -> {
@@ -58,7 +57,7 @@ public class ApplicationFacade {
                 });
     }
 
-    public Trainer selectTrainer(Integer id){
+    public Trainer selectTrainer(Long id){
         logger.info("Trying to get a trainer by id: {}", id);
         return trainerService.getById(id)
                 .orElseThrow(() -> {
@@ -67,7 +66,7 @@ public class ApplicationFacade {
                 });
     }
 
-    public Training selectTraining(TrainingKey trainingKey){
+    public Training selectTraining(Long trainingKey){
         logger.info("Trying to get a training by trainingKey: {}", trainingKey);
         return trainingService.getById(trainingKey)
                 .orElseThrow(() -> {
@@ -76,17 +75,17 @@ public class ApplicationFacade {
                 });
     }
 
-    public void updateTrainee(Integer id, TraineeDto traineeDTO){
+    public void updateTrainee(Long id, TraineeDto traineeDTO){
         logger.info("Trying to update trainee with id {}", id);
         traineeService.update(id, traineeDTO);
     }
 
-    public void updateTrainer(Integer id, TrainerDto trainerDTO){
+    public void updateTrainer(Long id, TrainerDto trainerDTO){
         logger.info("Trying to update trainer with id {}", id);
         trainerService.update(id, trainerDTO);
     }
 
-    public void deleteTrainee(Integer id) {
+    public void deleteTrainee(Long id) {
         logger.info("Trying to delete trainee with id {}", id);
         traineeService.delete(id);
     }

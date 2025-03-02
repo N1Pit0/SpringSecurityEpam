@@ -2,7 +2,6 @@ package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.domain.models.TrainingKey;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import com.mygym.crm.backstages.repositories.services.TrainingService;
 import org.slf4j.Logger;
@@ -32,7 +31,7 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
     }
 
     @Override
-    public Optional<Training> getById(TrainingKey id) {
+    public Optional<Training> getById(Long id) {
         return trainingDAO.select(id);
     }
 
@@ -40,7 +39,7 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
         Training training = new Training();
         logger.info("New Training, populating it with given traineeDTO");
 
-        training.setTrainingKey(trainingDTO.getTrainingKey());
+//        training.setTrainingKey(trainingDTO.getTrainingKey());
         training.setTrainingDate(trainingDTO.getTrainingDate());
         training.setTrainingName(trainingDTO.getTrainingName());
         training.setTrainingType(trainingDTO.getTrainingType());

@@ -3,10 +3,10 @@ package com.mygym.crm.backstages.repositories.services;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
 
-public interface TraineeService <T> extends BaseService<Trainee, Integer>{
+public interface TraineeService <T> extends BaseService<Trainee, Long>{
     void create(T t);
 
-    void update(Integer id,T t);
+    void update(Long id,T t);
 
-    void delete(Integer id);
+    void delete(Long id);
 }

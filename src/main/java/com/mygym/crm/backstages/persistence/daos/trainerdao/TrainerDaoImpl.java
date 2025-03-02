@@ -27,13 +27,13 @@ public class TrainerDaoImpl implements TrainerDao {
     }
 
     @Override
-    public Optional<Trainer> delete(Integer trainerId) {
+    public Optional<Trainer> delete(Long trainerId) {
 
         return Optional.empty();
     }
 
     @Override
-    public Optional<Trainer> select(Integer trainerId) {
+    public Optional<Trainer> select(Long trainerId) {
 
         return Optional.empty();
     }

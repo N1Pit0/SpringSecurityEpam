@@ -43,7 +43,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     }
 
     @Override
-    public void update(Integer id, TrainerDto trainerDTO) {
+    public void update(Long id, TrainerDto trainerDTO) {
         Trainer oldTrainer = getById(id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
             return new NoTrainerException("could not find Trainer with id " + id);
@@ -61,7 +61,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     }
 
     @Override
-    public Optional<Trainer> getById(Integer id) {
+    public Optional<Trainer> getById(Long id) {
         logger.info("Trying to find Trainer with ID: {}", id);
         return trainerDAO.select(id);
     }

@@ -10,7 +10,7 @@ import java.util.Random;
 
 @Service
 public class UserService{
-    public static int uniqueID = 20; // adjust value based
+    public static Long uniqueID = 20L; // adjust value based
                                     // on maximum userID for both trainee and
                                     // trainer file before starting
 

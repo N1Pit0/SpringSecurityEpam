@@ -44,7 +44,7 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
     }
 
     @Override
-    public void update(Integer id, TraineeDto traineeDTO) {
+    public void update(Long id, TraineeDto traineeDTO) {
         Trainee oldTrainee = getById(id).orElseThrow(() -> {
             logger.error("Trainee with ID: {} not found", id);
             return new NoTraineeException("could not find trainee with id " + id);
@@ -62,13 +62,13 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Long id) {
         logger.info("Trying to delete Trainee with ID: {}", id);
         traineeDAO.delete(id);
     }
 
     @Override
-    public Optional<Trainee> getById(Integer id) {
+    public Optional<Trainee> getById(Long id) {
         logger.info("Trying to find Trainee with ID: {}", id);
         return traineeDAO.select(id);
     }

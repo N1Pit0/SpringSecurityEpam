@@ -28,7 +28,7 @@ public class TrainerDaoImplTest {
     @Before
     public void setUpTrainer() throws Exception {
         trainer = new Trainer();
-        trainer.setUserId(1);
+        trainer.setUserId(1L);
         trainer.setFirstName("John");
         trainer.setLastName("Doe");
         trainer.setIsActive(true);
@@ -51,7 +51,7 @@ public class TrainerDaoImplTest {
     public void testCreateTrainer_Fail_AlreadyExists() {
         trainerDao.create(trainer);
         Trainer newTrainer = new Trainer();
-        newTrainer.setUserId(1);
+        newTrainer.setUserId(1L);
         Optional<Trainer> result = trainerDao.create(newTrainer);
 
         assertFalse(result.isPresent());
@@ -73,7 +73,7 @@ public class TrainerDaoImplTest {
     @Test
     public void testUpdateTrainer_Fail_NotExists() {
         Trainer updatedTrainer = new Trainer();
-        updatedTrainer.setUserId(2);
+        updatedTrainer.setUserId(2L);
         updatedTrainer.setFirstName("Jane");
         Optional<Trainer> result = trainerDao.update(updatedTrainer);
 
@@ -92,7 +92,7 @@ public class TrainerDaoImplTest {
 
     @Test
     public void testDeleteTrainer_Fail_NotExists() {
-        Optional<Trainer> result = trainerDao.delete(2);
+        Optional<Trainer> result = trainerDao.delete(2L);
 
         assertFalse(result.isPresent());
     }
@@ -109,7 +109,7 @@ public class TrainerDaoImplTest {
 
     @Test
     public void testSelectTrainer_Fail_NotExists() {
-        Optional<Trainer> result = trainerDao.select(2);
+        Optional<Trainer> result = trainerDao.select(2L);
 
         assertFalse(result.isPresent());
     }

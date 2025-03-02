@@ -11,8 +11,8 @@ public abstract class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_Id")
-    private int userId;
+    @Column(name = "user_id")
+    private Long userId;
 
     @Column(nullable = false)
     private String firstName;

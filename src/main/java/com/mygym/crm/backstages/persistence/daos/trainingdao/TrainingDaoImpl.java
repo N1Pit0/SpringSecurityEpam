@@ -1,7 +1,6 @@
 package com.mygym.crm.backstages.persistence.daos.trainingdao;
 
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.domain.models.TrainingKey;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +23,12 @@ public class TrainingDaoImpl implements TrainingDao {
     }
 
     @Override
-    public Optional<Training> delete(TrainingKey trainingKey) {
+    public Optional<Training> delete(Long trainingKey) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Training> select(TrainingKey trainingKey) {
+    public Optional<Training> select(Long trainingKey) {
 
         return Optional.empty();
     }

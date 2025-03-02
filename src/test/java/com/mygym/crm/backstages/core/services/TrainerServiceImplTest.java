@@ -40,17 +40,17 @@ public class TrainerServiceImplTest {
         trainerDto.setLastName("Doe");
         trainerDto.setActive(true);
 
-        UserService.uniqueID = 1;
+        UserService.uniqueID = 1L;
     }
 
     @Test
     public void testCreateTrainer_Success() {
         trainerService.create(trainerDto);
 
-        Optional<Trainer> createdTrainer = trainerDao.select(1);
+        Optional<Trainer> createdTrainer = trainerDao.select(1L);
 
         assertTrue(createdTrainer.isPresent());
-        assertEquals(1, createdTrainer.get().getUserId());
+        assertEquals(1L, createdTrainer.get().getUserId().longValue());
         assertEquals("John", createdTrainer.get().getFirstName());
         assertEquals("Doe", createdTrainer.get().getLastName());
         assertEquals("John.Doe", createdTrainer.get().getUserName());
@@ -65,9 +65,9 @@ public class TrainerServiceImplTest {
         updatedDto.setLastName("Doe");
         updatedDto.setActive(false);
 
-        trainerService.update(1, updatedDto);
+        trainerService.update(1L, updatedDto);
 
-        Optional<Trainer> updatedTrainer = trainerDao.select(1);
+        Optional<Trainer> updatedTrainer = trainerDao.select(1L);
         assertTrue(updatedTrainer.isPresent());
         assertEquals("Jana", updatedTrainer.get().getFirstName());
         assertEquals("Doe", updatedTrainer.get().getLastName());
@@ -82,14 +82,14 @@ public class TrainerServiceImplTest {
         updatedDto.setLastName("Doe");
         updatedDto.setActive(false);
 
-        trainerService.update(2, updatedDto); // ID does not exist
+        trainerService.update(2L, updatedDto); // ID does not exist
     }
 
     @Test
     public void testGetById_Success() {
         trainerService.create(trainerDto);
 
-        Optional<Trainer> foundTrainer = trainerService.getById(1);
+        Optional<Trainer> foundTrainer = trainerService.getById(1L);
 
         assertTrue(foundTrainer.isPresent());
         assertEquals("John", foundTrainer.get().getFirstName());
@@ -97,7 +97,7 @@ public class TrainerServiceImplTest {
 
     @Test
     public void testGetById_NotFound() {
-        Optional<Trainer> foundTrainer = trainerService.getById(999);
+        Optional<Trainer> foundTrainer = trainerService.getById(999L);
 
         assertFalse(foundTrainer.isPresent());
     }

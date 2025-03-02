@@ -5,7 +5,6 @@ import com.mygym.crm.backstages.config.Configs;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.TrainingDto;
-import com.mygym.crm.backstages.domain.models.TrainingKey;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -38,24 +37,19 @@ public class Application {
         trainerDto1.setLastName("sadasd");
         trainerDto1.setActive(true);
 
-        TrainingKey trainingKey = new TrainingKey();
-        trainingKey.setTraineeId(6);
-        trainingKey.setTrainerId(18);
-
         TrainingDto trainingDto = new TrainingDto();
-        trainingDto.setTrainingKey(trainingKey);
+//        trainingDto.setTrainingKey(trainingKey);
         trainingDto.setTrainingDuration(2);
         trainingDto.setTrainingName("adasdsad");
 
-        System.out.println(facade.selectTrainee(6));
+        System.out.println(facade.selectTrainee(6L));
         facade.createTrainee(traineeDto);
-        facade.updateTrainee(6, traineeDto1);
-        facade.deleteTrainee(6);
+        facade.updateTrainee(6L, traineeDto1);
+        facade.deleteTrainee(6L);
 
-        System.out.println(facade.selectTrainer(18));
+        System.out.println(facade.selectTrainer(18L));
         facade.createTrainer(trainerDto);
-        facade.updateTrainer(18, trainerDto1);
+        facade.updateTrainer(18L, trainerDto1);
 
-        System.out.println(facade.selectTraining(trainingKey));
     }
 }

@@ -13,13 +13,21 @@ public class Training {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
+    private Long Id;
 
-    private TrainingKey trainingKey;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id_trainer", referencedColumnName = "user_id")
+    private Trainer trainer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id_trainee",  referencedColumnName = "user_id")
+    private Trainee trainee;
 
     @Column(nullable = false)
     private String trainingName;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "training_type_id")
     private TrainingType trainingType;
 
     @Column(nullable = false)
@@ -28,11 +36,5 @@ public class Training {
 
     @Column(nullable = false)
     private Integer trainingDuration;
-
-    // Constructors
-
-    public Training(TrainingKey trainingKey) {
-        this.trainingKey = trainingKey;
-    }
 
 }

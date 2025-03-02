@@ -43,17 +43,17 @@ public class TraineeServiceImplTest {
         traineeDto.setActive(true);
         traineeDto.setDateOfBirth(LocalDate.of(1990, 1, 1));
         traineeDto.setAddress("123 Main St");
-        UserService.uniqueID = 1;
+        UserService.uniqueID = 1L;
     }
 
     @Test
     public void testCreateTrainee_Success() {
         traineeService.create(traineeDto);
 
-        Optional<Trainee> createdTrainee = traineeDao.select(1);
+        Optional<Trainee> createdTrainee = traineeDao.select(1L);
 
         assertTrue(createdTrainee.isPresent());
-        assertEquals(1, createdTrainee.get().getUserId());
+        assertEquals(1L, createdTrainee.get().getUserId().longValue());
         assertEquals("John", createdTrainee.get().getFirstName());
         assertEquals("Doe", createdTrainee.get().getLastName());
         assertEquals("John.Doe", createdTrainee.get().getUserName());
@@ -68,9 +68,9 @@ public class TraineeServiceImplTest {
         updatedDto.setLastName("Doe");
         updatedDto.setActive(false);
 
-        traineeService.update(1, updatedDto);
+        traineeService.update(1L, updatedDto);
 
-        Optional<Trainee> updatedTrainee = traineeDao.select(1);
+        Optional<Trainee> updatedTrainee = traineeDao.select(1L);
         assertTrue(updatedTrainee.isPresent());
         assertEquals("Jana", updatedTrainee.get().getFirstName());
         assertEquals("Doe", updatedTrainee.get().getLastName());
@@ -85,16 +85,16 @@ public class TraineeServiceImplTest {
         updatedDto.setLastName("Doe");
         updatedDto.setActive(false);
 
-        traineeService.update(2, updatedDto); // ID does not exist
+        traineeService.update(2L, updatedDto); // ID does not exist
     }
 //
     @Test
     public void testDeleteTrainee_Success() {
         traineeService.create(traineeDto);
 
-        traineeService.delete(1);
+        traineeService.delete(1L);
 
-        Optional<Trainee> deletedTrainee = traineeDao.select(1);
+        Optional<Trainee> deletedTrainee = traineeDao.select(1L);
         assertFalse(deletedTrainee.isPresent());
     }
 //
@@ -102,7 +102,7 @@ public class TraineeServiceImplTest {
     public void testGetById_Success() {
         traineeService.create(traineeDto);
 
-        Optional<Trainee> foundTrainee = traineeService.getById(1);
+        Optional<Trainee> foundTrainee = traineeService.getById(1L);
 
         assertTrue(foundTrainee.isPresent());
         assertEquals("John", foundTrainee.get().getFirstName());
@@ -110,7 +110,7 @@ public class TraineeServiceImplTest {
 
     @Test
     public void testGetById_NotFound() {
-        Optional<Trainee> foundTrainee = traineeService.getById(999);
+        Optional<Trainee> foundTrainee = traineeService.getById(999L);
 
         assertFalse(foundTrainee.isPresent());
     }

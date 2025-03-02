@@ -28,7 +28,7 @@ public class TraineeDaoImplTest {
     @Before
     public void setUpTrainee() throws Exception {
         trainee = new Trainee();
-        trainee.setUserId(1);
+        trainee.setUserId(1L);
         trainee.setFirstName("John");
         trainee.setLastName("Doe");
         trainee.setIsActive(true);
@@ -51,7 +51,7 @@ public class TraineeDaoImplTest {
     public void testCreateTrainee_Fail_AlreadyExists() {
         traineeDao.create(trainee);
         Trainee newTrainee = new Trainee();
-        newTrainee.setUserId(1);
+        newTrainee.setUserId(1L);
         Optional<Trainee> result = traineeDao.create(newTrainee);
 
         assertFalse(result.isPresent());
@@ -62,7 +62,7 @@ public class TraineeDaoImplTest {
 //        traineeDao.getTraineeStorage().getStorage().put(1,trainee);
 
         Trainee updatedTrainee = new Trainee();
-        updatedTrainee.setUserId(1);
+        updatedTrainee.setUserId(1L);
         updatedTrainee.setFirstName("Jane");
         Optional<Trainee> result = traineeDao.update(updatedTrainee);
 
@@ -73,7 +73,7 @@ public class TraineeDaoImplTest {
     @Test
     public void testUpdateTrainee_Fail_NotExists() {
         Trainee updatedTrainee = new Trainee();
-        updatedTrainee.setUserId(2);
+        updatedTrainee.setUserId(2L);
         updatedTrainee.setFirstName("Jane");
         Optional<Trainee> result = traineeDao.update(updatedTrainee);
 
@@ -84,7 +84,7 @@ public class TraineeDaoImplTest {
     public void testDeleteTrainee_Success() {
 //        traineeDao.getTraineeStorage().getStorage().put(1,trainee);
 
-        Optional<Trainee> result = traineeDao.delete(1);
+        Optional<Trainee> result = traineeDao.delete(1L);
 
         assertTrue(result.isPresent());
 //        assertNull(traineeDao.getTraineeStorage().getStorage().get(1));
@@ -92,7 +92,7 @@ public class TraineeDaoImplTest {
 
     @Test
     public void testDeleteTrainee_Fail_NotExists() {
-        Optional<Trainee> result = traineeDao.delete(2);
+        Optional<Trainee> result = traineeDao.delete(2L);
 
         assertFalse(result.isPresent());
     }
@@ -101,7 +101,7 @@ public class TraineeDaoImplTest {
     public void testSelectTrainee_Success() {
 //        traineeDao.getTraineeStorage().getStorage().put(1,trainee);
 
-        Optional<Trainee> result = traineeDao.select(1);
+        Optional<Trainee> result = traineeDao.select(1L);
 
         assertTrue(result.isPresent());
         assertEquals(trainee, result.get());
@@ -109,7 +109,7 @@ public class TraineeDaoImplTest {
 
     @Test
     public void testSelectTrainee_Fail_NotExists() {
-        Optional<Trainee> result = traineeDao.select(2);
+        Optional<Trainee> result = traineeDao.select(2L);
 
         assertFalse(result.isPresent());
     }

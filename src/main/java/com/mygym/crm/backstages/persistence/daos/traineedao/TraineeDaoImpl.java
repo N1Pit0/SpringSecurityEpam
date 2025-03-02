@@ -25,12 +25,12 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
-    public Optional<Trainee> delete(Integer traineeId) {
+    public Optional<Trainee> delete(Long traineeId) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<Trainee> select(Integer traineeId) {
+    public Optional<Trainee> select(Long traineeId) {
         return Optional.empty();
     }
 }
