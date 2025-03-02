@@ -27,11 +27,11 @@ public class TrainerServiceImplTest {
     private UserService userService;
     private TrainerDto trainerDto;
 
-    @Before
-    public void clear(){
-        trainerDao.getTrainerStorage().getStorage().clear();
-        userService.getUsernameCounter().clear();
-    }
+//    @Before
+//    public void clear(){
+//        trainerDao.getTrainerStorage().getStorage().clear();
+//        userService.getUsernameCounter().clear();
+//    }
 
     @Before
     public void setUp() {
@@ -71,7 +71,7 @@ public class TrainerServiceImplTest {
         assertTrue(updatedTrainer.isPresent());
         assertEquals("Jana", updatedTrainer.get().getFirstName());
         assertEquals("Doe", updatedTrainer.get().getLastName());
-        assertFalse(updatedTrainer.get().isActive());
+        assertFalse(updatedTrainer.get().getIsActive());
     }
 
     @Test(expected = NoTrainerException.class)

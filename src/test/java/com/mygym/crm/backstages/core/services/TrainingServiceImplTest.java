@@ -4,7 +4,6 @@ import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.core.services.configs.ServiceTestConfig;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingKey;
-import com.mygym.crm.backstages.exceptions.NoTrainingException;
 import com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,10 +27,10 @@ public class TrainingServiceImplTest {
     private TrainingDto trainingDto;
     private TrainingKey trainingKey;
 
-    @Before
-    public void clear(){
-        trainingDao.getTrainingStorage().getStorage().clear();
-    }
+//    @Before
+//    public void clear(){
+//        trainingDao.getTrainingStorage().getStorage().clear();
+//    }
 
     @Before
     public void setUp() {
@@ -52,7 +51,7 @@ public class TrainingServiceImplTest {
         assertTrue(createdTraining.isPresent());
         assertEquals(trainingKey, createdTraining.get().getTrainingKey());
         assertEquals("Session1", createdTraining.get().getTrainingName());
-        assertEquals(5, createdTraining.get().getTrainingDuration());
+        assertEquals(5, createdTraining.get().getTrainingDuration().intValue());
     }
 
     @Test

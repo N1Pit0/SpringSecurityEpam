@@ -31,7 +31,7 @@ public class TraineeServiceImplTest {
 
     @Before
     public void clear(){
-        traineeDao.getTraineeStorage().getStorage().clear();
+//        traineeDao.getTraineeStorage().getStorage().clear();
         userService.getUsernameCounter().clear();
     }
 
@@ -74,7 +74,7 @@ public class TraineeServiceImplTest {
         assertTrue(updatedTrainee.isPresent());
         assertEquals("Jana", updatedTrainee.get().getFirstName());
         assertEquals("Doe", updatedTrainee.get().getLastName());
-        assertFalse(updatedTrainee.get().isActive());
+        assertFalse(updatedTrainee.get().getIsActive());
     }
 //
     @Test(expected = NoTraineeException.class)

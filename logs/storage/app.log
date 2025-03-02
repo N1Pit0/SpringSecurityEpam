@@ -1,0 +1,6 @@
+2025-03-02 14:28:58 [main] ERROR com.mygym.crm.backstages.persistence.storages.TraineeStorage - ${trainee.data.path} (The system cannot find the file specified)
+2025-03-02 14:28:58 [main] ERROR com.mygym.crm.backstages.persistence.storages.TrainerStorage - ${trainer.data.path} (The system cannot find the file specified)
+2025-03-02 14:28:58 [main] ERROR com.mygym.crm.backstages.persistence.storages.TrainingStorage - ${training.data.path} (The system cannot find the file specified)
+2025-03-02 14:28:59 [main] ERROR com.mygym.crm.backstages.persistence.storages.TraineeStorage - ${trainee.data.path} (The system cannot find the file specified)
+2025-03-02 14:28:59 [main] ERROR com.mygym.crm.backstages.persistence.storages.TrainerStorage - ${trainer.data.path} (The system cannot find the file specified)
+2025-03-02 14:28:59 [main] ERROR com.mygym.crm.backstages.persistence.storages.TrainingStorage - ${training.data.path} (The system cannot find the file specified)
