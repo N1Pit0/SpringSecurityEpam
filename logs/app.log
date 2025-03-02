@@ -1,0 +1,8 @@
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainee by id: 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to create new trainee
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to update trainee with id 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to delete trainee with id 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainer by id: 18
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to create new trainer
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to update trainer with id 18
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a training by trainingKey: TrainingKey(traineeId=6, trainerId=18)

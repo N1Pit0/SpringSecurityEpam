@@ -56,7 +56,7 @@ public class TraineeStorage implements UserStorage<Integer, Trainee> {
                     trainee.setPassword(password);
 
                     boolean isActive = Boolean.parseBoolean(parts[5].trim());
-                    trainee.setActive(isActive);
+                    trainee.setIsActive(isActive);
 
                     LocalDate dateOfBirth = LocalDate.parse(parts[6].trim());
                     trainee.setDateOfBirth(dateOfBirth);

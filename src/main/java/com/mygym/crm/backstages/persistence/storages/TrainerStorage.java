@@ -1,7 +1,7 @@
 package com.mygym.crm.backstages.persistence.storages;
 
 import com.mygym.crm.backstages.domain.models.Trainer;
-import com.mygym.crm.backstages.domain.models.TrainingTypeEnum;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,9 +56,9 @@ public class TrainerStorage implements UserStorage<Integer, Trainer> {
                     trainer.setPassword(password);
 
                     boolean isActive = Boolean.parseBoolean(parts[5].trim());
-                    trainer.setActive(isActive);
+                    trainer.setIsActive(isActive);
 
-                    TrainingTypeEnum trainingType = TrainingTypeEnum.valueOf(parts[6].trim());
+                    TrainingType trainingType = TrainingType.valueOf(parts[6].trim());
                     trainer.setTrainingType(trainingType);
 
                     storage.put(id, trainer);

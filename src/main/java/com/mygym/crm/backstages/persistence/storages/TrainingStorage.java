@@ -2,7 +2,7 @@ package com.mygym.crm.backstages.persistence.storages;
 
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingKey;
-import com.mygym.crm.backstages.domain.models.TrainingTypeEnum;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +50,7 @@ public class TrainingStorage implements UserStorage<TrainingKey, Training> {
                     String traineeName = parts[2].trim();
                     training.setTrainingName(traineeName);
 
-                    TrainingTypeEnum trainingType = TrainingTypeEnum.valueOf(parts[3].trim());
+                    TrainingType trainingType = TrainingType.valueOf(parts[3].trim());
                     training.setTrainingType(trainingType);
 
                     LocalDate date = LocalDate.parse(parts[4].trim());

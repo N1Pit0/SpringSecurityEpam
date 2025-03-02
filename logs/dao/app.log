@@ -1,0 +1,10 @@
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee created successfully with ID: 20
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee found successfully: 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee updated successfully: 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Trainee deleted successfully: 6
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 18
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer created successfully with ID: 21
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer found successfully: 18
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Trainer updated successfully: 18
+2025-03-02 13:52:23 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl - Trainer found successfully: TrainingKey(traineeId=6, trainerId=18)

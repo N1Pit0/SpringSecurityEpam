@@ -1,26 +1,32 @@
 package com.mygym.crm.backstages.domain.models.common;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 
-@EqualsAndHashCode
-@Getter
-@Setter
-@ToString
+@Data
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@Inheritance(strategy = InheritanceType.JOINED)
+@Entity
 public abstract class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_Id")
     private int userId;
 
+    @Column(nullable = false)
     private String firstName;
 
+    @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
     private String password;
 
-    private boolean isActive;
+    @Column(nullable = false)
+    private Boolean isActive;
 
 }

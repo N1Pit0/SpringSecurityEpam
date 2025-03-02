@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.domain.models;
 
-public enum TrainingTypeEnum {
+public enum TrainingType {
     PLYOMETRIC,
     WEIGHT,
     STRENGTH,

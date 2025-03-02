@@ -2,8 +2,7 @@ package com.mygym.crm.backstages.persistence.storages.trainingstorage;
 
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingKey;
-import com.mygym.crm.backstages.domain.models.TrainingTypeEnum;
-import com.mygym.crm.backstages.persistence.storages.TraineeStorage;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.persistence.storages.TrainingStorage;
 import com.mygym.crm.backstages.persistence.storages.configs.StorageTestConfig;
 import org.junit.After;
@@ -57,7 +56,7 @@ public class TrainingStorageValidTest {
         Training training = map.get(new TrainingKey(1,2));
         assertNotNull("Training with id=(1,2) should be present", training);
         assertEquals("Session1", training.getTrainingName());
-        assertEquals(TrainingTypeEnum.valueOf("WEIGHT"), training.getTrainingType());
+        assertEquals(TrainingType.valueOf("WEIGHT"), training.getTrainingType());
         assertEquals(LocalDate.parse("2023-01-09"), training.getTrainingDate());
         assertEquals(5, training.getTrainingDuration());
     }

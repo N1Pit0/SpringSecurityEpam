@@ -72,7 +72,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
 
         trainer.setFirstName(trainerDTO.getFirstName());
         trainer.setLastName(trainerDTO.getLastName());
-        trainer.setActive(trainerDTO.isActive());
+        trainer.setIsActive(trainerDTO.isActive());
         trainer.setTrainingType(trainerDTO.getTrainingType());
 
         logger.info("New Trainer has been successfully populated with given trainerDTO");

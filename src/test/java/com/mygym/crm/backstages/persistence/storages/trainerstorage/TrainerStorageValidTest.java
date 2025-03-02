@@ -1,7 +1,7 @@
 package com.mygym.crm.backstages.persistence.storages.trainerstorage;
 
 import com.mygym.crm.backstages.domain.models.Trainer;
-import com.mygym.crm.backstages.domain.models.TrainingTypeEnum;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.persistence.storages.TrainerStorage;
 import com.mygym.crm.backstages.persistence.storages.configs.StorageTestConfig;
 import org.junit.After;
@@ -55,7 +55,7 @@ public class TrainerStorageValidTest {
         assertEquals("Doe", trainer.getLastName());
         assertEquals("John.doe", trainer.getUserName());
         assertTrue(trainer.isActive());
-        assertEquals(TrainingTypeEnum.valueOf("PLYOMETRIC"), trainer.getTrainingType());
+        assertEquals(TrainingType.valueOf("PLYOMETRIC"), trainer.getTrainingType());
     }
 
     @Test
