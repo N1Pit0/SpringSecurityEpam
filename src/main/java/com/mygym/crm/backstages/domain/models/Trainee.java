@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @ToString(callSuper = true)
 @Data
 @Entity
+@NoArgsConstructor
 public class Trainee extends User {
 
     @Column

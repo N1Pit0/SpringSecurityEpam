@@ -58,8 +58,6 @@ public class TrainerStorage implements UserStorage<Integer, Trainer> {
                     boolean isActive = Boolean.parseBoolean(parts[5].trim());
                     trainer.setIsActive(isActive);
 
-                    TrainingType trainingType = TrainingType.valueOf(parts[6].trim());
-                    trainer.setTrainingType(trainingType);
 
                     storage.put(id, trainer);
                 }

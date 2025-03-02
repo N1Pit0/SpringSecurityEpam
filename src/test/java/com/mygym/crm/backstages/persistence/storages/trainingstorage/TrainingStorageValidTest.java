@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -56,9 +57,9 @@ public class TrainingStorageValidTest {
         Training training = map.get(new TrainingKey(1,2));
         assertNotNull("Training with id=(1,2) should be present", training);
         assertEquals("Session1", training.getTrainingName());
-        assertEquals(TrainingType.valueOf("WEIGHT"), training.getTrainingType());
+        assertEquals("WEIGHT", training.getTrainingType().getTrainingTypeName());
         assertEquals(LocalDate.parse("2023-01-09"), training.getTrainingDate());
-        assertEquals(5, training.getTrainingDuration());
+        assertEquals(5, training.getTrainingDuration().intValue());
     }
     @Test
     public void test_AutowiringStorage_NotNull() {

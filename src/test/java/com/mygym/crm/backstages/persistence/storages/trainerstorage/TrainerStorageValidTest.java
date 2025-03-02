@@ -54,8 +54,8 @@ public class TrainerStorageValidTest {
         assertEquals("John", trainer.getFirstName());
         assertEquals("Doe", trainer.getLastName());
         assertEquals("John.doe", trainer.getUserName());
-        assertTrue(trainer.isActive());
-        assertEquals(TrainingType.valueOf("PLYOMETRIC"), trainer.getTrainingType());
+        assertTrue(trainer.getIsActive());
+        assertEquals("PLYOMETRIC", trainer.getTrainingType().getTrainingTypeName());
     }
 
     @Test

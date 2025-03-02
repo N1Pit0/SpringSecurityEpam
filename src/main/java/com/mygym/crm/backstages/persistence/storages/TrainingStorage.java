@@ -50,8 +50,8 @@ public class TrainingStorage implements UserStorage<TrainingKey, Training> {
                     String traineeName = parts[2].trim();
                     training.setTrainingName(traineeName);
 
-                    TrainingType trainingType = TrainingType.valueOf(parts[3].trim());
-                    training.setTrainingType(trainingType);
+//                    TrainingType trainingType = TrainingType.valueOf(parts[3].trim());
+//                    training.setTrainingType(trainingType);
 
                     LocalDate date = LocalDate.parse(parts[4].trim());
                     training.setTrainingDate(date);

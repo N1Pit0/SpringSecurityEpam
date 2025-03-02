@@ -57,7 +57,7 @@ public class TraineeStorageValidTest  {
         assertEquals("John", trainee.getFirstName());
         assertEquals("Doe", trainee.getLastName());
         assertEquals("John.doe", trainee.getUserName());
-        assertTrue(trainee.isActive());
+        assertTrue(trainee.getIsActive());
         assertEquals(LocalDate.parse("1990-01-01"), trainee.getDateOfBirth());
         assertEquals("123 Main St", trainee.getAddress());
     }
