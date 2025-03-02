@@ -30,16 +30,13 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
     public void create(TraineeDto traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
 
-        newTrainee.setUserId(UserService.uniqueID);
-        logger.info("new Trainee set with ID: {}", UserService.uniqueID);
-
         newTrainee.setPassword(userService.generatePassword());
-        logger.info("new Trainee password has been created");
+        logger.info("Trying to create new user with generated password");
 
         newTrainee.setUserName(userService.generateUserName(traineeDTO));
-        logger.info("new Trainee userName has been created");
+        logger.info("Trying to create new user with generated username");
 
-        logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
+//        logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
         traineeDAO.create(newTrainee);
     }
 
@@ -55,7 +52,7 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
         newTrainee.setUserId(oldTrainee.getUserId());
         newTrainee.setPassword(oldTrainee.getPassword());
         newTrainee.setUserName(oldTrainee.getUserName());
-        logger.info("new Trainee set with: ID: {} has been set successfully", UserService.uniqueID);
+//        logger.info("new Trainee set with: ID: {} has been set successfully", UserService.uniqueID);
 
         logger.info("Trying to update Trainee with ID: {}", id);
         traineeDAO.update(newTrainee);

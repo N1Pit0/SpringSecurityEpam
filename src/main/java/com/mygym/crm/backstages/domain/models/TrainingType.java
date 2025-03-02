@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 @Entity
+@Table(name = "training_type_table")
 @Data
 @NoArgsConstructor
 public class TrainingType {

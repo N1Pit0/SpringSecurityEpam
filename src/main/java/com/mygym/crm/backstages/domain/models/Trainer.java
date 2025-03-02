@@ -14,6 +14,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Data
 @Entity
+@Table(name = "trainer_table")
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "user_id")
 public class Trainer extends User {

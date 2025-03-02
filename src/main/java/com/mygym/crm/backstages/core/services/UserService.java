@@ -10,9 +10,6 @@ import java.util.Random;
 
 @Service
 public class UserService{
-    public static Long uniqueID = 20L; // adjust value based
-                                    // on maximum userID for both trainee and
-                                    // trainer file before starting
 
     @Getter
     private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();

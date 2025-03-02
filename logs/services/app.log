@@ -202,3 +202,77 @@
 2025-03-02 16:57:45 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - New Training, populating it with given traineeDTO
 2025-03-02 16:57:45 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - New Training has been successfully populated with given traineeDTO
 2025-03-02 16:57:45 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - Trying to new create training
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 999
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee set with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee set with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to delete Trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee set with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee set with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - new Trainee userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 1
+2025-03-02 17:09:07 [main] ERROR com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trainee with ID: 1 not found
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 2
+2025-03-02 17:09:07 [main] ERROR com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trainee with ID: 2 not found
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer, populating it with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer has been successfully populated with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer set with: ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to create new Trainer with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with ID: 999
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer, populating it with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer has been successfully populated with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer set with: ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to create new Trainer with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer, populating it with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer has been successfully populated with given trainerDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer set with: ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer password has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - new Trainer userName has been created
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to create new Trainer with ID: 1
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with ID: 1
+2025-03-02 17:09:07 [main] ERROR com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trainer with ID: 1 not found
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with ID: 2
+2025-03-02 17:09:07 [main] ERROR com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trainer with ID: 2 not found
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - New Training, populating it with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - New Training has been successfully populated with given traineeDTO
+2025-03-02 17:09:07 [main] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - Trying to new create training
+2025-03-02 20:17:50 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 6
+2025-03-02 20:32:53 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 6
+2025-03-02 20:34:26 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 1
+2025-03-02 20:42:05 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 20:42:05 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 20:42:05 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated password
+2025-03-02 20:42:05 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated username
+2025-03-02 20:42:05 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 1
+2025-03-02 20:54:58 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 20:54:58 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 20:54:58 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated password
+2025-03-02 20:54:58 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated username
+2025-03-02 20:55:43 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-02 20:55:43 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-02 20:55:43 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated password
+2025-03-02 20:55:43 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new user with generated username

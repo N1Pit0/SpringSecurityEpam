@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
+@Table(name = "user_table")
 public abstract class User {
 
     @Id

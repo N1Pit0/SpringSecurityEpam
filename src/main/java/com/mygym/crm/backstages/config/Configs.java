@@ -8,7 +8,6 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @ComponentScan("com.mygym.crm")
-@PropertySource("classpath:application.properties")
 public class Configs {
 
 }

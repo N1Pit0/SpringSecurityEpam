@@ -29,8 +29,8 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     public void create(TrainerDto trainerDTO) {
         Trainer newTrainer = map(trainerDTO);
 
-        newTrainer.setUserId(UserService.uniqueID);
-        logger.info("new Trainer set with: ID: {}", UserService.uniqueID);
+//        newTrainer.setUserId(UserService.uniqueID);
+//        logger.info("new Trainer set with: ID: {}", UserService.uniqueID);
 
         newTrainer.setPassword(userService.generatePassword());
         logger.info("new Trainer password has been created");
@@ -38,7 +38,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
         newTrainer.setUserName(userService.generateUserName(trainerDTO));
         logger.info("new Trainer userName has been created");
 
-        logger.info("Trying to create new Trainer with ID: {}", UserService.uniqueID);
+//        logger.info("Trying to create new Trainer with ID: {}", UserService.uniqueID);
         trainerDAO.create(newTrainer);
     }
 
@@ -54,7 +54,7 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
         newTrainer.setUserId(oldTrainer.getUserId());
         newTrainer.setPassword(oldTrainer.getPassword());
         newTrainer.setUserName(oldTrainer.getUserName());
-        logger.info("new Trainer set with: ID: {} has been set successfully", UserService.uniqueID);
+//        logger.info("new Trainer set with: ID: {} has been set successfully", UserService.uniqueID);
 
         logger.info("Trying to update Trainer with ID: {}", id);
         trainerDAO.update(newTrainer);
