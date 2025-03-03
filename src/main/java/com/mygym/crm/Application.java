@@ -4,15 +4,16 @@ import com.mygym.crm.backstages.ApplicationFacade;
 import com.mygym.crm.backstages.config.Configs;
 import com.mygym.crm.backstages.config.HibernateConfigs;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
-import com.mygym.crm.backstages.core.dtos.TrainerDto;
-import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl;
+import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Application {
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfigs.class,Configs.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfigs.class, Configs.class);
         ApplicationFacade facade = context.getBean(ApplicationFacade.class);
+//        TraineeDao dao = context.getBean("traineeDAOIMPL", TraineeDaoImpl.class);
 
         TraineeDto traineeDto = new TraineeDto();
 
@@ -44,7 +45,8 @@ public class Application {
 //        trainingDto.setTrainingName("adasdsad");
 
         facade.createTrainee(traineeDto);
-//        System.out.println(facade.selectTrainee(1L));
+        System.out.println(facade.selectTrainee(1L));
+//        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
 //        facade.updateTrainee(6L, traineeDto1);
 //        facade.deleteTrainee(6L);

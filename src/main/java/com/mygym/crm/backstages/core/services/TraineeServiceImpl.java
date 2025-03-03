@@ -36,7 +36,7 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
         logger.info("Trying to generate new username while attempting to create a new trainee");
         newTrainee.setUserName(userService.generateUserName(traineeDTO));
 
-//        logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
+        logger.info("Trying to create new trainee with ID: {}", newTrainee.getUserId());
         traineeDAO.create(newTrainee);
     }
 

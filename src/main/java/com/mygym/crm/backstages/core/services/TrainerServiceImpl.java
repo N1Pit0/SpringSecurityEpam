@@ -29,16 +29,13 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     public void create(TrainerDto trainerDTO) {
         Trainer newTrainer = map(trainerDTO);
 
-//        newTrainer.setUserId(UserService.uniqueID);
-//        logger.info("new Trainer set with: ID: {}", UserService.uniqueID);
-
+        logger.info("Trying to generate new password while attempting to create a new trainer");
         newTrainer.setPassword(userService.generatePassword());
-        logger.info("new Trainer password has been created");
 
+        logger.info("Trying to generate new username while attempting to create a new trainer");
         newTrainer.setUserName(userService.generateUserName(trainerDTO));
-        logger.info("new Trainer userName has been created");
 
-//        logger.info("Trying to create new Trainer with ID: {}", UserService.uniqueID);
+        logger.info("Trying to create new Trainer with ID: {}", newTrainer.getUserId());
         trainerDAO.create(newTrainer);
     }
 
