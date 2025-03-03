@@ -40,7 +40,7 @@ public class TrainerServiceImplTest {
         trainerDto.setLastName("Doe");
         trainerDto.setActive(true);
 
-        UserService.uniqueID = 1L;
+//        UserService.uniqueID = 1L;
     }
 
     @Test

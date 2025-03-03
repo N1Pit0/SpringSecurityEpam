@@ -32,7 +32,7 @@ public class TraineeServiceImplTest {
     @Before
     public void clear(){
 //        traineeDao.getTraineeStorage().getStorage().clear();
-        userService.getUsernameCounter().clear();
+//        userService.getUsernameCounter().clear();
     }
 
     @Before
@@ -43,7 +43,7 @@ public class TraineeServiceImplTest {
         traineeDto.setActive(true);
         traineeDto.setDateOfBirth(LocalDate.of(1990, 1, 1));
         traineeDto.setAddress("123 Main St");
-        UserService.uniqueID = 1L;
+//        UserService.uniqueID = 1L;
     }
 
     @Test

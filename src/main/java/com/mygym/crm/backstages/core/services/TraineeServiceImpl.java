@@ -30,11 +30,11 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
     public void create(TraineeDto traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
 
+        logger.info("Trying to generate new password while attempting to create a new trainee");
         newTrainee.setPassword(userService.generatePassword());
-        logger.info("Trying to create new user with generated password");
 
+        logger.info("Trying to generate new username while attempting to create a new trainee");
         newTrainee.setUserName(userService.generateUserName(traineeDTO));
-        logger.info("Trying to create new user with generated username");
 
 //        logger.info("Trying to create new trainee with ID: {}", UserService.uniqueID);
         traineeDAO.create(newTrainee);

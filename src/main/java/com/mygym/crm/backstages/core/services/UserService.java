@@ -1,29 +1,28 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.common.UserDto;
-import lombok.Getter;
+import com.mygym.crm.backstages.repositories.daorepositories.UserDaoReadOnly;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @Service
 public class UserService{
 
-    @Getter
-    private final Map<String, Integer> usernameCounter = new HashMap<String, Integer>();
+    private UserDaoReadOnly userDao;
+
+    @Autowired
+    public void setUserDao(UserDaoReadOnly userDao) {
+        this.userDao = userDao;
+    }
 
     public String generateUserName(UserDto userDTO){
         String baseUserName = userDTO.getFirstName() + "." + userDTO.getLastName();
 
-        int count = usernameCounter.getOrDefault(baseUserName, 0);
+        Long userNameCount = userDao.countSpecificUserName(baseUserName);
 
-        String newUserName = (count == 0) ? baseUserName : baseUserName + count;
-
-        usernameCounter.put(baseUserName, count + 1);
-
-        return newUserName;
+        return userNameCount == 0 ? baseUserName : baseUserName + userNameCount;
     }
 
     public String generatePassword(){

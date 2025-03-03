@@ -48,7 +48,7 @@ public class HibernateConfigs {
         Properties hibernateProperties = new Properties();
         hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         hibernateProperties.put("hibernate.show_sql", "true");
-        hibernateProperties.put("hibernate.hbm2ddl.auto", "create");
+        hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
 
         sessionFactoryBean.setHibernateProperties(hibernateProperties);
 
