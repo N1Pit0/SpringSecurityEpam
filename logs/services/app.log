@@ -1,0 +1,16 @@
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User John.Doe authenticated
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with UserName: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Found Trainee with UserName: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User John.Doe authenticated
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with ID: 23
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Found Trainee with ID: 23
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDTO
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDTO
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Setting with old UserId Password and UserName
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to update Trainee with ID: 23
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User John.Doe authenticated
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with UserName: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Found Trainee with UserName: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User John.Doe authenticated
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to delete Trainee with userName: John.Doe2
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe2 has been deleted

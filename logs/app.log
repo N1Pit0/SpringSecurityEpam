@@ -1,0 +1,4 @@
+2025-03-05 23:32:38 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainee by name: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to update trainee with id 23
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainee by name: John.Doe
+2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to delete trainee by name: John.Doe2

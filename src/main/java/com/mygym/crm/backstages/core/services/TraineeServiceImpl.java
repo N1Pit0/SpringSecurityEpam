@@ -1,6 +1,8 @@
 package com.mygym.crm.backstages.core.services;
 
+import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
@@ -47,9 +49,10 @@ public class TraineeServiceImpl implements TraineeService{
     }
 
     @Transactional
+    @SecureMethod
     @Override
-    public void update(Long id, TraineeDto traineeDTO) {
-        Trainee oldTrainee = getById(id).orElseThrow(() -> {
+    public void update(SecurityDTO securityDTO,Long id, TraineeDto traineeDTO) {
+        Trainee oldTrainee = getById(securityDTO, id).orElseThrow(() -> {
             logger.error("Trainee with ID: {} not found", id);
             return new NoTraineeException("could not find trainee with id " + id);
         });
@@ -65,15 +68,17 @@ public class TraineeServiceImpl implements TraineeService{
     }
 
     @Transactional
+    @SecureMethod
     @Override
-    public void delete(Long id) {
+    public void delete(SecurityDTO securityDTO, Long id) {
         logger.info("Trying to delete Trainee with ID: {}", id);
         traineeDAO.delete(id);
     }
 
     @Transactional
+    @SecureMethod
     @Override
-    public void deleteWithUserName(String userName) {
+    public void deleteWithUserName(SecurityDTO securityDTO,String userName) {
         logger.info("Trying to delete Trainee with userName: {}", userName);
         traineeDAO.deleteWithUserName(userName)
                 .ifPresentOrElse(
@@ -82,9 +87,10 @@ public class TraineeServiceImpl implements TraineeService{
                 );
     }
 
-    @Transactional(noRollbackFor= HibernateException.class)
+    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @SecureMethod
     @Override
-    public Optional<Trainee> getById(Long id) {
+    public Optional<Trainee> getById(SecurityDTO securityDTO, Long id) {
         logger.info("Trying to find Trainee with ID: {}", id);
 
         Optional<Trainee> traineeOptional = traineeDAO.select(id);
@@ -97,9 +103,10 @@ public class TraineeServiceImpl implements TraineeService{
         return traineeOptional;
     }
 
-    @Transactional(noRollbackFor= HibernateException.class)
+    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @SecureMethod
     @Override
-    public Optional<Trainee> getByUserName(String userName){
+    public Optional<Trainee> getByUserName(SecurityDTO securityDTO, String userName){
         logger.info("Trying to find Trainee with UserName: {}", userName);
 
         Optional<Trainee> traineeOptional = traineeDAO.selectWithUserName(userName);

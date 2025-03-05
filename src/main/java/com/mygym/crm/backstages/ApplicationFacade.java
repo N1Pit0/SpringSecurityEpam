@@ -3,6 +3,7 @@ package com.mygym.crm.backstages;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
@@ -48,59 +49,59 @@ public class ApplicationFacade {
         trainingService.create(trainingDTO);
     }
 
-    public Trainee selectTrainee(Long id){
+    public Trainee selectTrainee(SecurityDTO securityDTO, Long id){
         logger.info("Trying to get a trainee by id: {}", id);
-        return traineeService.getById(id)
+        return traineeService.getById(securityDTO,id)
                 .orElseThrow(() -> {
                     logger.error("No trainee present with id: {}", id);
                     return new NoTraineeException("No trainee present with id: " + id);
                 });
     }
 
-    public Trainee selectTraineeWithUserName(String userName){
+    public Trainee selectTraineeWithUserName(SecurityDTO securityDTO, String userName){
         logger.info("Trying to get a trainee by name: {}", userName);
-        return traineeService.getByUserName(userName)
+        return traineeService.getByUserName(securityDTO, userName)
                 .orElseThrow(() -> {
                     logger.error("No trainee present with name: {}", userName);
                     return new NoTraineeException("No trainee present with name: " + userName);
                 });
     }
 
-    public Trainer selectTrainer(Long id){
+    public Trainer selectTrainer(SecurityDTO securityDTO, Long id){
         logger.info("Trying to get a trainer by id: {}", id);
-        return trainerService.getById(id)
+        return trainerService.getById(securityDTO, id)
                 .orElseThrow(() -> {
                     logger.error("No trainer present with id: {}", id);
                     return new NoTrainerException("No trainer present with id: " + id);
                 });
     }
 
-    public Training selectTraining(Long trainingKey){
+    public Training selectTraining(SecurityDTO securityDTO, Long trainingKey){
         logger.info("Trying to get a training by trainingKey: {}", trainingKey);
-        return trainingService.getById(trainingKey)
+        return trainingService.getById(securityDTO, trainingKey)
                 .orElseThrow(() -> {
                     logger.error("No training present with trainingKey: {}", trainingKey);
                     return new NoTrainingException("No training present with id: " + trainingKey);
                 });
     }
 
-    public void updateTrainee(Long id, TraineeDto traineeDTO){
+    public void updateTrainee(SecurityDTO securityDTO,Long id, TraineeDto traineeDTO){
         logger.info("Trying to update trainee with id {}", id);
-        traineeService.update(id, traineeDTO);
+        traineeService.update(securityDTO, id, traineeDTO);
     }
 
-    public void updateTrainer(Long id, TrainerDto trainerDTO){
+    public void updateTrainer(SecurityDTO securityDTO,Long id, TrainerDto trainerDTO){
         logger.info("Trying to update trainer with id {}", id);
-        trainerService.update(id, trainerDTO);
+        trainerService.update(securityDTO, id, trainerDTO);
     }
 
-    public void deleteTrainee(Long id) {
+    public void deleteTrainee(SecurityDTO securityDTO, Long id) {
         logger.info("Trying to delete trainee with id {}", id);
-        traineeService.delete(id);
+        traineeService.delete(securityDTO, id);
     }
 
-    public void deleteTraineeWithUserName(String userName){
+    public void deleteTraineeWithUserName(SecurityDTO securityDTO, String userName){
         logger.info("Trying to delete trainee by name: {}", userName);
-        traineeService.deleteWithUserName(userName);
+        traineeService.deleteWithUserName(securityDTO, userName);
     }
 }

@@ -1,7 +1,7 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.common.UserDto;
-import com.mygym.crm.backstages.repositories.daorepositories.UserDaoReadOnly;
+import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import java.util.Random;
 @Service
 public class UserService{
 
-    private UserDaoReadOnly userDao;
+    private UserReadOnlyDao userDao;
 
     @Autowired
-    public void setUserDao(UserDaoReadOnly userDao) {
+    public void setUserDao(UserReadOnlyDao userDao) {
         this.userDao = userDao;
     }
 

@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.ApplicationFacade;
 import com.mygym.crm.backstages.config.Configs;
 import com.mygym.crm.backstages.config.HibernateConfigs;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import org.springframework.context.ApplicationContext;
@@ -43,10 +44,15 @@ public class Application {
 ////        trainingDto.setTrainingKey(trainingKey);
 //        trainingDto.setTrainingDuration(2);
 //        trainingDto.setTrainingName("adasdsad");
+        SecurityDTO securityDTO = new SecurityDTO();
+        securityDTO.setPassword("FB:ibC*cY[");
+        securityDTO.setUserName("John.Doe");
 
-        facade.createTrainee(traineeDto);
-        System.out.println(facade.selectTraineeWithUserName("John.Doe1"));
-        facade.deleteTraineeWithUserName("John.Doe1");
+//        facade.createTrainee(traineeDto);
+        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
+        facade.updateTrainee(securityDTO, 23L, traineeDto1);
+        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
+        facade.deleteTraineeWithUserName(securityDTO,"John.Doe2");
 //        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
 //        facade.updateTrainee(6L, traineeDto1);

@@ -137,7 +137,7 @@ public class TraineeDaoImpl implements TraineeDao {
                  SELECT t FROM\s
                  Trainee t\s
                  LEFT JOIN FETCH t.trainings tr\s
-                 WHERE t.userName = :username
+                 WHERE t.userName LIKE :username
                 """;
 
         Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)

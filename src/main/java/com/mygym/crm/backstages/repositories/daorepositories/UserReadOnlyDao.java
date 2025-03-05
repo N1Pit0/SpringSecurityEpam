@@ -1,9 +1,14 @@
 package com.mygym.crm.backstages.repositories.daorepositories;
 
-import java.util.List;
+import com.mygym.crm.backstages.domain.models.common.User;
 
-public interface UserDaoReadOnly {
+import java.util.List;
+import java.util.Optional;
+
+public interface UserReadOnlyDao {
     List<String> findAllUserNames();
 
     Long countSpecificUserName(String specificUserName);
+
+    Optional<User> findByUserName(String userName);
 }

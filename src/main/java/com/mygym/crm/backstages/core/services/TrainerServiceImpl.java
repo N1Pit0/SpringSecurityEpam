@@ -1,6 +1,8 @@
 package com.mygym.crm.backstages.core.services;
 
+import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
@@ -39,9 +41,10 @@ public class TrainerServiceImpl implements TrainerService{
         trainerDAO.create(newTrainer);
     }
 
+    @SecureMethod
     @Override
-    public void update(Long id, TrainerDto trainerDTO) {
-        Trainer oldTrainer = getById(id).orElseThrow(() -> {
+    public void update(SecurityDTO securityDTO,Long id, TrainerDto trainerDTO) {
+        Trainer oldTrainer = getById(securityDTO, id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
             return new NoTrainerException("could not find Trainer with id " + id);
         });
@@ -57,15 +60,17 @@ public class TrainerServiceImpl implements TrainerService{
         trainerDAO.update(newTrainer);
     }
 
+    @SecureMethod
     @Override
-    public Optional<Trainer> getById(Long id) {
+    public Optional<Trainer> getById(SecurityDTO securityDTO, Long id) {
         logger.info("Trying to find Trainer with ID: {}", id);
         return trainerDAO.select(id);
     }
 
 
+    @SecureMethod
     @Override
-    public Optional<Trainer> getByUserName(String userName) {
+    public Optional<Trainer> getByUserName(SecurityDTO securityDTO, String userName) {
         return Optional.empty();
     }
 
