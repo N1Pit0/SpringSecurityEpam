@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.Optional;
@@ -27,19 +26,20 @@ public class TraineeDaoImpl implements TraineeDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> create(Trainee trainee) {
         checkTrainee(trainee, Trainee.class);
 
-        try{
-            logger.info("Creating trainee: {}", trainee.getUserId());
+        try {
+            logger.info("Creating trainee with UserName: {}", trainee.getUserName());
             Session session = this.sessionFactory.getCurrentSession();
             Serializable generatedID = session.save(trainee);
 
-            if (generatedID != null) return Optional.of(trainee);
-        }
-        catch (HibernateError e) {
+            if (generatedID != null) {
+                logger.info("Successfully created trainee with UserName: {}", trainee.getUserName());
+                return Optional.of(trainee);
+            }
+        } catch (HibernateError e) {
             logger.error(e.getMessage());
             throw new HibernateException(e);
         }
@@ -47,12 +47,11 @@ public class TraineeDaoImpl implements TraineeDao {
         return Optional.empty();
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> update(Trainee trainee) {
         checkTrainee(trainee, Trainee.class);
 
-        try{
+        try {
             logger.info("Updating trainee: {}", trainee.getUserId());
 
             Session session = this.sessionFactory.getCurrentSession();
@@ -60,13 +59,12 @@ public class TraineeDaoImpl implements TraineeDao {
             session.flush();
 
             return Optional.ofNullable(newTrainee);
-        }catch (HibernateException e) {
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> delete(Long traineeId) {
         checkTrainee(traineeId, Long.class);
@@ -90,7 +88,6 @@ public class TraineeDaoImpl implements TraineeDao {
         }
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> deleteWithUserName(String username) {
         checkTrainee(username, String.class);
@@ -98,7 +95,7 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to delete trainee with username: {}", username);
 
         Session session = this.sessionFactory.getCurrentSession();
-        Trainee trainee = session.get(Trainee.class, username);
+        Trainee trainee = selectWithUserName(username).orElse(null);
         if (trainee != null) {
             try {
                 session.delete(trainee);
@@ -109,12 +106,11 @@ public class TraineeDaoImpl implements TraineeDao {
                 throw e;
             }
         } else {
-            logger.info("No trainee found with username: {}", username);
+            logger.info("No trainee found with username: {} to delete", username);
             return Optional.empty();
         }
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> select(Long traineeId) {
         checkTrainee(traineeId, Long.class);
@@ -129,7 +125,6 @@ public class TraineeDaoImpl implements TraineeDao {
         return Optional.empty();
     }
 
-    @Transactional
     @Override
     public Optional<Trainee> selectWithUserName(String username) {
         checkTrainee(username, String.class);
@@ -137,10 +132,24 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to select trainee with username: {}", username);
 
         Session session = this.sessionFactory.getCurrentSession();
-        Trainee trainee = session.get(Trainee.class, username);
 
-        if (trainee != null) return Optional.of(trainee);
+        String sql = """
+                 SELECT t FROM\s
+                 Trainee t\s
+                 LEFT JOIN FETCH t.trainings tr\s
+                 WHERE t.userName = :username
+                """;
 
+        Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
+                .setParameter("username", username)
+                .uniqueResult();
+
+        if (trainee != null) {
+            logger.info("Selected trainee with username: {}", username);
+            return Optional.of(trainee);
+        }
+
+        logger.warn("No trainee found with username: {}", username);
         return Optional.empty();
     }
 

@@ -54,4 +54,8 @@ public class UserDaoReadOnlyImpl implements UserDaoReadOnly {
             throw new HibernateException(e);
         }
     }
+
+    public boolean userNameAndPasswordMatches(String username, String password) {
+        return false;
+    }
 }

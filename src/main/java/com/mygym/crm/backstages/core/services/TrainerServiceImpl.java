@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service("trainerServiceIMPL")
-public class TrainerServiceImpl implements TrainerService<TrainerDto>{
+public class TrainerServiceImpl implements TrainerService{
 
     private final TrainerDao trainerDAO;
     private final UserService userService;
@@ -61,6 +61,12 @@ public class TrainerServiceImpl implements TrainerService<TrainerDto>{
     public Optional<Trainer> getById(Long id) {
         logger.info("Trying to find Trainer with ID: {}", id);
         return trainerDAO.select(id);
+    }
+
+
+    @Override
+    public Optional<Trainer> getByUserName(String userName) {
+        return Optional.empty();
     }
 
     private Trainer map(TrainerDto trainerDTO){

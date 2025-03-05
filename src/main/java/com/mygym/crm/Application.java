@@ -24,8 +24,8 @@ public class Application {
         TraineeDto traineeDto1 = new TraineeDto();
 
         traineeDto1.setFirstName("John");
-        traineeDto1.setLastName("Doe");
-        traineeDto1.setActive(true);
+        traineeDto1.setLastName("Donovan");
+        traineeDto1.setActive(false);
 
 //        TrainerDto trainerDto = new TrainerDto();
 //
@@ -45,7 +45,8 @@ public class Application {
 //        trainingDto.setTrainingName("adasdsad");
 
         facade.createTrainee(traineeDto);
-        System.out.println(facade.selectTrainee(1L));
+        System.out.println(facade.selectTraineeWithUserName("John.Doe1"));
+        facade.deleteTraineeWithUserName("John.Doe1");
 //        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
 //        facade.updateTrainee(6L, traineeDto1);

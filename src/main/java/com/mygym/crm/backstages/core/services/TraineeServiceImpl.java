@@ -5,16 +5,18 @@ import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
+import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-public class TraineeServiceImpl implements TraineeService<TraineeDto> {
+public class TraineeServiceImpl implements TraineeService{
 
     private final TraineeDao traineeDAO;
     private final UserService userService;
@@ -26,6 +28,7 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
         this.userService = userService;
     }
 
+    @Transactional
     @Override
     public void create(TraineeDto traineeDTO) {
         Trainee newTrainee = map(traineeDTO);
@@ -36,10 +39,14 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
         logger.info("Trying to generate new username while attempting to create a new trainee");
         newTrainee.setUserName(userService.generateUserName(traineeDTO));
 
-        logger.info("Trying to create new trainee with ID: {}", newTrainee.getUserId());
-        traineeDAO.create(newTrainee);
+        logger.info("Trying to create new trainee with UserName: {}", newTrainee.getUserName());
+        traineeDAO.create(newTrainee).ifPresentOrElse(
+                (trainee) -> logger.info("trainee with userName: {} has been created", trainee.getUserName()),
+                () -> logger.warn("trainee with userName: {} was not created", newTrainee.getUserName())
+        );
     }
 
+    @Transactional
     @Override
     public void update(Long id, TraineeDto traineeDTO) {
         Trainee oldTrainee = getById(id).orElseThrow(() -> {
@@ -52,22 +59,59 @@ public class TraineeServiceImpl implements TraineeService<TraineeDto> {
         newTrainee.setUserId(oldTrainee.getUserId());
         newTrainee.setPassword(oldTrainee.getPassword());
         newTrainee.setUserName(oldTrainee.getUserName());
-//        logger.info("new Trainee set with: ID: {} has been set successfully", UserService.uniqueID);
 
         logger.info("Trying to update Trainee with ID: {}", id);
         traineeDAO.update(newTrainee);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         logger.info("Trying to delete Trainee with ID: {}", id);
         traineeDAO.delete(id);
     }
 
+    @Transactional
+    @Override
+    public void deleteWithUserName(String userName) {
+        logger.info("Trying to delete Trainee with userName: {}", userName);
+        traineeDAO.deleteWithUserName(userName)
+                .ifPresentOrElse(
+                        (trainee) -> logger.info("trainee with userName: {} has been deleted", trainee.getUserName()),
+                        () -> logger.warn("trainee with userName: {} can't be found", userName)
+                );
+    }
+
+    @Transactional(noRollbackFor= HibernateException.class)
     @Override
     public Optional<Trainee> getById(Long id) {
         logger.info("Trying to find Trainee with ID: {}", id);
-        return traineeDAO.select(id);
+
+        Optional<Trainee> traineeOptional = traineeDAO.select(id);
+
+        Trainee trainee = traineeOptional.orElseThrow(() -> new NoTraineeException("not trainee"));
+        trainee.getTrainings().size();
+
+        logger.info("Found Trainee with ID: {}", id);
+
+        return traineeOptional;
+    }
+
+    @Transactional(noRollbackFor= HibernateException.class)
+    @Override
+    public Optional<Trainee> getByUserName(String userName){
+        logger.info("Trying to find Trainee with UserName: {}", userName);
+
+        Optional<Trainee> traineeOptional = traineeDAO.selectWithUserName(userName);
+
+        traineeOptional.ifPresentOrElse(
+                trainee -> {
+                    trainee.getTrainings().size();
+                    logger.info("Found Trainee with UserName: {}", userName);
+                },
+                () -> logger.warn("No Trainee found with UserName: {}", userName)
+        );
+        return traineeOptional;
     }
 
     private Trainee map(TraineeDto traineeDTO) {

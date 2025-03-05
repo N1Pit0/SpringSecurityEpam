@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 
 @Component("applicationFacade")
 public class ApplicationFacade {
-    private final TraineeService<TraineeDto> traineeService;
-    private final TrainerService<TrainerDto> trainerService;
+    private final TraineeService traineeService;
+    private final TrainerService trainerService;
     private final TrainingService<TrainingDto> trainingService;
     private static final Logger logger = LoggerFactory.getLogger(ApplicationFacade.class);
 
     @Autowired
-    public ApplicationFacade(TraineeService<TraineeDto> traineeService,
-                             TrainerService<TrainerDto> trainerService,
+    public ApplicationFacade(TraineeService traineeService,
+                             TrainerService trainerService,
                              TrainingService<TrainingDto> trainingService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
@@ -54,6 +54,15 @@ public class ApplicationFacade {
                 .orElseThrow(() -> {
                     logger.error("No trainee present with id: {}", id);
                     return new NoTraineeException("No trainee present with id: " + id);
+                });
+    }
+
+    public Trainee selectTraineeWithUserName(String userName){
+        logger.info("Trying to get a trainee by name: {}", userName);
+        return traineeService.getByUserName(userName)
+                .orElseThrow(() -> {
+                    logger.error("No trainee present with name: {}", userName);
+                    return new NoTraineeException("No trainee present with name: " + userName);
                 });
     }
 
@@ -88,5 +97,10 @@ public class ApplicationFacade {
     public void deleteTrainee(Long id) {
         logger.info("Trying to delete trainee with id {}", id);
         traineeService.delete(id);
+    }
+
+    public void deleteTraineeWithUserName(String userName){
+        logger.info("Trying to delete trainee by name: {}", userName);
+        traineeService.deleteWithUserName(userName);
     }
 }
