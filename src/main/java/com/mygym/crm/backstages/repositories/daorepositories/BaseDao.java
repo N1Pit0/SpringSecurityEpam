@@ -7,8 +7,6 @@ public interface BaseDao<T, ID>{
 
     Optional<T> update(T model);
 
-    Optional<T> delete(ID UserId);
-
     Optional<T> select(ID UserId);
 
 }

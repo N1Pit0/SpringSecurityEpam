@@ -67,7 +67,6 @@ public class TrainerServiceImpl implements TrainerService{
         return trainerDAO.select(id);
     }
 
-
     @SecureMethod
     @Override
     public Optional<Trainer> getByUserName(SecurityDTO securityDTO, String userName) {

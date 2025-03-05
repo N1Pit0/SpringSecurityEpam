@@ -76,9 +76,9 @@ public class ApplicationFacade {
                 });
     }
 
-    public Training selectTraining(SecurityDTO securityDTO, Long trainingKey){
+    public Training selectTraining(Long trainingKey){
         logger.info("Trying to get a training by trainingKey: {}", trainingKey);
-        return trainingService.getById(securityDTO, trainingKey)
+        return trainingService.getById(trainingKey)
                 .orElseThrow(() -> {
                     logger.error("No training present with trainingKey: {}", trainingKey);
                     return new NoTrainingException("No training present with id: " + trainingKey);

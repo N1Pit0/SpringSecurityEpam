@@ -13,23 +13,15 @@ public class TrainingDaoImpl implements TrainingDao {
     private static final Logger logger = LoggerFactory.getLogger(TrainingDaoImpl.class);
 
     @Override
-    public Optional<Training> create(Training training) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Training> update(Training training) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Optional<Training> delete(Long trainingKey) {
-        return Optional.empty();
-    }
-
-    @Override
     public Optional<Training> select(Long trainingKey) {
 
         return Optional.empty();
     }
+
+    @Override
+    public Optional<Training> create(Training training) {
+        return Optional.empty();
+    }
+
+
 }

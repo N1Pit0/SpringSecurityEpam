@@ -75,13 +75,6 @@ public class TrainerDaoImpl implements TrainerDao {
 
     @Transactional
     @Override
-    public Optional<Trainer> delete(Long trainerId) {
-
-        return Optional.empty();
-    }
-
-    @Transactional
-    @Override
     public Optional<Trainer> select(Long trainerId) {
 
         return Optional.empty();

@@ -1,8 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TrainingDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import com.mygym.crm.backstages.repositories.services.TrainingService;
@@ -33,7 +31,7 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
     }
 
     @Override
-    public Optional<Training> getById(SecurityDTO securityDTO, Long id) {
+    public Optional<Training> getById(Long id) {
         return trainingDAO.select(id);
     }
 
