@@ -35,6 +35,8 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional
     @Override
     public void create(TrainerDto trainerDto) {
+        userService.validateDto(trainerDto);
+
         Trainer newTrainer = map(trainerDto);
         newTrainer.setIsActive(true);
 
@@ -55,6 +57,8 @@ public class TrainerServiceImpl implements TrainerService{
     @SecureMethod
     @Override
     public void update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
+        userService.validateDto(trainerDto);
+
         Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
             return new NoTrainerException("could not find trainer with id " + id);

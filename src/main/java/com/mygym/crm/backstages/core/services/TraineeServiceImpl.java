@@ -36,7 +36,10 @@ public class TraineeServiceImpl implements TraineeService{
     @Transactional
     @Override
     public void create(TraineeDto traineeDto) {
+        userService.validateDto(traineeDto);
+
         Trainee newTrainee = map(traineeDto);
+        newTrainee.setIsActive(true);
 
         logger.info("Trying to generate new password while attempting to create a new trainee");
         newTrainee.setPassword(userService.generatePassword());
@@ -55,6 +58,8 @@ public class TraineeServiceImpl implements TraineeService{
     @SecureMethod
     @Override
     public void update(SecurityDto securityDto, Long id, TraineeDto traineeDto) {
+        userService.validateDto(traineeDto);
+
         Trainee oldTrainee = getById(securityDto, id).orElseThrow(() -> {
             logger.error("Trainee with ID: {} not found", id);
             return new NoTraineeException("could not find trainee with id " + id);
@@ -74,6 +79,7 @@ public class TraineeServiceImpl implements TraineeService{
     @SecureMethod
     @Override
     public void delete(SecurityDto securityDto, Long id) {
+
         logger.info("Trying to delete Trainee with ID: {}", id);
         traineeDao.delete(id);
     }

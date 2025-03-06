@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.core.services.security;
 
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
+import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.common.User;
 import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
 import org.slf4j.Logger;
@@ -24,6 +25,7 @@ public class UserSecurityService {
 
     @Transactional(readOnly = true)
     public boolean authenticate(SecurityDto securityDto, String username) {
+
         if (!securityDto.getUserName().equals(username)) {
             logger.error("UserName {} is not authorized to perform the action", securityDto.getUserName());
             return false;

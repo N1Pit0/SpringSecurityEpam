@@ -21,9 +21,11 @@ import java.util.Optional;
 public class TrainingServiceImpl implements TrainingService<TrainingDto>{
 
     private final TrainingDao trainingDAO;
-    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
     private final TrainerDao trainerDao;
     private final TraineeDao traineeDao;
+    private UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
+
 
     @Autowired
     public TrainingServiceImpl(TrainingDao trainingDAO, TrainerDao trainerDao, TraineeDao traineeDao) {
@@ -32,9 +34,16 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
         this.traineeDao = traineeDao;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     @Transactional
     @Override
     public void add(TrainingDto trainingDto) {
+        userService.validateDto(trainingDto);
+
         Training newTraining = new Training();
         logger.info("New Training, populating it with given traineeDTO");
 
