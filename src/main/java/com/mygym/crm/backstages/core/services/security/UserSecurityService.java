@@ -26,7 +26,7 @@ public class UserSecurityService {
     @Transactional(readOnly = true)
     public boolean authenticate(SecurityDTO securityDTO, String username) {
         if (!securityDTO.getUserName().equals(username)) {
-            logger.warn("UserName {} is not authorized to perform the action", securityDTO.getUserName());
+            logger.error("UserName {} is not authorized to perform the action", securityDTO.getUserName());
             return false;
         }
 
@@ -40,7 +40,7 @@ public class UserSecurityService {
                 return true;
             }
         }
-        logger.warn("User with username: {} not authenticated", securityDTO.getUserName());
+        logger.error("User with username: {} not authenticated", securityDTO.getUserName());
         return false;
     }
 
@@ -65,7 +65,7 @@ public class UserSecurityService {
             if(!authorizedWithIdMatch){
                 logger.info("User with id: {} not authorized", user.getUserId());
             }
-            else logger.warn("User with id: {} not authenticated", user.getUserId());
+            else logger.error("User with id: {} not authenticated", user.getUserId());
 
         }
         return false;

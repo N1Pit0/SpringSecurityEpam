@@ -76,6 +76,15 @@ public class ApplicationFacade {
                 });
     }
 
+    public Trainer selectTrainerWithUserName(SecurityDTO securityDTO, String userName){
+        logger.info("Trying to get a trainer by name: {}", userName);
+        return trainerService.getByUserName(securityDTO, userName)
+                .orElseThrow(() -> {
+                    logger.error("No trainer present with name: {}", userName);
+                    return new NoTrainerException("No trainer present with name: " + userName);
+                });
+    }
+
     public Training selectTraining(Long trainingKey){
         logger.info("Trying to get a training by trainingKey: {}", trainingKey);
         return trainingService.getById(trainingKey)

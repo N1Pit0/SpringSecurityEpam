@@ -13,6 +13,4 @@ public abstract class UserDto {
 
     private String lastName;
 
-    private boolean isActive;
-
 }
