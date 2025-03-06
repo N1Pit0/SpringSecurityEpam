@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -156,6 +159,20 @@ public class TraineeServiceImpl implements TraineeService{
             return false;
         }
     }
+
+    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @SecureMethod
+    @Override
+    public List<Training> getTraineeTrainings(SecurityDTO securityDTO,String username, LocalDate fromDate,
+                                              LocalDate toDate, String trainerName, String trainingTypeName) {
+        List<Training> trainings = traineeDAO.getTraineeTrainings(username, fromDate, toDate, trainerName, trainingTypeName);
+        if(trainings.isEmpty()){
+            logger.warn("No training found for Trainee with UserName: {}", username);
+        }
+        else logger.info("training record of size: {} was found for Trainee with UserName: {}", trainings.size(), username);
+        return trainings;
+    }
+
 
     private Trainee map(TraineeDto traineeDTO) {
         Trainee trainee = new Trainee();

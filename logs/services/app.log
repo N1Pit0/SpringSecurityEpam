@@ -1,12 +1,21 @@
-2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
-2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with UserName: John.Doe1
-2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Found Trainer with UserName: John.Doe1
-2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
-2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to toggle isActive for Trainee with UserName: John.Doe1
-2025-03-06 14:28:46 [main] WARN  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Failed to toggled isActive for Trainee with UserName: John.Doe1
-2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
-2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with UserName: John.Doe1
-2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Found Trainer with UserName: John.Doe1
-2025-03-06 14:29:49 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
-2025-03-06 14:29:49 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to find Trainee with UserName: John.Doe1
-2025-03-06 14:29:49 [main] WARN  com.mygym.crm.backstages.core.services.TraineeServiceImpl - No Trainee found with UserName: John.Doe1
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with UserName: John.Doe1
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Found Trainer with UserName: John.Doe1
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to toggle isActive for Trainee with UserName: John.Doe1
+2025-03-06 15:53:31 [main] WARN  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Failed to toggled isActive for Trainee with UserName: John.Doe1
+2025-03-06 15:53:31 [main] INFO  com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 authenticated
+2025-03-06 15:53:32 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to find Trainer with UserName: John.Doe1
+2025-03-06 15:53:32 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Found Trainer with UserName: John.Doe1
+2025-03-06 15:54:11 [main] ERROR com.mygym.crm.backstages.core.services.security.UserSecurityService - User with username: John.Doe1 not authenticated
+2025-03-06 15:57:37 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer, populating it with given trainerDTO
+2025-03-06 15:57:37 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer has been successfully populated with given trainerDTO
+2025-03-06 15:57:37 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to generate new password while attempting to create a new trainer
+2025-03-06 15:57:37 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to generate new username while attempting to create a new trainer
+2025-03-06 15:57:37 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to create new trainer with UserName: John.Doe
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer, populating it with given trainerDTO
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - New Trainer has been successfully populated with given trainerDTO
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to generate new password while attempting to create a new trainer
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to generate new username while attempting to create a new trainer
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - Trying to create new trainer with UserName: John.Doe
+2025-03-06 15:59:30 [main] INFO  com.mygym.crm.backstages.core.services.TrainerServiceImpl - trainer with userName: John.Doe has been created

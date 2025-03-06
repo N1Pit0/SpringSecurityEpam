@@ -27,22 +27,6 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public List<String> findAllUserNames() {
-        try{
-            Session session = this.sessionFactory.getCurrentSession();
-            String sql = """
-                    SELECT username\s
-                    FROM user_table
-                    """;
-            return session.createNativeQuery(sql.strip(), String.class).list();
-        } catch(HibernateException e){
-            logger.error(e.getMessage());
-            throw e;
-        }
-
-    }
-
     public Optional<User> findByUserName(String username) {
         try {
             Session session = this.sessionFactory.getCurrentSession();

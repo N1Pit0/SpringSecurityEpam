@@ -17,7 +17,7 @@ public class TrainingType {
     @Column(name = "training_type_id")
     private Long trainingTypeId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String trainingTypeName;
 
     @OneToMany(mappedBy = "trainingType")

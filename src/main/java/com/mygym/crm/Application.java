@@ -11,6 +11,8 @@ import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.sql.Date;
+
 public class Application {
     public static void main(String[] args) {
         ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfigs.class, Configs.class);
@@ -49,16 +51,16 @@ public class Application {
         securityDTO.setPassword("!oc7^|:45_");
         securityDTO.setUserName("John.Doe1");
 
-//        facade.createTrainer(trainerDto);
+        facade.createTrainer(trainerDto);
 //        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
 //        facade.deleteTrainee(securityDTO, 30L);
 //        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
 //        facade.deleteTraineeWithUserName(securityDTO,"John.Doe3");
 //        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
-        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
-        facade.toggleIsActiveForTrainee(securityDTO, "John.Doe1");
-        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
+//        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
+//        facade.toggleIsActiveForTrainee(securityDTO, "John.Doe1");
+//        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
 
 //        facade.updateTrainee(6L, traineeDto1);
 //        facade.deleteTrainee(6L);

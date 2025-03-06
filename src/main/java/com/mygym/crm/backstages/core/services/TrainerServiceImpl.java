@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
 import com.mygym.crm.backstages.domain.models.Trainer;
+import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service("trainerServiceIMPL")
@@ -33,6 +36,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Override
     public void create(TrainerDto trainerDTO) {
         Trainer newTrainer = map(trainerDTO);
+        newTrainer.setIsActive(true);
 
         logger.info("Trying to generate new password while attempting to create a new trainer");
         newTrainer.setPassword(userService.generatePassword());
@@ -146,5 +150,18 @@ public class TrainerServiceImpl implements TrainerService{
 
         logger.info("New Trainer has been successfully populated with given trainerDTO");
         return trainer;
+    }
+
+    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @SecureMethod
+    @Override
+    public List<Training> getTrainerTrainings(SecurityDTO securityDTO,String username, LocalDate fromDate,
+                                              LocalDate toDate, String traineeName) {
+        List<Training> trainings = trainerDAO.getTrainerTrainings(username, fromDate, toDate, traineeName);
+        if(trainings.isEmpty()){
+            logger.warn("No training found for Trainer with UserName: {}", username);
+        }
+        else logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
+        return trainings;
     }
 }

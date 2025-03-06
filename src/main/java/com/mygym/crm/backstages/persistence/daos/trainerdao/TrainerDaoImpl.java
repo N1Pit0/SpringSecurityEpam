@@ -1,7 +1,11 @@
 package com.mygym.crm.backstages.persistence.daos.trainerdao;
 
+import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
+import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,6 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -205,6 +212,49 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.error("Error toggling isActive for trainer with username: {}", username, e);
             throw e;
         }
+    }
+
+    public List<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate,
+                                              String traineeName) {
+        List<Training> result = new ArrayList<>();
+        Session session = null;
+        try {
+            session = sessionFactory.getCurrentSession();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<Training> cq = cb.createQuery(Training.class);
+            Root<Training> trainingRoot = cq.from(Training.class);
+
+            Join<Training, Trainer> trainerJoin = trainingRoot.join("trainer");
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (username != null && !username.trim().isEmpty()) {
+                predicates.add(cb.equal(trainerJoin.get("username"), username));
+            }
+
+            if (fromDate != null) {
+                predicates.add(cb.greaterThanOrEqualTo(trainingRoot.get("trainingDate"), fromDate));
+            }
+
+            if (toDate != null) {
+                predicates.add(cb.lessThanOrEqualTo(trainingRoot.get("trainingDate"), toDate));
+            }
+
+            if (traineeName != null && !traineeName.trim().isEmpty()) {
+                predicates.add(cb.equal(trainingRoot.get("traineeName"), traineeName));
+            }
+
+            cq.select(trainingRoot).where(predicates.toArray(new Predicate[0]));
+
+            TypedQuery<Training> query = session.createQuery(cq);
+
+            result = query.getResultList();
+            logger.info("Retrieved {} training records for user {}.", result.size(), username);
+        } catch (Exception e) {
+            logger.error("Error retrieving training records for user {}: {}", username, e.getMessage(), e);
+            throw e;
+        }
+        return result;
     }
 
     private <T> void checkTrainer(T trainer, Class<T> tClass) {

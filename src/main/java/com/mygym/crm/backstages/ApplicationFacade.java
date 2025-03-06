@@ -18,6 +18,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Component("applicationFacade")
 public class ApplicationFacade {
     private final TraineeService traineeService;
@@ -132,5 +135,17 @@ public class ApplicationFacade {
     public void toggleIsActiveForTrainer(SecurityDTO securityDTO, String userName){
         logger.info("Trying to toggle isActive for trainer with userName {}", userName);
         trainerService.toggleIsActive(securityDTO, userName);
+    }
+
+    public List<Training> getTraineeTrainings(SecurityDTO securityDTO,String username, LocalDate fromDate,
+                                              LocalDate toDate, String trainerName, String trainingTypeName){
+        logger.info("Trying to get traine trainings with username {}", username);
+        return traineeService.getTraineeTrainings(securityDTO, username, fromDate, toDate, trainerName, trainingTypeName);
+    }
+
+    public List<Training> getTrainerTrainings(SecurityDTO securityDTO,String username, LocalDate fromDate,
+                                              LocalDate toDate, String traineeName){
+        logger.info("Trying to get trainer trainings with username {}", username);
+        return trainerService.getTrainerTrainings(securityDTO, username, fromDate, toDate, traineeName);
     }
 }
