@@ -37,7 +37,34 @@ public class SecurityAspect {
                 .findFirst()
                 .orElse(null);
 
-        if (securityDTO == null || !userSecurityService.authenticate(securityDTO)) {
+        Long id = Arrays.stream(joinPoint.getArgs())
+                .filter(arg -> arg instanceof Long)
+                .map(arg -> (Long) arg)
+                .findFirst()
+                .orElse(null);
+
+        String userName = Arrays.stream(joinPoint.getArgs())
+                .filter(arg -> arg instanceof String)
+                .map(arg -> (String) arg)
+                .findFirst()
+                .orElse(null);
+
+
+        if (securityDTO == null) {
+            throw new SecurityException("Security details not provided");
+        }
+
+        boolean isAuthenticated = false;
+
+        if (userName != null) {
+            isAuthenticated = userSecurityService.authenticate(securityDTO, userName);
+        } else if (id != null) {
+            isAuthenticated = userSecurityService.authenticate(securityDTO, id);
+        } else {
+            throw new SecurityException("Neither username nor id was provided");
+        }
+
+        if (!isAuthenticated) {
             throw new SecurityException("Invalid credentials provided");
         }
 

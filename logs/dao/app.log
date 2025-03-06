@@ -1,14 +1,5 @@
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe has been found
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with username: John.Doe
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Selected trainee with username: John.Doe
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe has been found
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with ID: 23
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Updating trainee: 23
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe has been found
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with username: John.Doe
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Selected trainee with username: John.Doe
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe has been found
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to delete trainee with username: John.Doe2
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with username: John.Doe2
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Selected trainee with username: John.Doe2
-2025-03-05 23:32:39 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Deleted trainee with username: John.Doe2
+2025-03-06 11:29:13 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe3 has been found
+2025-03-06 11:29:14 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to delete trainee with username: John.Doe3
+2025-03-06 11:29:14 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with username: John.Doe3
+2025-03-06 11:29:14 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Selected trainee with username: John.Doe3
+2025-03-06 11:29:14 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Deleted trainee with username: John.Doe3

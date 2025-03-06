@@ -45,14 +45,14 @@ public class Application {
 //        trainingDto.setTrainingDuration(2);
 //        trainingDto.setTrainingName("adasdsad");
         SecurityDTO securityDTO = new SecurityDTO();
-        securityDTO.setPassword("FB:ibC*cY[");
-        securityDTO.setUserName("John.Doe");
+        securityDTO.setPassword("DfylvCem:;");
+        securityDTO.setUserName("John.Doe3");
 
 //        facade.createTrainee(traineeDto);
-        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
-        facade.updateTrainee(securityDTO, 23L, traineeDto1);
-        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
-        facade.deleteTraineeWithUserName(securityDTO,"John.Doe2");
+//        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
+//        facade.deleteTrainee(securityDTO, 30L);
+//        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
+        facade.deleteTraineeWithUserName(securityDTO,"John.Doe3");
 //        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
 //        facade.updateTrainee(6L, traineeDto1);

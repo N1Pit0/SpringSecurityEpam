@@ -24,22 +24,50 @@ public class UserSecurityService {
     }
 
     @Transactional(readOnly = true)
-    public boolean authenticate(SecurityDTO securityDTO) {
+    public boolean authenticate(SecurityDTO securityDTO, String username) {
+        if (!securityDTO.getUserName().equals(username)) {
+            logger.warn("UserName {} is not authorized to perform the action", securityDTO.getUserName());
+            return false;
+        }
+
         Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDTO.getUserName());
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             boolean match = user.getPassword().equals(securityDTO.getPassword());
             if (match){
-                logger.info("User " + securityDTO.getUserName() + " authenticated");
+                logger.info("User with username: {} authenticated", securityDTO.getUserName());
                 return true;
             }
-            else {
-                logger.info("User " + securityDTO.getUserName() + " not authenticated");
-                return false;
-            }
         }
-        logger.info("User " + securityDTO.getUserName() + " not authenticated");
+        logger.warn("User with username: {} not authenticated", securityDTO.getUserName());
+        return false;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean authenticate(SecurityDTO securityDTO, Long id) {
+
+        Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDTO.getUserName());
+        boolean authorizedWithIdMatch = false;
+        boolean authenticatedWIthPasswordMatch = false;
+
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+
+            authorizedWithIdMatch = user.getUserId().equals(id);
+            authenticatedWIthPasswordMatch = user.getPassword().equals(securityDTO.getPassword());
+
+            if (authorizedWithIdMatch && authenticatedWIthPasswordMatch){
+                logger.info("User with id: {} authenticated", id);
+                return true;
+            }
+
+            if(!authorizedWithIdMatch){
+                logger.info("User with id: {} not authorized", user.getUserId());
+            }
+            else logger.warn("User with id: {} not authenticated", user.getUserId());
+
+        }
         return false;
     }
 }
