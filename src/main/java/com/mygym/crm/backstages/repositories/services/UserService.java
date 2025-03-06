@@ -14,4 +14,8 @@ public interface UserService <T, E>{
 
     Optional<E> getById(SecurityDTO securityDTO, Long id);
 
+    boolean changePassword(SecurityDTO securityDTO, String username, String newPassword);
+
+    boolean toggleIsActive(SecurityDTO securityDTO, String username);
+
 }

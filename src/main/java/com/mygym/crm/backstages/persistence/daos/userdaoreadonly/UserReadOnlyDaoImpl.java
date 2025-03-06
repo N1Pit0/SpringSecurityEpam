@@ -49,7 +49,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
             String sql = """
                     SELECT u\s
                     FROM User u\s
-                    WHERE u.userName LIKE :username
+                    WHERE u.userName = :username
                     """;
 
             User user = (User) session.createQuery(sql.strip())

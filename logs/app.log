@@ -1,0 +1,5 @@
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainer by name: John.Doe1
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to toggle isActive for trainee with userName John.Doe1
+2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainer by name: John.Doe1
+2025-03-06 14:29:49 [main] INFO  com.mygym.crm.backstages.ApplicationFacade - Trying to get a trainee by name: John.Doe1
+2025-03-06 14:29:49 [main] ERROR com.mygym.crm.backstages.ApplicationFacade - No trainee present with name: John.Doe1

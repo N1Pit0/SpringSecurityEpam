@@ -99,6 +99,43 @@ public class TrainerServiceImpl implements TrainerService{
         );
         return trainerOptional;
     }
+
+    @Transactional
+    @SecureMethod
+    @Override
+    public boolean changePassword(SecurityDTO securityDTO, String username, String newPassword) {
+        logger.info("Trying to change password for Trainer with UserName: {}", username);
+
+        boolean success = trainerDAO.changePassword(username, newPassword);
+
+        if(success){
+            logger.info("Successfully changed password for Trainer with UserName: {}", username);
+            return true;
+        }
+        else {
+            logger.warn("Failed to change password for Trainer with UserName: {}", username);
+            return false;
+        }
+    }
+
+    @Transactional
+    @SecureMethod
+    @Override
+    public boolean toggleIsActive(SecurityDTO securityDTO, String username) {
+        logger.info("Trying to toggle isActive for Trainer with UserName: {}", username);
+
+        boolean success = trainerDAO.toggleIsActive(username);
+
+        if(success){
+            logger.info("Successfully toggled isActive for Trainer with UserName: {}", username);
+            return true;
+        }
+        else {
+            logger.warn("Failed to toggled isActive for Trainer with UserName: {}", username);
+            return false;
+        }
+    }
+    
     private Trainer map(TrainerDto trainerDTO){
         Trainer trainer = new Trainer();
         logger.info("New Trainer, populating it with given trainerDTO");

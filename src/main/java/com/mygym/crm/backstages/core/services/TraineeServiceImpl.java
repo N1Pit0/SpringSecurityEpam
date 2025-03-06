@@ -121,6 +121,42 @@ public class TraineeServiceImpl implements TraineeService{
         return traineeOptional;
     }
 
+    @Transactional
+    @SecureMethod
+    @Override
+    public boolean changePassword(SecurityDTO securityDTO, String username, String newPassword) {
+        logger.info("Trying to change password for Trainee with UserName: {}", username);
+
+        boolean success = traineeDAO.changePassword(username, newPassword);
+
+        if(success){
+            logger.info("Successfully changed password for Trainee with UserName: {}", username);
+            return true;
+        }
+        else {
+            logger.warn("Failed to change password for Trainee with UserName: {}", username);
+            return false;
+        }
+    }
+
+    @Transactional
+    @SecureMethod
+    @Override
+    public boolean toggleIsActive(SecurityDTO securityDTO, String username) {
+        logger.info("Trying to toggle isActive for Trainee with UserName: {}", username);
+
+        boolean success = traineeDAO.toggleIsActive(username);
+
+        if(success){
+            logger.info("Successfully toggled isActive for Trainee with UserName: {}", username);
+            return true;
+        }
+        else {
+            logger.warn("Failed to toggled isActive for Trainee with UserName: {}", username);
+            return false;
+        }
+    }
+
     private Trainee map(TraineeDto traineeDTO) {
         Trainee trainee = new Trainee();
         logger.info("New Trainee, populating it with given traineeDTO");

@@ -113,4 +113,24 @@ public class ApplicationFacade {
         logger.info("Trying to delete trainee by name: {}", userName);
         traineeService.deleteWithUserName(securityDTO, userName);
     }
+
+    public void changePasswordForTrainee(SecurityDTO securityDTO, String userName, String newPassword){
+        logger.info("Trying to change password for trainee with userName {}", userName);
+        traineeService.changePassword(securityDTO, userName, newPassword);
+    }
+
+    public void changePasswordForTrainer(SecurityDTO securityDTO, String userName, String newPassword){
+        logger.info("Trying to change password for trainer with userName {}", userName);
+        trainerService.changePassword(securityDTO, userName, newPassword);
+    }
+
+    public void toggleIsActiveForTrainee(SecurityDTO securityDTO, String userName){
+        logger.info("Trying to toggle isActive for trainee with userName {}", userName);
+        traineeService.toggleIsActive(securityDTO, userName);
+    }
+
+    public void toggleIsActiveForTrainer(SecurityDTO securityDTO, String userName){
+        logger.info("Trying to toggle isActive for trainer with userName {}", userName);
+        trainerService.toggleIsActive(securityDTO, userName);
+    }
 }

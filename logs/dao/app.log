@@ -1,0 +1,12 @@
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe1 has been found
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Attempting to select trainer with username: John.Doe1
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Successfully selected trainer with username: John.Doe1
+2025-03-06 14:28:45 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe1 has been found
+2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to toggle isActive for trainee with username: John.Doe1
+2025-03-06 14:28:46 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - No trainee found to toggle isActive with username: John.Doe1
+2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe1 has been found
+2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Attempting to select trainer with username: John.Doe1
+2025-03-06 14:28:46 [main] INFO  com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl - Successfully selected trainer with username: John.Doe1
+2025-03-06 14:29:49 [main] INFO  com.mygym.crm.backstages.persistence.daos.userdaoreadonly.UserReadOnlyDaoImpl - User with userName: John.Doe1 has been found
+2025-03-06 14:29:49 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Attempting to select trainee with username: John.Doe1
+2025-03-06 14:29:49 [main] WARN  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - No trainee found with username: John.Doe1

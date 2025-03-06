@@ -21,25 +21,25 @@ public class Application {
 
         traineeDto.setFirstName("John");
         traineeDto.setLastName("Doe");
-        traineeDto.setActive(true);
+//        traineeDto.setActive(true);
 
         TraineeDto traineeDto1 = new TraineeDto();
 
         traineeDto1.setFirstName("John");
         traineeDto1.setLastName("Donovan");
-        traineeDto1.setActive(false);
+//        traineeDto1.setActive(false);
 
         TrainerDto trainerDto = new TrainerDto();
 
         trainerDto.setFirstName("John");
         trainerDto.setLastName("Doe");
-        trainerDto.setActive(true);
+//        trainerDto.setActive(true);
 
         TrainerDto trainerDto1 = new TrainerDto();
 
         trainerDto1.setFirstName("sad");
         trainerDto1.setLastName("sadasd");
-        trainerDto1.setActive(true);
+//        trainerDto1.setActive(true);
 //
 //        TrainingDto trainingDto = new TrainingDto();
 ////        trainingDto.setTrainingKey(trainingKey);
@@ -56,7 +56,9 @@ public class Application {
 //        facade.deleteTraineeWithUserName(securityDTO,"John.Doe3");
 //        System.out.println(dao.selectWithUserName("John.Doe1").get().getUserId());
 
-        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe2"));
+        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
+        facade.toggleIsActiveForTrainee(securityDTO, "John.Doe1");
+        System.out.println(facade.selectTrainerWithUserName(securityDTO, "John.Doe1"));
 
 //        facade.updateTrainee(6L, traineeDto1);
 //        facade.deleteTrainee(6L);

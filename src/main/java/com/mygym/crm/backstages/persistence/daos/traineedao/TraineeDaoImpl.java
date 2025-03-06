@@ -71,21 +71,24 @@ public class TraineeDaoImpl implements TraineeDao {
 
         logger.info("Attempting to delete trainee with ID: {}", traineeId);
 
-        Session session = this.sessionFactory.getCurrentSession();
-        Trainee trainee = session.get(Trainee.class, traineeId);
-        if (trainee != null) {
-            try {
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+            Trainee trainee = session.get(Trainee.class, traineeId);
+            if (trainee != null) {
                 session.delete(trainee);
                 logger.info("Deleted trainee with ID: {}", traineeId);
+
                 return Optional.of(trainee);
-            } catch (HibernateException e) {
-                logger.error("Failed to delete trainee with ID: {}. Error: {}", traineeId, e.getMessage(), e);
-                throw e;
+
+            } else {
+                logger.warn("No trainee found with ID: {} to delete", traineeId);
+                return Optional.empty();
             }
-        } else {
-            logger.info("No trainee found with ID: {}", traineeId);
-            return Optional.empty();
+        } catch (HibernateException e) {
+            logger.error("Failed to delete trainee with ID: {}. Error: {}", traineeId, e.getMessage(), e);
+            throw e;
         }
+
     }
 
     @Override
@@ -94,20 +97,22 @@ public class TraineeDaoImpl implements TraineeDao {
 
         logger.info("Attempting to delete trainee with username: {}", username);
 
-        Session session = this.sessionFactory.getCurrentSession();
-        Trainee trainee = selectWithUserName(username).orElse(null);
-        if (trainee != null) {
-            try {
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+            Trainee trainee = selectWithUserName(username).orElse(null);
+            if (trainee != null) {
                 session.delete(trainee);
                 logger.info("Deleted trainee with username: {}", username);
+
                 return Optional.of(trainee);
-            } catch (HibernateException e) {
-                logger.error("Failed to delete trainee with username: {}. Error: {}", username, e.getMessage(), e);
-                throw e;
+
+            } else {
+                logger.warn("No trainee found with username: {} to delete", username);
+                return Optional.empty();
             }
-        } else {
-            logger.info("No trainee found with username: {} to delete", username);
-            return Optional.empty();
+        } catch (HibernateException e) {
+            logger.error("Failed to delete trainee with username: {}. Error: {}", username, e.getMessage(), e);
+            throw e;
         }
     }
 
@@ -117,12 +122,21 @@ public class TraineeDaoImpl implements TraineeDao {
 
         logger.info("Attempting to select trainee with ID: {}", traineeId);
 
-        Session session = this.sessionFactory.getCurrentSession();
-        Trainee trainee = session.get(Trainee.class, traineeId);
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+            Trainee trainee = session.get(Trainee.class, traineeId);
 
-        if (trainee != null) return Optional.of(trainee);
+            if (trainee != null) {
+                logger.info("Successfully selected trainee with ID: {}", traineeId);
+                return Optional.of(trainee);
+            }
 
-        return Optional.empty();
+            logger.warn("No trainee found with ID: {}", traineeId);
+            return Optional.empty();
+        } catch (Exception e) {
+            logger.error("Error selecting trainee with ID: {}", traineeId, e);
+            throw e;
+        }
     }
 
     @Override
@@ -131,26 +145,117 @@ public class TraineeDaoImpl implements TraineeDao {
 
         logger.info("Attempting to select trainee with username: {}", username);
 
-        Session session = this.sessionFactory.getCurrentSession();
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
 
-        String sql = """
-                 SELECT t FROM\s
-                 Trainee t\s
-                 LEFT JOIN FETCH t.trainings tr\s
-                 WHERE t.userName LIKE :username
-                """;
+            String sql = """
+             SELECT t FROM Trainee t\s
+             LEFT JOIN FETCH t.trainings tr\s
+             WHERE t.userName = :username
+           """;
 
-        Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
-                .setParameter("username", username)
-                .uniqueResult();
+            Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
 
-        if (trainee != null) {
-            logger.info("Selected trainee with username: {}", username);
-            return Optional.of(trainee);
+            if (trainee != null) {
+                logger.info("Successfully selected trainee with username: {}", username);
+                return Optional.of(trainee);
+            }
+
+            logger.warn("No trainee found with username: {}", username);
+            return Optional.empty();
+        } catch (Exception e) {
+            logger.error("Error selecting trainee with username: {}", username, e);
+            throw e;
         }
+    }
 
-        logger.warn("No trainee found with username: {}", username);
-        return Optional.empty();
+    @Override
+    public boolean changePassword(String username, String newPassword) {
+        checkTrainee(username, String.class);
+
+        logger.info("Attempting to change password for trainee with username: {}", username);
+
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                UPDATE Trainee t\s
+                SET t.password = :newPassword\s
+                WHERE t.userName = :username
+               """;
+
+            int affectedRows = session.createQuery(sql.strip())
+                    .setParameter("newPassword", newPassword)
+                    .setParameter("username", username)
+                    .executeUpdate();
+
+            if (affectedRows == 1) {
+                logger.info("Successfully changed password for trainee with username: {}", username);
+                return true;
+            }
+
+            logger.warn("No trainee found to change password with username: {}", username);
+            return false;
+        } catch (Exception e) {
+            logger.error("Error changing password for trainee with username: {}", username, e);
+            throw e;
+        }
+    }
+
+    @Override
+    public boolean toggleIsActive(String username) {
+        checkTrainee(username, String.class);
+
+        logger.info("Attempting to toggle isActive for trainee with username: {}", username);
+
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                    SELECT t.isActive\s
+                    From Trainee t\s
+                    WHERE t.userName = :username
+                    """;
+
+            Boolean isActive = (Boolean) session.createQuery(sql.strip(), Boolean.class)
+                    .setParameter("username", username)
+                    .uniqueResult();
+
+            if (isActive == null) {
+                logger.warn("No trainee found to toggle isActive with username: {}", username);
+                return false;
+            }
+
+            boolean newIsActive = !isActive;
+
+            sql = """
+                    UPDATE Trainee t\s
+                    SET t.isActive = :isActive\s
+                    WHERE t.userName = :username
+                    """;
+
+            int affectedRows = session.createQuery(sql.strip())
+                    .setParameter("isActive", newIsActive)
+                    .setParameter("username", username)
+                    .executeUpdate();
+
+            if (affectedRows == 1) {
+                logger.info("Successfully toggled isActive for trainee with username: {} from: {} to: {}",
+                        username,
+                        isActive,
+                        newIsActive);
+                return true;
+            }
+
+            logger.warn("Failed to toggle isActive for trainee with username: {}", username);
+            return false;
+
+        }catch (Exception e) {
+            logger.error("Error toggling isActive for trainee with username: {}", username, e);
+            throw e;
+        }
     }
 
     private <T> void checkTrainee(T trainee, Class<T> tClass) {

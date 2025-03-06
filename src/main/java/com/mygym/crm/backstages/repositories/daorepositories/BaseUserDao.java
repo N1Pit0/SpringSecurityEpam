@@ -11,5 +11,9 @@ public interface BaseUserDao<T, ID>{
 
     Optional<T> selectWithUserName(String username);
 
+    boolean changePassword(String username, String newPassword);
+
+    boolean toggleIsActive(String username);
+
 }
 
