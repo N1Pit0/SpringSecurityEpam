@@ -148,4 +148,10 @@ public class ApplicationFacade {
         logger.info("Trying to get trainer trainings with username {}", username);
         return trainerService.getTrainerTrainings(securityDTO, username, fromDate, toDate, traineeName);
     }
+
+    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
+                                                                    String trainerUserName, String traineeUserName){
+        logger.info("Trying to get Trainers not matched with Trainee with userName {}", traineeUserName);
+        return trainerService.getTrainersNotTrainingTraineesWithUserName(securityDto, trainerUserName, traineeUserName);
+    }
 }

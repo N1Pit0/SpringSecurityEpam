@@ -1,6 +1,5 @@
 package com.mygym.crm.backstages.persistence.daos.trainerdao;
 
-import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
@@ -254,6 +253,39 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.error("Error retrieving training records for user {}: {}", username, e.getMessage(), e);
             throw e;
         }
+        return result;
+    }
+
+    @Override
+    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName){
+        checkTrainer(userName, String.class);
+
+        logger.info("Trying to get Trainers that do not teach trainees with username: {}", userName);
+
+        List<Trainer> result = new ArrayList<>();
+
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                SELECT tr\s
+                FROM Trainer tr\s
+                WHERE NOT EXISTS (
+                    SELECT 1\s
+                    FROM Trainee t\s
+                    JOIN t.trainings trn\s
+                    WHERE trn.trainer = tr AND t.userName = :userName
+                )
+           """;
+            result = session.createQuery(sql.strip(), Trainer.class)
+                    .setParameter("userName", userName)
+                    .getResultList();
+        }
+        catch (Exception e) {
+            logger.error("Error retrieving Trainers that do not teach trainees with username: {} : {}", userName, e.getMessage(), e);
+            throw e;
+        }
+
         return result;
     }
 

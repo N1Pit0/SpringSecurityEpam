@@ -25,7 +25,7 @@ public class Trainee extends User {
     @Column
     private String address;
 
-    @OneToMany(mappedBy = "trainee")
+    @OneToMany(mappedBy = "trainee", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Training> trainings;
 
 }

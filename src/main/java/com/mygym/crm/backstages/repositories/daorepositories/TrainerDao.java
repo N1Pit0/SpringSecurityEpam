@@ -7,7 +7,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface TrainerDao extends BaseUserDao<Trainer, Long> {
+
     List<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate,
                                        String traineeName);
 
+    List<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName);
 }

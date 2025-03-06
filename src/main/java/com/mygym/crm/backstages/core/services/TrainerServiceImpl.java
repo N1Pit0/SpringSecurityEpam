@@ -155,7 +155,23 @@ public class TrainerServiceImpl implements TrainerService{
         else logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
         return trainings;
     }
-    
+
+    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @SecureMethod
+    @Override
+    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
+                                                                    String trainerUserName, String traineeUserName) {
+
+        List<Trainer> trainers = trainerDAO.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
+        if(trainers.isEmpty()){
+            logger.warn("No trainer found for Trainer with UserName: {}", trainerUserName);
+        }
+        else logger.info("Trainer record of size: {} was found for Trainer not matched with Trainee with username: {}",
+                trainers.size(), traineeUserName);
+        return trainers;
+    }
+
+
     private Trainer map(TrainerDto trainerDto){
         Trainer trainer = new Trainer();
         logger.info("New Trainer, populating it with given trainerDto");

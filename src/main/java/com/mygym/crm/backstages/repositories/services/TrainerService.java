@@ -14,4 +14,6 @@ public interface TrainerService extends UserService<TrainerDto, Trainer> {
     List<Training> getTrainerTrainings(SecurityDto securityDTO, String username, LocalDate fromDate, LocalDate toDate,
                                        String traineeName);
 
+    List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
+                                                             String TrainerUserName,String TraineeUserName);
 }

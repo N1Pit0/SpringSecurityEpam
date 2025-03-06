@@ -8,6 +8,7 @@ import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import com.mygym.crm.backstages.repositories.services.TrainingService;
+import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
         trainingDAO.add(newTraining, trainingDto.getTrainingTypeId());
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @Override
     public Optional<Training> getById(Long id) {
         logger.info("Trying to find Training with ID: {}", id);
