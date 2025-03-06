@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.services.security;
 
-import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Pointcut;
@@ -31,9 +31,9 @@ public class SecurityAspect {
     @Around("secureMethod()")
     public Object validateCredentials(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        SecurityDTO securityDTO = Arrays.stream(joinPoint.getArgs())
-                .filter(arg -> arg instanceof SecurityDTO)
-                .map(arg -> (SecurityDTO) arg)
+        SecurityDto securityDto = Arrays.stream(joinPoint.getArgs())
+                .filter(arg -> arg instanceof SecurityDto)
+                .map(arg -> (SecurityDto) arg)
                 .findFirst()
                 .orElse(null);
 
@@ -50,16 +50,16 @@ public class SecurityAspect {
                 .orElse(null);
 
 
-        if (securityDTO == null) {
+        if (securityDto == null) {
             throw new SecurityException("Security details not provided");
         }
 
         boolean isAuthenticated = false;
 
         if (userName != null) {
-            isAuthenticated = userSecurityService.authenticate(securityDTO, userName);
+            isAuthenticated = userSecurityService.authenticate(securityDto, userName);
         } else if (id != null) {
-            isAuthenticated = userSecurityService.authenticate(securityDTO, id);
+            isAuthenticated = userSecurityService.authenticate(securityDto, id);
         } else {
             throw new SecurityException("Neither username nor id was provided");
         }

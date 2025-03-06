@@ -5,13 +5,9 @@ import com.mygym.crm.backstages.config.Configs;
 import com.mygym.crm.backstages.config.HibernateConfigs;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
-import com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl;
-import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.sql.Date;
 
 public class Application {
     public static void main(String[] args) {
@@ -47,7 +43,7 @@ public class Application {
 ////        trainingDto.setTrainingKey(trainingKey);
 //        trainingDto.setTrainingDuration(2);
 //        trainingDto.setTrainingName("adasdsad");
-        SecurityDTO securityDTO = new SecurityDTO();
+        SecurityDto securityDTO = new SecurityDto();
         securityDTO.setPassword("!oc7^|:45_");
         securityDTO.setUserName("John.Doe1");
 

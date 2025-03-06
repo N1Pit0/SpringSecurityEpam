@@ -32,7 +32,6 @@ public class Training {
     private TrainingType trainingType;
 
     @Column(nullable = false)
-
     private LocalDate trainingDate;
 
     @Column(nullable = false)

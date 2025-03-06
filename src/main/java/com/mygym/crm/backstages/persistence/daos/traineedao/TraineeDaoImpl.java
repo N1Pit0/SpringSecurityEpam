@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Repository("traineeDAOIMPL")
+@Repository("traineeDaoImpl")
 public class TraineeDaoImpl implements TraineeDao {
 
     private SessionFactory sessionFactory;

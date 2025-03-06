@@ -2,7 +2,7 @@ package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDTO;
+import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
@@ -34,15 +34,15 @@ public class TrainerServiceImpl implements TrainerService{
 
     @Transactional
     @Override
-    public void create(TrainerDto trainerDTO) {
-        Trainer newTrainer = map(trainerDTO);
+    public void create(TrainerDto trainerDto) {
+        Trainer newTrainer = map(trainerDto);
         newTrainer.setIsActive(true);
 
         logger.info("Trying to generate new password while attempting to create a new trainer");
         newTrainer.setPassword(userService.generatePassword());
 
         logger.info("Trying to generate new username while attempting to create a new trainer");
-        newTrainer.setUserName(userService.generateUserName(trainerDTO));
+        newTrainer.setUserName(userService.generateUserName(trainerDto));
 
         logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
         trainerDAO.create(newTrainer).ifPresentOrElse(
@@ -54,12 +54,12 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional
     @SecureMethod
     @Override
-    public void update(SecurityDTO securityDTO,Long id, TrainerDto trainerDTO) {
-        Trainer oldTrainer = getById(securityDTO, id).orElseThrow(() -> {
+    public void update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
+        Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
             logger.error("Trainer with ID: {} not found", id);
             return new NoTrainerException("could not find trainer with id " + id);
         });
-        Trainer newTrainer = map(trainerDTO);
+        Trainer newTrainer = map(trainerDto);
 
         logger.info("Setting with old UserId Password and UserName");
         newTrainer.setUserId(oldTrainer.getUserId());
@@ -73,15 +73,18 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public Optional<Trainer> getById(SecurityDTO securityDTO, Long id) {
+    public Optional<Trainer> getById(SecurityDto securityDto, Long id) {
         logger.info("Trying to find Trainer with ID: {}", id);
 
         Optional<Trainer> trainerOptional = trainerDAO.select(id);
 
-        Trainer trainer = trainerOptional.orElseThrow(() -> new NoTrainerException("not trainer"));
-        trainer.getTrainings().size();
-
-        logger.info("Found Trainer with ID: {}", id);
+        trainerOptional.ifPresentOrElse(
+                trainer -> {
+                    trainer.getTrainings().size();
+                    logger.info("Found Trainer with ID: {}", id);
+                },
+                () -> logger.warn("No Trainer found with ID: {}", id)
+        );
 
         return trainerOptional;
     }
@@ -89,7 +92,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public Optional<Trainer> getByUserName(SecurityDTO securityDTO, String userName){
+    public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName){
         logger.info("Trying to find Trainer with UserName: {}", userName);
 
         Optional<Trainer> trainerOptional = trainerDAO.selectWithUserName(userName);
@@ -107,7 +110,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional
     @SecureMethod
     @Override
-    public boolean changePassword(SecurityDTO securityDTO, String username, String newPassword) {
+    public boolean changePassword(SecurityDto securityDto, String username, String newPassword) {
         logger.info("Trying to change password for Trainer with UserName: {}", username);
 
         boolean success = trainerDAO.changePassword(username, newPassword);
@@ -125,7 +128,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional
     @SecureMethod
     @Override
-    public boolean toggleIsActive(SecurityDTO securityDTO, String username) {
+    public boolean toggleIsActive(SecurityDto securityDto, String username) {
         logger.info("Trying to toggle isActive for Trainer with UserName: {}", username);
 
         boolean success = trainerDAO.toggleIsActive(username);
@@ -139,23 +142,11 @@ public class TrainerServiceImpl implements TrainerService{
             return false;
         }
     }
-    
-    private Trainer map(TrainerDto trainerDTO){
-        Trainer trainer = new Trainer();
-        logger.info("New Trainer, populating it with given trainerDTO");
-
-        trainer.setFirstName(trainerDTO.getFirstName());
-        trainer.setLastName(trainerDTO.getLastName());
-        trainer.setTrainingType(trainerDTO.getTrainingType());
-
-        logger.info("New Trainer has been successfully populated with given trainerDTO");
-        return trainer;
-    }
 
     @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public List<Training> getTrainerTrainings(SecurityDTO securityDTO,String username, LocalDate fromDate,
+    public List<Training> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
                                               LocalDate toDate, String traineeName) {
         List<Training> trainings = trainerDAO.getTrainerTrainings(username, fromDate, toDate, traineeName);
         if(trainings.isEmpty()){
@@ -163,5 +154,17 @@ public class TrainerServiceImpl implements TrainerService{
         }
         else logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
         return trainings;
+    }
+    
+    private Trainer map(TrainerDto trainerDto){
+        Trainer trainer = new Trainer();
+        logger.info("New Trainer, populating it with given trainerDto");
+
+        trainer.setFirstName(trainerDto.getFirstName());
+        trainer.setLastName(trainerDto.getLastName());
+        trainer.setTrainingType(trainerDto.getTrainingType());
+
+        logger.info("New Trainer has been successfully populated with given trainerDto");
+        return trainer;
     }
 }

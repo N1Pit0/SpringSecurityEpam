@@ -17,8 +17,8 @@ public class UserService{
         this.userDao = userDao;
     }
 
-    public String generateUserName(UserDto userDTO){
-        String baseUserName = userDTO.getFirstName() + "." + userDTO.getLastName();
+    public String generateUserName(UserDto userDto){
+        String baseUserName = userDto.getFirstName() + "." + userDto.getLastName();
 
         Long userNameCount = userDao.countSpecificUserName(baseUserName);
 

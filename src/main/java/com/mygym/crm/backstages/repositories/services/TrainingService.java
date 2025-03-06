@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface TrainingService<T>{
     Optional<Training> getById(Long id);
-    void create(T t);
+    void add(T t);
 }

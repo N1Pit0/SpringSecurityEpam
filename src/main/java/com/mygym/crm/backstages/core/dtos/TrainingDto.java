@@ -1,6 +1,5 @@
 package com.mygym.crm.backstages.core.dtos;
 
-import com.mygym.crm.backstages.domain.models.TrainingType;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ public class TrainingDto {
 
     private String trainingName;
 
-    private TrainingType trainingType;
+    private Long trainingTypeId;
 
     private LocalDate trainingDate;
 
