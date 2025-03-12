@@ -1,0 +1,2 @@
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Creating trainee with UserName: John.Doe3
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe3

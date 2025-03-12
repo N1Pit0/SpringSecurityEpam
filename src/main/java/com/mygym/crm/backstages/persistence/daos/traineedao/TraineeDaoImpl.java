@@ -319,7 +319,7 @@ public class TraineeDaoImpl implements TraineeDao {
         if (trainee == null) {
             String className = tClass.getName();
             switch (className) {
-                case "com/mygym/crm/backstages/domain/models/Trainee.java":
+                case "com/mygym/crm/backstages/domain/models/Trainee":
                     logger.error("Trainee is null");
                     throw new IllegalArgumentException("Trainee must not be null");
                 case "java.lang.Long":

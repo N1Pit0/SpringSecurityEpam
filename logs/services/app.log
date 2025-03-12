@@ -1,0 +1,6 @@
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDto
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDto
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new password while attempting to create a new trainee
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe3
+2025-03-12 13:36:33 [main] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe3 has been created
