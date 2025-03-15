@@ -1,4 +1,4 @@
-package com.mygym.crm;
+package com.mygym.crm.backstages.servlet;
 
 import com.mygym.crm.backstages.config.WebConfig;
 import jakarta.servlet.FilterRegistration;

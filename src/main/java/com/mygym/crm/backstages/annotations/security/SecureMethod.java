@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.Annotations.SecutiryAnnotations;
+package com.mygym.crm.backstages.annotations.security;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.Annotations.SecutiryAnnotations.SecureMethod;
+import com.mygym.crm.backstages.annotations.security.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
