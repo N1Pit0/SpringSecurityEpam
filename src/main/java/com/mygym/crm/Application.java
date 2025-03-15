@@ -1,7 +1,7 @@
 package com.mygym.crm;
 
 import com.mygym.crm.backstages.ApplicationFacade;
-import com.mygym.crm.backstages.config.Configs;
+import com.mygym.crm.backstages.config.AppConfigs;
 import com.mygym.crm.backstages.config.HibernateConfigs;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class Application {
     public static void main(String[] args) {
-        ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfigs.class, Configs.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(HibernateConfigs.class, AppConfigs.class);
         ApplicationFacade facade = context.getBean(ApplicationFacade.class);
 //        TraineeDao dao = context.getBean("traineeDAOIMPL", TraineeDaoImpl.class);
 
