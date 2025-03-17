@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface UserService <T, E>{
 
-    void create(T t);
+    Optional<E> create(T t);
 
     void update(SecurityDto securityDTO, Long id, T t);
 

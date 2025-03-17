@@ -1,60 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
-<!--I have set configuration based on assumption that the project is in production, if it were in
-development we could use a lot of debugs and even traces
-change them if u want to see more logs-->
+    <!-- Appenders -->
     <Appenders>
         <!-- Console Appender -->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
-        <!-- File Appender -->
-
-        <File name="FileLogger" fileName="logs/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        <!-- File Appender for General Logs -->
+        <File name="FileLogger" fileName="${sys:APP_ROOT}/logs/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
         </File>
 
-        <File name="FileLoggerServices" fileName="logs/services/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        <!-- File Appender for Service Logs -->
+        <File name="FileLoggerServices" fileName="${sys:APP_ROOT}/logs/services/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
         </File>
 
-        <File name="FileLoggerDAOs" fileName="logs/dao/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        <!-- File Appender for DAO Logs -->
+        <File name="FileLoggerDAOs" fileName="${sys:APP_ROOT}/logs/dao/app.log" createOnDemand="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
         </File>
-
-        <File name="FileLoggerStorages" fileName="logs/storage/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
-
     </Appenders>
 
+    <!-- Loggers -->
     <Loggers>
         <!-- Root Logger -->
-        <Root level="off">
-            <AppenderRef ref="Console"/>
-<!--            <AppenderRef ref="FileLogger"/>-->
+        <Root level="info">
+            <AppenderRef ref="Console" />
         </Root>
 
+        <!-- Custom Loggers -->
         <Logger name="com.mygym.crm" level="warn" additivity="false">
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="Console" />
         </Logger>
-
         <Logger name="com.mygym.crm.backstages" level="info" additivity="false">
-            <AppenderRef ref="FileLogger"/>
+            <AppenderRef ref="FileLogger" />
         </Logger>
-
         <Logger name="com.mygym.crm.backstages.core.services" level="info" additivity="false">
-            <AppenderRef ref="FileLoggerServices"/>
+            <AppenderRef ref="FileLoggerServices" />
         </Logger>
-
         <Logger name="com.mygym.crm.backstages.persistence.daos" level="info" additivity="false">
-            <AppenderRef ref="FileLoggerDAOs"/>
+            <AppenderRef ref="FileLoggerDAOs" />
         </Logger>
-
-        <Logger name="com.mygym.crm.backstages.persistence.storages" level="info" additivity="false">
-            <AppenderRef ref="FileLoggerStorages"/>
-        </Logger>
-
     </Loggers>
 </Configuration>

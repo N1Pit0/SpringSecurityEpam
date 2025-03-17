@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class TraineeServiceImpl implements TraineeService{
+public class TraineeServiceImpl implements TraineeService {
 
     private final TraineeDao traineeDao;
     private final UserService userService;
@@ -35,7 +35,7 @@ public class TraineeServiceImpl implements TraineeService{
 
     @Transactional
     @Override
-    public void create(TraineeDto traineeDto) {
+    public Optional<Trainee> create(TraineeDto traineeDto) {
         userService.validateDto(traineeDto);
 
         Trainee newTrainee = map(traineeDto);
@@ -48,10 +48,14 @@ public class TraineeServiceImpl implements TraineeService{
         newTrainee.setUserName(userService.generateUserName(traineeDto));
 
         logger.info("Trying to create new trainee with UserName: {}", newTrainee.getUserName());
-        traineeDao.create(newTrainee).ifPresentOrElse(
+        Optional<Trainee> optionalTrainee = traineeDao.create(newTrainee);
+
+        optionalTrainee.ifPresentOrElse(
                 (trainee) -> logger.info("trainee with userName: {} has been created", trainee.getUserName()),
                 () -> logger.warn("trainee with userName: {} was not created", newTrainee.getUserName())
         );
+
+        return optionalTrainee;
     }
 
     @Transactional
@@ -96,7 +100,7 @@ public class TraineeServiceImpl implements TraineeService{
                 );
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public Optional<Trainee> getById(SecurityDto securityDto, Long id) {
@@ -115,10 +119,10 @@ public class TraineeServiceImpl implements TraineeService{
         return traineeOptional;
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public Optional<Trainee> getByUserName(SecurityDto securityDto, String userName){
+    public Optional<Trainee> getByUserName(SecurityDto securityDto, String userName) {
         logger.info("Trying to find Trainee with UserName: {}", userName);
 
         Optional<Trainee> traineeOptional = traineeDao.selectWithUserName(userName);
@@ -141,11 +145,10 @@ public class TraineeServiceImpl implements TraineeService{
 
         boolean success = traineeDao.changePassword(username, newPassword);
 
-        if(success){
+        if (success) {
             logger.info("Successfully changed password for Trainee with UserName: {}", username);
             return true;
-        }
-        else {
+        } else {
             logger.warn("Failed to change password for Trainee with UserName: {}", username);
             return false;
         }
@@ -159,26 +162,25 @@ public class TraineeServiceImpl implements TraineeService{
 
         boolean success = traineeDao.toggleIsActive(username);
 
-        if(success){
+        if (success) {
             logger.info("Successfully toggled isActive for Trainee with UserName: {}", username);
             return true;
-        }
-        else {
+        } else {
             logger.warn("Failed to toggled isActive for Trainee with UserName: {}", username);
             return false;
         }
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public List<Training> getTraineeTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
                                               LocalDate toDate, String trainerName, String trainingTypeName) {
         List<Training> trainings = traineeDao.getTraineeTrainings(username, fromDate, toDate, trainerName, trainingTypeName);
-        if(trainings.isEmpty()){
+        if (trainings.isEmpty()) {
             logger.warn("No training found for Trainee with UserName: {}", username);
-        }
-        else logger.info("training record of size: {} was found for Trainee with UserName: {}", trainings.size(), username);
+        } else
+            logger.info("training record of size: {} was found for Trainee with UserName: {}", trainings.size(), username);
         return trainings;
     }
 

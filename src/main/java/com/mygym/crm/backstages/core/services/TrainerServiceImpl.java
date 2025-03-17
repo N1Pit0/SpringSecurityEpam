@@ -34,7 +34,7 @@ public class TrainerServiceImpl implements TrainerService{
 
     @Transactional
     @Override
-    public void create(TrainerDto trainerDto) {
+    public Optional<Trainer> create(TrainerDto trainerDto) {
         userService.validateDto(trainerDto);
 
         Trainer newTrainer = map(trainerDto);
@@ -47,10 +47,14 @@ public class TrainerServiceImpl implements TrainerService{
         newTrainer.setUserName(userService.generateUserName(trainerDto));
 
         logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
-        trainerDAO.create(newTrainer).ifPresentOrElse(
+        Optional<Trainer> optionalTrainer = trainerDAO.create(newTrainer);
+
+        optionalTrainer.ifPresentOrElse(
                 (trainer) -> logger.info("trainer with userName: {} has been created", trainer.getUserName()),
                 () -> logger.warn("trainer with userName: {} was not created", newTrainer.getUserName())
         );
+
+        return optionalTrainer;
     }
 
     @Transactional

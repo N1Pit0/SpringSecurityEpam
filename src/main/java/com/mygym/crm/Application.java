@@ -48,7 +48,7 @@ public class Application {
         securityDTO.setUserName("John.Doe1");
 
 //        facade.createTrainer(trainerDto);
-        facade.createTrainee(traineeDto);
+//        facade.createTrainee(traineeDto);
 //        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
 //        facade.deleteTrainee(securityDTO, 30L);
 //        System.out.println(facade.selectTraineeWithUserName(securityDTO,"John.Doe"));
