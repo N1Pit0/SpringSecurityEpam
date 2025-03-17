@@ -1,2 +1,10 @@
-2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Creating trainee with UserName: John.Doe
-2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.persistence.daos.traineedao.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe
+2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Creating trainee with UserName: John.Doe
+2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Creating trainee with UserName: John.Doe1
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe1
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Creating trainee with UserName: John.Doe2
+2025-03-17 18:52:23 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe2
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Creating trainee with UserName: John.Doe3
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe3
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Creating trainee with UserName: John.Doe4
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully created trainee with UserName: John.Doe4

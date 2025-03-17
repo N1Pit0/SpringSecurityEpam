@@ -1,6 +1,5 @@
-package com.mygym.crm.backstages.persistence.daos.trainingdao;
+package com.mygym.crm.backstages.persistence.daos;
 
-import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
@@ -52,7 +51,7 @@ public class TrainingDaoImpl implements TrainingDao {
     }
 
     @Override
-    public Optional<Training> add(Training training, Long trainingTypeId) {
+    public Optional<Training> add(Training training) {
         try {
             logger.info("Creating training with id: {}", training.getId());
             Session session = this.sessionFactory.getCurrentSession();
@@ -60,11 +59,6 @@ public class TrainingDaoImpl implements TrainingDao {
 
             if (generatedID != null) {
                 logger.info("Successfully created trainer with id: {}", training.getId());
-
-                TrainingType trainingType = session
-                        .getReference(TrainingType.class, trainingTypeId);
-
-                training.setTrainingType(trainingType);
 
                 return Optional.of(training);
             }

@@ -25,7 +25,7 @@ public class SecurityAspect {
         this.userSecurityService = userSecurityService;
     }
 
-    @Pointcut("@annotation(com.mygym.crm.backstages.Annotations.securityannotations.SecureMethod)")
+    @Pointcut("@annotation(com.mygym.crm.backstages.annotations.security.SecureMethod)")
     public void secureMethod() {}
 
     @Around("secureMethod()")

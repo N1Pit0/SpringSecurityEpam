@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos.trainerdao;
+package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
@@ -47,7 +47,7 @@ public class TrainerDaoImpl implements TrainerDao {
             }
         } catch (HibernateError e) {
             logger.error(e.getMessage());
-            throw new HibernateException(e);
+            throw e;
         }
 
         return Optional.empty();

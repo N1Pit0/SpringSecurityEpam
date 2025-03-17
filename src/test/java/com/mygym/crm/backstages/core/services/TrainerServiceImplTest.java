@@ -4,7 +4,7 @@
 //import com.mygym.crm.backstages.core.services.configs.ServiceTestConfig;
 //import com.mygym.crm.backstages.domain.models.Trainer;
 //import com.mygym.crm.backstages.exceptions.NoTrainerException;
-//import com.mygym.crm.backstages.persistence.daos.trainerdao.TrainerDaoImpl;
+//import com.mygym.crm.backstages.persistence.daos.TrainerDaoImpl;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

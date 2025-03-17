@@ -4,3 +4,27 @@
 2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
 2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe
 2025-03-17 16:05:03 [http-nio-8080-exec-7] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe has been created
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDto
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDto
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new password while attempting to create a new trainee
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe1
+2025-03-17 18:46:47 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe1 has been created
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDto
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDto
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new password while attempting to create a new trainee
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
+2025-03-17 18:52:22 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe2
+2025-03-17 18:52:23 [http-nio-8080-exec-10] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe2 has been created
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDto
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDto
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new password while attempting to create a new trainee
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe3
+2025-03-17 18:56:18 [http-nio-8080-exec-8] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe3 has been created
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee, populating it with given traineeDto
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - New Trainee has been successfully populated with given traineeDto
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new password while attempting to create a new trainee
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to generate new username while attempting to create a new trainee
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - Trying to create new trainee with UserName: John.Doe4
+2025-03-17 19:01:09 [http-nio-8080-exec-3] INFO  com.mygym.crm.backstages.core.services.TraineeServiceImpl - trainee with userName: John.Doe4 has been created

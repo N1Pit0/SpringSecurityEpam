@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos.userdaoreadonly;
+package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.common.User;
 import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -44,7 +43,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
             userOptional.ifPresentOrElse(
                     (user1) -> logger.info("User with userName: {} has been found", username),
-                    () -> logger.info("User with userName: {} was not found", username)
+                    () -> logger.warn("User with userName: {} was not found", username)
             );
 
             return userOptional;

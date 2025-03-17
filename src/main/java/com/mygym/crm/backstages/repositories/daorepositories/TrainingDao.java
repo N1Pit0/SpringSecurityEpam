@@ -7,5 +7,5 @@ import java.util.Optional;
 public interface TrainingDao {
     Optional<Training> select(Long UserId);
 
-    Optional<Training> add(Training training, Long trainingTypeId);
+    Optional<Training> add(Training training);
 }

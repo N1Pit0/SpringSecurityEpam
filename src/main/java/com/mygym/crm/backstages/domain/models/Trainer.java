@@ -3,10 +3,7 @@ package com.mygym.crm.backstages.domain.models;
 
 import com.mygym.crm.backstages.domain.models.common.User;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Set;
 
@@ -21,6 +18,7 @@ public class Trainer extends User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "training_type_id")
+    @NonNull
     private TrainingType trainingType;
 
     @OneToMany(mappedBy = "trainer")

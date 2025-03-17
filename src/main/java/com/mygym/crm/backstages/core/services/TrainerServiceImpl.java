@@ -5,8 +5,10 @@ import com.mygym.crm.backstages.core.dtos.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnlyDao;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
@@ -24,12 +26,14 @@ public class TrainerServiceImpl implements TrainerService{
 
     private final TrainerDao trainerDAO;
     private final UserService userService;
+    private final TrainingTypeReadOnlyDao trainingTypeRadOnlyDao;
     private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    public TrainerServiceImpl(TrainerDao trainerDAO, UserService userService) {
+    public TrainerServiceImpl(TrainerDao trainerDAO, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
         this.trainerDAO = trainerDAO;
         this.userService = userService;
+        this.trainingTypeRadOnlyDao = trainingTypeRadOnlyDao;
     }
 
     @Transactional
@@ -45,6 +49,17 @@ public class TrainerServiceImpl implements TrainerService{
 
         logger.info("Trying to generate new username while attempting to create a new trainer");
         newTrainer.setUserName(userService.generateUserName(trainerDto));
+
+        logger.info("Trying to find and set TrainingType while attempting to create a new trainer");
+        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+
+        if(optionalTrainingType.isEmpty()){
+            logger.warn("TrainingType with trainingTypeName {} not found", trainerDto.getTrainingTypeName());
+            return Optional.empty();
+        }
+
+        newTrainer.setTrainingType(optionalTrainingType.get());
+        logger.info("TrainingType with trainingTypeName; {} has been found and set", optionalTrainingType.get().getTrainingTypeName());
 
         logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
         Optional<Trainer> optionalTrainer = trainerDAO.create(newTrainer);
@@ -186,7 +201,6 @@ public class TrainerServiceImpl implements TrainerService{
 
         trainer.setFirstName(trainerDto.getFirstName());
         trainer.setLastName(trainerDto.getLastName());
-        trainer.setTrainingType(trainerDto.getTrainingType());
 
         logger.info("New Trainer has been successfully populated with given trainerDto");
         return trainer;

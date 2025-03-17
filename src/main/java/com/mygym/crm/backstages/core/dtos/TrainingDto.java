@@ -18,7 +18,7 @@ public class TrainingDto {
     private String trainingName;
 
     @NotNull
-    private Long trainingTypeId;
+    private String trainingTypeName;
 
     @NotNull
     private LocalDate trainingDate;

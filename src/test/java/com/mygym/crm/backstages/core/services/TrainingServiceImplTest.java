@@ -3,7 +3,7 @@
 //import com.mygym.crm.backstages.core.dtos.TrainingDto;
 //import com.mygym.crm.backstages.core.services.configs.ServiceTestConfig;
 //import com.mygym.crm.backstages.domain.models.Training;
-//import com.mygym.crm.backstages.persistence.daos.trainingdao.TrainingDaoImpl;
+//import com.mygym.crm.backstages.persistence.daos.TrainingDaoImpl;
 //import org.junit.Before;
 //import org.junit.Test;
 //import org.junit.runner.RunWith;

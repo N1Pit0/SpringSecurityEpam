@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos.traineedao;
+package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Training;

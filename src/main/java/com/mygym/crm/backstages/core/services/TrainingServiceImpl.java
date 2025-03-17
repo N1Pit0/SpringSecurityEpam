@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.core.dtos.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
@@ -53,12 +54,15 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
 
         Trainer trainer = trainerDao.select(trainingDto.getTrainerId()).orElse(null);
         Trainee trainee = traineeDao.select(trainingDto.getTraineeId()).orElse(null);
+        assert trainer != null;
+        TrainingType trainingType = trainer.getTrainingType();
 
         newTraining.setTrainer(trainer);
         newTraining.setTrainee(trainee);
+        newTraining.setTrainingType(trainingType);
 
         logger.info("Trying to new create training");
-        trainingDAO.add(newTraining, trainingDto.getTrainingTypeId());
+        trainingDAO.add(newTraining);
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)

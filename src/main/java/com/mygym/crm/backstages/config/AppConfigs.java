@@ -10,7 +10,6 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
 @EnableAspectJAutoProxy
-@ComponentScan(basePackages = {"com.mygym.crm"})
 public class AppConfigs {
 
     @Bean
