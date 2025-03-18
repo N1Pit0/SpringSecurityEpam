@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @Entity
 @Table(name = "training_table")
 @NoArgsConstructor
-public class Training {
+public class Training implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -3,12 +3,14 @@ package com.mygym.crm.backstages.domain.models.common;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "user_table")
-public abstract class User {
+public abstract class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

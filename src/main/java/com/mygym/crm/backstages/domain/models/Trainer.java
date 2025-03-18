@@ -5,6 +5,7 @@ import com.mygym.crm.backstages.domain.models.common.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)

@@ -5,8 +5,11 @@ import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnl
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.SQLGrammarException;
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -16,6 +19,11 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
 
     private SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(TrainingTypeRadOnlyDaoImpl.class);
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public Optional<TrainingType> getTrainingTypeByUserName(String trainingTypeName) {
@@ -27,7 +35,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
                     WHERE t.trainingTypeName = :trainingTypeName
                     """;
 
-            TrainingType trainingType = (TrainingType)session.createSQLQuery(sql.strip())
+            TrainingType trainingType = (TrainingType)session.createQuery(sql.strip())
                     .setParameter("trainingTypeName", trainingTypeName)
                     .uniqueResult();
 
@@ -39,7 +47,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             );
 
             return optionalTrainingType;
-        }catch (HibernateException e){
+        } catch (HibernateException e){
             logger.error(e.getMessage());
             throw e;
         }

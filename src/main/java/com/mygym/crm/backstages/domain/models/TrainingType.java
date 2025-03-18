@@ -4,13 +4,14 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "training_type_table")
 @Data
 @NoArgsConstructor
-public class TrainingType {
+public class TrainingType implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
