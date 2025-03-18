@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.controllers;
 
 import com.mygym.crm.backstages.core.dtos.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.common.ChangePasswordDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
@@ -8,15 +9,12 @@ import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/trainers")
+@RequestMapping(value = "users/trainers")
 public class TrainerController {
     private TrainerService trainerService;
 
@@ -34,5 +32,20 @@ public class TrainerController {
 
         return new ResponseEntity<>(new SecurityDto(trainer1.getUserName(), trainer1.getPassword()),
                 HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Void> changeLogin(@PathVariable("userName")String userName,
+                                            @RequestBody ChangePasswordDto changePasswordDto){
+
+        boolean isPassed = trainerService.changePassword(
+                new SecurityDto(userName, changePasswordDto.getOldPassword()),
+                userName,
+                changePasswordDto.getNewPassword()
+        );
+
+        if(isPassed) return ResponseEntity.ok().build();
+
+        return ResponseEntity.notFound().build();
     }
 }

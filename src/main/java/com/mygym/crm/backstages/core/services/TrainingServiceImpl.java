@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class TrainingServiceImpl implements TrainingService<TrainingDto>{
+public class TrainingServiceImpl implements TrainingService{
 
     private final TrainingDao trainingDAO;
     private final TrainerDao trainerDao;
@@ -42,7 +42,7 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
 
     @Transactional
     @Override
-    public void add(TrainingDto trainingDto) {
+    public Optional<Training> add(TrainingDto trainingDto) {
         userService.validateDto(trainingDto);
 
         Training newTraining = new Training();
@@ -62,7 +62,14 @@ public class TrainingServiceImpl implements TrainingService<TrainingDto>{
         newTraining.setTrainingType(trainingType);
 
         logger.info("Trying to new create training");
-        trainingDAO.add(newTraining);
+        Optional<Training> optionalTraining = trainingDAO.add(newTraining);
+
+        optionalTraining.ifPresentOrElse(
+                (training) -> logger.info("Training with trainingId: {} has been created", training.getId()),
+                () -> logger.warn("Training could not be created")
+        );
+
+        return optionalTraining;
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)

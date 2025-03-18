@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.Set;
 
 @Service
-public class UserService{
+public class UserService {
 
     private UserReadOnlyDao userDao;
     private Validator validator;

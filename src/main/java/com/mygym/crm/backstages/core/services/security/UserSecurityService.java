@@ -1,7 +1,6 @@
 package com.mygym.crm.backstages.core.services.security;
 
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
-import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.common.User;
 import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
 import org.slf4j.Logger;

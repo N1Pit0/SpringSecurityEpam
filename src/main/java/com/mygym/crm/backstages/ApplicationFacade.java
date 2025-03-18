@@ -25,13 +25,13 @@ import java.util.List;
 public class ApplicationFacade {
     private final TraineeService traineeService;
     private final TrainerService trainerService;
-    private final TrainingService<TrainingDto> trainingService;
+    private final TrainingService trainingService;
     private static final Logger logger = LoggerFactory.getLogger(ApplicationFacade.class);
 
     @Autowired
     public ApplicationFacade(TraineeService traineeService,
                              TrainerService trainerService,
-                             TrainingService<TrainingDto> trainingService) {
+                             TrainingService trainingService) {
         this.traineeService = traineeService;
         this.trainerService = trainerService;
         this.trainingService = trainingService;
