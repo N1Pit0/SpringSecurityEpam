@@ -157,10 +157,12 @@ public class TraineeDaoImpl implements TraineeDao {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-             SELECT t FROM Trainee t\s
-             LEFT JOIN FETCH t.trainings tr\s
-             WHERE t.userName = :username
-           """;
+                  SELECT DISTINCT t FROM Trainee t
+                  LEFT JOIN FETCH t.trainings tr
+                  LEFT JOIN FETCH tr.trainer trainer
+                  LEFT JOIN FETCH trainer.trainingType
+                  WHERE t.userName = :username
+                """;
 
             Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
                     .setParameter("username", username)

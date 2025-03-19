@@ -2,7 +2,9 @@ package com.mygym.crm.backstages.domain.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -11,6 +13,8 @@ import java.util.Set;
 @Table(name = "training_type_table")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"trainers", "trainings"})
+@ToString(exclude = {"trainers", "trainings"})
 public class TrainingType implements Serializable {
 
     @Id
@@ -22,7 +26,7 @@ public class TrainingType implements Serializable {
     private String trainingTypeName;
 
     @OneToMany(mappedBy = "trainingType")
-    private Set<Trainer> trainer;
+    private Set<Trainer> trainers;
 
     @OneToMany(mappedBy = "trainingType")
     private Set<Training> trainings;

@@ -3,8 +3,10 @@ package com.mygym.crm.backstages.controllers;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.common.ChangePasswordDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
+import com.mygym.crm.backstages.core.dtos.traineedto.response.select.SelectTraineeDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.mapper.SelectTraineeMapper;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,21 +19,28 @@ import java.util.Optional;
 @RequestMapping(value = "/users/trainees")
 public class TraineeController {
     private TraineeService traineeService;
+    private SelectTraineeMapper mapper;
 
     @Autowired
     public void setTraineeService(TraineeService traineeService) {
         this.traineeService = traineeService;
     }
 
-    @GetMapping(value = "{userName:.+}", produces = "application/json")
-    public ResponseEntity<Trainee> getTraineeProfile(@PathVariable("userName") String userName,
-                        @RequestBody SecurityDto securityDto) throws NoTraineeException {
+    @Autowired
+    public void setMapper(SelectTraineeMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    @GetMapping(value = "/{userName:.+}",consumes = "application/json", produces = "application/json")
+    public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName,
+                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException {
 
         Optional<Trainee> optionalTrainee = traineeService.getByUserName(securityDto,userName);
 
         if (optionalTrainee.isPresent()) {
             Trainee trainee = optionalTrainee.get();
-            return new ResponseEntity<>(trainee, HttpStatus.FOUND);
+            SelectTraineeDto selectTraineeDto = mapper.traineeToSelectTraineeDto(trainee);
+            return new ResponseEntity<>(selectTraineeDto, HttpStatus.FOUND);
         }
 
         return ResponseEntity.notFound().build();

@@ -5,11 +5,10 @@ import com.mygym.crm.backstages.domain.models.common.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"trainings"})
+@ToString(callSuper = true, exclude = {"trainings"})
 @Data
 @Entity
 @Table(name = "trainer_table")

@@ -7,12 +7,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"trainings"})
+@ToString(callSuper = true, exclude = {"trainings"})
 @Data
 @Entity
 @Table(name = "trainee_table")

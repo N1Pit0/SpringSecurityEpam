@@ -6,6 +6,7 @@ import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.mapper.SelectTraineeMapper;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.hibernate.HibernateException;
@@ -129,11 +130,11 @@ public class TraineeServiceImpl implements TraineeService {
 
         traineeOptional.ifPresentOrElse(
                 trainee -> {
-                    trainee.getTrainings().size();
                     logger.info("Found Trainee with UserName: {}", userName);
                 },
                 () -> logger.warn("No Trainee found with UserName: {}", userName)
         );
+
         return traineeOptional;
     }
 
