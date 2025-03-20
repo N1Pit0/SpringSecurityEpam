@@ -6,7 +6,6 @@ import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
-import com.mygym.crm.backstages.mapper.SelectTraineeMapper;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.hibernate.HibernateException;
@@ -62,7 +61,7 @@ public class TraineeServiceImpl implements TraineeService {
     @Transactional
     @SecureMethod
     @Override
-    public void update(SecurityDto securityDto, Long id, TraineeDto traineeDto) {
+    public Optional<Trainee> update(SecurityDto securityDto, Long id, TraineeDto traineeDto) {
         userService.validateDto(traineeDto);
 
         Trainee oldTrainee = getById(securityDto, id).orElseThrow(() -> {
@@ -75,30 +74,86 @@ public class TraineeServiceImpl implements TraineeService {
         newTrainee.setUserId(oldTrainee.getUserId());
         newTrainee.setPassword(oldTrainee.getPassword());
         newTrainee.setUserName(oldTrainee.getUserName());
+        newTrainee.setTrainings(oldTrainee.getTrainings());
+        newTrainee.setIsActive(oldTrainee.getIsActive());
 
         logger.info("Trying to update Trainee with ID: {}", id);
-        traineeDao.update(newTrainee);
+        Optional<Trainee> optionalTrainee = traineeDao.update(newTrainee);
+
+        optionalTrainee.ifPresentOrElse(
+                (trainee) -> {
+                    logger.info("trainee with ID: {} has been updated", trainee.getUserId());
+                    trainee.getTrainings().size();
+                },
+                () -> logger.warn("trainee with ID: {} was not updated", newTrainee.getUserId())
+        );
+
+        return optionalTrainee;
     }
 
     @Transactional
     @SecureMethod
     @Override
-    public void delete(SecurityDto securityDto, Long id) {
+    public Optional<Trainee> updateByUserName(SecurityDto securityDto, String userName, TraineeDto traineeDto) {
+        userService.validateDto(traineeDto);
+
+        Trainee oldTrainee = getByUserName(securityDto, userName).orElseThrow(() -> {
+            logger.error("Trainee with UserName {} not found", userName);
+            return new NoTraineeException("could not find trainee with UserName " + userName);
+        });
+        Trainee newTrainee = map(traineeDto);
+
+        logger.info("Setting with old UserId Password and UserName inside updateByUserName");
+        newTrainee.setUserId(oldTrainee.getUserId());
+        newTrainee.setPassword(oldTrainee.getPassword());
+        newTrainee.setUserName(oldTrainee.getUserName());
+        newTrainee.setTrainings(oldTrainee.getTrainings());
+        newTrainee.setIsActive(oldTrainee.getIsActive());
+
+        logger.info("Trying to update Trainee with userName: {}", userName);
+        Optional<Trainee> optionalTrainee = traineeDao.update(newTrainee);
+
+        optionalTrainee.ifPresentOrElse(
+                (trainee) -> {
+                    logger.info("trainee with userName: {} has been updated", trainee.getUserName());
+                    trainee.getTrainings().size();
+                },
+                () -> logger.warn("trainee with userName: {} was not updated", newTrainee.getUserName())
+        );
+
+        return optionalTrainee;
+    }
+
+    @Transactional
+    @SecureMethod
+    @Override
+    public Optional<Trainee> delete(SecurityDto securityDto, Long id) {
 
         logger.info("Trying to delete Trainee with ID: {}", id);
-        traineeDao.delete(id);
+        Optional<Trainee> optionalTrainee = traineeDao.delete(id);
+
+        optionalTrainee.ifPresentOrElse(
+                (trainee) -> logger.info("trainee with userId: {} has been deleted", trainee.getUserId()),
+                () -> logger.warn("trainee with userId: {} was not deleted", id)
+        );
+
+        return optionalTrainee;
     }
 
     @Transactional
     @SecureMethod
     @Override
-    public void deleteWithUserName(SecurityDto securityDto, String userName) {
+    public Optional<Trainee> deleteWithUserName(SecurityDto securityDto, String userName) {
+
         logger.info("Trying to delete Trainee with userName: {}", userName);
-        traineeDao.deleteWithUserName(userName)
-                .ifPresentOrElse(
-                        (trainee) -> logger.info("trainee with userName: {} has been deleted", trainee.getUserName()),
-                        () -> logger.warn("trainee with userName: {} can't be found", userName)
-                );
+        Optional<Trainee> optionalTrainee = traineeDao.deleteWithUserName(userName);
+
+        optionalTrainee.ifPresentOrElse(
+                (trainee) -> logger.info("trainee with userName: {} has been deleted", trainee.getUserName()),
+                () -> logger.warn("trainee with userName: {} can't be found", userName)
+        );
+
+        return optionalTrainee;
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)

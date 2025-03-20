@@ -15,4 +15,6 @@ public interface TraineeDao extends BaseUserDao<Trainee, Long> {
     List<Training> getTraineeTrainings(String username, LocalDate fromDate, LocalDate toDate,
                                        String trainerName, String trainingTypeName);
 
+
+    Optional<Trainee> updateByUserName(Trainee trainee);
 }

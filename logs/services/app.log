@@ -1,3 +1,0 @@
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - New Training, populating it with given traineeDTO
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - Trying to new create training
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.core.services.TrainingServiceImpl - Training with trainingId: 8 has been created

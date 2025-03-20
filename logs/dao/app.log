@@ -1,6 +1,0 @@
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TrainerDaoImpl - Attempting to select trainer with ID: 6
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TrainerDaoImpl - Successfully selected trainer with ID: 6
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Attempting to select trainee with ID: 1
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TraineeDaoImpl - Successfully selected trainee with ID: 1
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TrainingDaoImpl - Creating training with id: null
-2025-03-18 22:11:54 [http-nio-8080-exec-6] INFO  com.mygym.crm.backstages.persistence.daos.TrainingDaoImpl - Successfully created trainer with id: 8

@@ -75,7 +75,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Transactional
     @SecureMethod
     @Override
-    public void update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
+    public Optional<Trainer> update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
         userService.validateDto(trainerDto);
 
         Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
@@ -90,7 +90,14 @@ public class TrainerServiceImpl implements TrainerService{
         newTrainer.setUserName(oldTrainer.getUserName());
 
         logger.info("Trying to update Trainer with ID: {}", id);
-        trainerDAO.update(newTrainer);
+        Optional<Trainer> optionalTrainer = trainerDAO.update(newTrainer);
+
+        optionalTrainer.ifPresentOrElse(
+                (trainer) -> logger.info("trainer with userName: {} has been updated", trainer.getUserName()),
+                () -> logger.warn("trainer with userName: {} was not updated", newTrainer.getUserName())
+        );
+
+        return optionalTrainer;
     }
 
     @Transactional(noRollbackFor= HibernateException.class, readOnly = true)

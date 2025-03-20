@@ -1,15 +1,18 @@
 package com.mygym.crm.backstages.controllers;
 
+import com.mygym.crm.backstages.core.dtos.CombineUpdateTraineeDtoWithSecurityDto;
 import com.mygym.crm.backstages.core.dtos.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.common.ChangePasswordDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.dtos.traineedto.response.select.SelectTraineeDto;
+import com.mygym.crm.backstages.core.dtos.traineedto.response.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
-import com.mygym.crm.backstages.mapper.SelectTraineeMapper;
+import com.mygym.crm.backstages.mapper.TraineeMapper;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +22,7 @@ import java.util.Optional;
 @RequestMapping(value = "/users/trainees")
 public class TraineeController {
     private TraineeService traineeService;
-    private SelectTraineeMapper mapper;
+    private TraineeMapper mapper;
 
     @Autowired
     public void setTraineeService(TraineeService traineeService) {
@@ -27,7 +30,7 @@ public class TraineeController {
     }
 
     @Autowired
-    public void setMapper(SelectTraineeMapper mapper) {
+    public void setMapper(TraineeMapper mapper) {
         this.mapper = mapper;
     }
 
@@ -47,15 +50,28 @@ public class TraineeController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    public ResponseEntity<SecurityDto> registerTrainee(@RequestBody TraineeDto trainee) {
-        System.out.println("I am here ");
+    public ResponseEntity<SecurityDto> registerTrainee(@RequestBody TraineeDto traineeDto) {
 
-        Optional<Trainee> optionalTrainee = traineeService.create(trainee);
+        Optional<Trainee> optionalTrainee = traineeService.create(traineeDto);
 
-        Trainee trainee1 = optionalTrainee.orElseThrow(() -> new NoTraineeException("no trainee"));
+        Trainee trainee = optionalTrainee.orElseThrow(() -> new NoTraineeException("no trainee"));
 
-        return new ResponseEntity<>(new SecurityDto(trainee1.getUserName(), trainee1.getPassword()),
+        return new ResponseEntity<>(new SecurityDto(trainee.getUserName(), trainee.getPassword()),
                 HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
+    public ResponseEntity<UpdateTraineeDto> updateTraineeProfile(@PathVariable("userName") String userName,
+                                                                 @RequestBody CombineUpdateTraineeDtoWithSecurityDto updateTraineeDtoWithSecurityDto){
+
+        Optional<Trainee> optionalTrainee = traineeService.updateByUserName(updateTraineeDtoWithSecurityDto.getSecurityDto(),
+                userName,
+                updateTraineeDtoWithSecurityDto.getTraineeDto());
+
+        return optionalTrainee
+                .map(mapper::traineeToUpdateTraineeDto)
+                .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.valueOf(405)).build());
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
@@ -71,6 +87,19 @@ public class TraineeController {
         if(isPassed) return ResponseEntity.ok().build();
 
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Void> DeleteTraineeProfile(@PathVariable("userName") String userName,
+                                                     @RequestBody SecurityDto securityDto){
+        Optional<Trainee> optionalTrainee = traineeService.deleteWithUserName(securityDto, userName);
+
+        if (optionalTrainee.isPresent()) {
+
+            return new ResponseEntity<>(HttpStatus.valueOf(204));
+        }
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
     }
 
 }

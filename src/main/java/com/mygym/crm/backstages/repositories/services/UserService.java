@@ -8,7 +8,7 @@ public interface UserService <T, E>{
 
     Optional<E> create(T t);
 
-    void update(SecurityDto securityDTO, Long id, T t);
+    Optional<E> update(SecurityDto securityDTO, Long id, T t);
 
     Optional<E> getByUserName(SecurityDto securityDTO, String userName);
 

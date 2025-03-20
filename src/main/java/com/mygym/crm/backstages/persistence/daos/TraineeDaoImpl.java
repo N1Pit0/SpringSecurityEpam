@@ -66,8 +66,45 @@ public class TraineeDaoImpl implements TraineeDao {
             Trainee newTrainee = (Trainee) session.merge(trainee);
             session.flush();
 
-            return Optional.ofNullable(newTrainee);
+            return Optional.of(newTrainee);
         } catch (HibernateException e) {
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
+
+    public Optional<Trainee> updateByUserName(Trainee trainee){
+        checkTrainee(trainee, Trainee.class);
+
+        try{
+            logger.info("Updating trainee with userName: {}", trainee.getUserName());
+
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                    UPDATE Trainee
+                    SET
+                        firstName=:firstName,
+                        lastName=:lastName,
+                        isActive=:isActive,
+                        dateOfBirth=:dateOfBirth,
+                        address=:address,
+                    WHERE userName =:userName
+                    """;
+            Trainee updatedTrainee = (Trainee) session.createQuery(sql.strip())
+                    .setParameter("userName", trainee.getUserName())
+                    .setParameter("firstName", trainee.getFirstName())
+                    .setParameter("lastName", trainee.getLastName())
+                    .setParameter("isActive", trainee.getIsActive())
+                    .setParameter("dateOfBirth", trainee.getDateOfBirth())
+                    .setParameter("address", trainee.getAddress())
+                    .uniqueResult();
+
+            logger.info("Successfully update trainee with userName: {}", trainee.getUserName());
+
+            return Optional.of(updatedTrainee);
+
+        }catch (HibernateException e){
             logger.error(e.getMessage());
             throw e;
         }
