@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.controllers;
 
-import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.repositories.services.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;

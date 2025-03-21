@@ -1,6 +1,6 @@
-package com.mygym.crm.backstages.core.dtos.traineedto.response.select;
+package com.mygym.crm.backstages.core.dtos.response.traineedto.select;
 
-import com.mygym.crm.backstages.core.dtos.trainerdto.response.select.SelectTrainerDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.mapping.MapSelectTrainerDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,5 +18,5 @@ public class SelectTraineeDto {
 
     private Boolean isActive;
 
-    private Set<SelectTrainerDto> trainers;
+    private Set<MapSelectTrainerDto> trainers;
 }

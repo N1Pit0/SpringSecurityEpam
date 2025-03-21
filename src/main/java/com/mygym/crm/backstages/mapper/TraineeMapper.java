@@ -1,9 +1,9 @@
 package com.mygym.crm.backstages.mapper;
 
-import com.mygym.crm.backstages.core.dtos.traineedto.response.select.SelectTraineeDto;
-import com.mygym.crm.backstages.core.dtos.traineedto.response.update.UpdateTraineeDto;
-import com.mygym.crm.backstages.core.dtos.trainerdto.response.select.SelectTrainerDto;
-import com.mygym.crm.backstages.core.dtos.trainerdto.response.update.UpdateTrainerDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.mapping.MapSelectTrainerDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.mapping.MapUpdateTrainerDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
@@ -22,18 +22,18 @@ public interface TraineeMapper {
     @Mapping(target = "trainers", expression = "java(mapTrainingsSelectTrainersDto(trainee.getTrainings()))")
     SelectTraineeDto traineeToSelectTraineeDto(Trainee trainee);
 
-    // Map from Trainer to SelectTrainerDto
+    // Map from Trainer to MapSelectTrainerDto
     @Mapping(target = "trainingTypeName", source = "trainingType.trainingTypeName")
-    SelectTrainerDto trainerToSelectTrainerDto(Trainer trainer);
+    MapSelectTrainerDto trainerToSelectTrainerDto(Trainer trainer);
 
     @Mapping(target = "trainers", expression = "java(mapTrainingsUpdateTrainerDto(trainee.getTrainings()))")
     UpdateTraineeDto traineeToUpdateTraineeDto(Trainee trainee);
 
     @Mapping(target = "trainingTypeName", source = "trainingType.trainingTypeName")
-    UpdateTrainerDto trainerToUpdateTrainerDto(Trainer trainer);
+    MapUpdateTrainerDto trainerToUpdateTrainerDto(Trainer trainer);
 
     // Custom method to map Training entities to Trainer DTOs
-    default Set<SelectTrainerDto> mapTrainingsSelectTrainersDto(Set<Training> trainings) {
+    default Set<MapSelectTrainerDto> mapTrainingsSelectTrainersDto(Set<Training> trainings) {
         if (trainings == null || trainings.isEmpty()) {
             return Collections.emptySet();
         }
@@ -45,7 +45,7 @@ public interface TraineeMapper {
                 .collect(Collectors.toSet());
     }
 
-    default Set<UpdateTrainerDto> mapTrainingsUpdateTrainerDto(Set<Training> trainings) {
+    default Set<MapUpdateTrainerDto> mapTrainingsUpdateTrainerDto(Set<Training> trainings) {
         if (trainings == null || trainings.isEmpty()) {
             return Collections.emptySet();
         }

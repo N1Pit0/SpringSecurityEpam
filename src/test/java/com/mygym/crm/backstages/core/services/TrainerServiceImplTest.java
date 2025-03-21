@@ -1,6 +1,6 @@
 //package com.mygym.crm.backstages.core.services;
 //
-//import com.mygym.crm.backstages.core.dtos.TrainerDto;
+//import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 //import com.mygym.crm.backstages.core.services.configs.ServiceTestConfig;
 //import com.mygym.crm.backstages.domain.models.Trainer;
 //import com.mygym.crm.backstages.exceptions.NoTrainerException;

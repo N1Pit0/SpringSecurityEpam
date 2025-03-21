@@ -1,7 +1,6 @@
-package com.mygym.crm.backstages.core.dtos;
+package com.mygym.crm.backstages.core.dtos.request.trainerdto;
 
-import com.mygym.crm.backstages.core.dtos.common.UserDto;
-import com.mygym.crm.backstages.domain.models.TrainingType;
+import com.mygym.crm.backstages.core.dtos.request.common.UserDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

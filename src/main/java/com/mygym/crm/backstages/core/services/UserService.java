@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.common.UserDto;
+import com.mygym.crm.backstages.core.dtos.request.common.UserDto;
 import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
 import jakarta.validation.ConstraintViolation;
 import org.slf4j.Logger;

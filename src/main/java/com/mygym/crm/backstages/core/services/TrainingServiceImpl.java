@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;

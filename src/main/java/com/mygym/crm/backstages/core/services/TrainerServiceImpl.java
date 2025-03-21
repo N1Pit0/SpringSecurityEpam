@@ -1,11 +1,14 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.annotations.security.SecureMethod;
-import com.mygym.crm.backstages.core.dtos.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
+import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
+import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnlyDao;
@@ -24,14 +27,14 @@ import java.util.Optional;
 @Service("trainerServiceIMPL")
 public class TrainerServiceImpl implements TrainerService{
 
-    private final TrainerDao trainerDAO;
+    private final TrainerDao trainerDao;
     private final UserService userService;
     private final TrainingTypeReadOnlyDao trainingTypeRadOnlyDao;
     private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
-    public TrainerServiceImpl(TrainerDao trainerDAO, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
-        this.trainerDAO = trainerDAO;
+    public TrainerServiceImpl(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
+        this.trainerDao = trainerDao;
         this.userService = userService;
         this.trainingTypeRadOnlyDao = trainingTypeRadOnlyDao;
     }
@@ -62,7 +65,7 @@ public class TrainerServiceImpl implements TrainerService{
         logger.info("TrainingType with trainingTypeName; {} has been found and set", optionalTrainingType.get().getTrainingTypeName());
 
         logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
-        Optional<Trainer> optionalTrainer = trainerDAO.create(newTrainer);
+        Optional<Trainer> optionalTrainer = trainerDao.create(newTrainer);
 
         optionalTrainer.ifPresentOrElse(
                 (trainer) -> logger.info("trainer with userName: {} has been created", trainer.getUserName()),
@@ -90,11 +93,44 @@ public class TrainerServiceImpl implements TrainerService{
         newTrainer.setUserName(oldTrainer.getUserName());
 
         logger.info("Trying to update Trainer with ID: {}", id);
-        Optional<Trainer> optionalTrainer = trainerDAO.update(newTrainer);
+        Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
 
         optionalTrainer.ifPresentOrElse(
                 (trainer) -> logger.info("trainer with userName: {} has been updated", trainer.getUserName()),
                 () -> logger.warn("trainer with userName: {} was not updated", newTrainer.getUserName())
+        );
+
+        return optionalTrainer;
+    }
+
+    @Transactional
+    @SecureMethod
+    @Override
+    public Optional<Trainer> updateByUserName(SecurityDto securityDto, String userName, TrainerDto trainerDto) {
+        userService.validateDto(trainerDto);
+
+        Trainer oldTrainer = getByUserName(securityDto, userName).orElseThrow(() -> {
+            logger.error("Trainer with UserName {} not found", userName);
+            return new NoTrainerException("could not find trainer with UserName " + userName);
+        });
+        Trainer newTrainer = map(trainerDto);
+
+        logger.info("Setting with old UserId Password and UserName inside updateByUserName for Treainer");
+        newTrainer.setUserId(oldTrainer.getUserId());
+        newTrainer.setPassword(oldTrainer.getPassword());
+        newTrainer.setUserName(oldTrainer.getUserName());
+        newTrainer.setTrainings(oldTrainer.getTrainings());
+        newTrainer.setIsActive(oldTrainer.getIsActive());
+
+        logger.info("Trying to update Trainee with userName: {}", userName);
+        Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
+
+        optionalTrainer.ifPresentOrElse(
+                (trainee) -> {
+                    logger.info("trainee with userName: {} has been updated", trainee.getUserName());
+                    trainee.getTrainings().size();
+                },
+                () -> logger.warn("trainee with userName: {} was not updated", newTrainer.getUserName())
         );
 
         return optionalTrainer;
@@ -106,7 +142,7 @@ public class TrainerServiceImpl implements TrainerService{
     public Optional<Trainer> getById(SecurityDto securityDto, Long id) {
         logger.info("Trying to find Trainer with ID: {}", id);
 
-        Optional<Trainer> trainerOptional = trainerDAO.select(id);
+        Optional<Trainer> trainerOptional = trainerDao.select(id);
 
         trainerOptional.ifPresentOrElse(
                 trainer -> {
@@ -125,7 +161,7 @@ public class TrainerServiceImpl implements TrainerService{
     public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName){
         logger.info("Trying to find Trainer with UserName: {}", userName);
 
-        Optional<Trainer> trainerOptional = trainerDAO.selectWithUserName(userName);
+        Optional<Trainer> trainerOptional = trainerDao.selectWithUserName(userName);
 
         trainerOptional.ifPresentOrElse(
                 trainer -> {
@@ -143,7 +179,7 @@ public class TrainerServiceImpl implements TrainerService{
     public boolean changePassword(SecurityDto securityDto, String username, String newPassword) {
         logger.info("Trying to change password for Trainer with UserName: {}", username);
 
-        boolean success = trainerDAO.changePassword(username, newPassword);
+        boolean success = trainerDao.changePassword(username, newPassword);
 
         if(success){
             logger.info("Successfully changed password for Trainer with UserName: {}", username);
@@ -161,7 +197,7 @@ public class TrainerServiceImpl implements TrainerService{
     public boolean toggleIsActive(SecurityDto securityDto, String username) {
         logger.info("Trying to toggle isActive for Trainer with UserName: {}", username);
 
-        boolean success = trainerDAO.toggleIsActive(username);
+        boolean success = trainerDao.toggleIsActive(username);
 
         if(success){
             logger.info("Successfully toggled isActive for Trainer with UserName: {}", username);
@@ -178,7 +214,7 @@ public class TrainerServiceImpl implements TrainerService{
     @Override
     public List<Training> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
                                               LocalDate toDate, String traineeName) {
-        List<Training> trainings = trainerDAO.getTrainerTrainings(username, fromDate, toDate, traineeName);
+        List<Training> trainings = trainerDao.getTrainerTrainings(username, fromDate, toDate, traineeName);
         if(trainings.isEmpty()){
             logger.warn("No training found for Trainer with UserName: {}", username);
         }
@@ -192,7 +228,7 @@ public class TrainerServiceImpl implements TrainerService{
     public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
                                                                     String trainerUserName, String traineeUserName) {
 
-        List<Trainer> trainers = trainerDAO.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
+        List<Trainer> trainers = trainerDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
         if(trainers.isEmpty()){
             logger.warn("No trainer found for Trainer with UserName: {}", trainerUserName);
         }

@@ -1,6 +1,6 @@
-package com.mygym.crm.backstages.core.dtos.traineedto.response.update;
+package com.mygym.crm.backstages.core.dtos.response.traineedto.update;
 
-import com.mygym.crm.backstages.core.dtos.trainerdto.response.update.UpdateTrainerDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.mapping.MapUpdateTrainerDto;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -18,5 +18,5 @@ public class UpdateTraineeDto {
 
     private Boolean isActive;
 
-    private Set<UpdateTrainerDto> trainers;
+    private Set<MapUpdateTrainerDto> trainers;
 }

@@ -1,6 +1,6 @@
 package com.mygym.crm.backstages.repositories.services;
 
-import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 import com.mygym.crm.backstages.domain.models.Training;
 
 import java.util.Optional;

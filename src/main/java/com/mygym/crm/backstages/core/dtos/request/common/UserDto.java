@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.core.dtos.common;
+package com.mygym.crm.backstages.core.dtos.request.common;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;

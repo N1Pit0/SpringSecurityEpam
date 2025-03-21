@@ -1,8 +1,8 @@
 package com.mygym.crm.backstages;
 
-import com.mygym.crm.backstages.core.dtos.TraineeDto;
-import com.mygym.crm.backstages.core.dtos.TrainerDto;
-import com.mygym.crm.backstages.core.dtos.TrainingDto;
+import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
+import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;

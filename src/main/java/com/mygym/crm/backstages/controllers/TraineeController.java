@@ -1,11 +1,11 @@
 package com.mygym.crm.backstages.controllers;
 
-import com.mygym.crm.backstages.core.dtos.CombineUpdateTraineeDtoWithSecurityDto;
-import com.mygym.crm.backstages.core.dtos.TraineeDto;
-import com.mygym.crm.backstages.core.dtos.common.ChangePasswordDto;
+import com.mygym.crm.backstages.core.dtos.request.ChangePasswordDto;
+import com.mygym.crm.backstages.core.dtos.request.common.CombineUpdateUserDtoWithSecurityDto;
+import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
-import com.mygym.crm.backstages.core.dtos.traineedto.response.select.SelectTraineeDto;
-import com.mygym.crm.backstages.core.dtos.traineedto.response.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
@@ -40,13 +40,9 @@ public class TraineeController {
 
         Optional<Trainee> optionalTrainee = traineeService.getByUserName(securityDto,userName);
 
-        if (optionalTrainee.isPresent()) {
-            Trainee trainee = optionalTrainee.get();
-            SelectTraineeDto selectTraineeDto = mapper.traineeToSelectTraineeDto(trainee);
-            return new ResponseEntity<>(selectTraineeDto, HttpStatus.FOUND);
-        }
-
-        return ResponseEntity.notFound().build();
+        return optionalTrainee.map(mapper::traineeToSelectTraineeDto)
+                .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -62,11 +58,11 @@ public class TraineeController {
 
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
     public ResponseEntity<UpdateTraineeDto> updateTraineeProfile(@PathVariable("userName") String userName,
-                                                                 @RequestBody CombineUpdateTraineeDtoWithSecurityDto updateTraineeDtoWithSecurityDto){
+                                                                 @RequestBody CombineUpdateUserDtoWithSecurityDto<TraineeDto> updateTraineeDtoWithSecurityDto){
 
         Optional<Trainee> optionalTrainee = traineeService.updateByUserName(updateTraineeDtoWithSecurityDto.getSecurityDto(),
                 userName,
-                updateTraineeDtoWithSecurityDto.getTraineeDto());
+                updateTraineeDtoWithSecurityDto.getUserDto());
 
         return optionalTrainee
                 .map(mapper::traineeToUpdateTraineeDto)

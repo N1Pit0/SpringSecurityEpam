@@ -60,7 +60,7 @@ public class TraineeDaoImpl implements TraineeDao {
         checkTrainee(trainee, Trainee.class);
 
         try {
-            logger.info("Updating trainee: {}", trainee.getUserId());
+            logger.info("Updating trainee: {} and userName: {}", trainee.getUserId(), trainee.getUserName());
 
             Session session = this.sessionFactory.getCurrentSession();
             Trainee newTrainee = (Trainee) session.merge(trainee);

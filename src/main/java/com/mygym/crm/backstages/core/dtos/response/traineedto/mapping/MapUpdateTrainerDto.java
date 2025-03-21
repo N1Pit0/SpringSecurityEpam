@@ -1,9 +1,9 @@
-package com.mygym.crm.backstages.core.dtos.trainerdto.response.select;
+package com.mygym.crm.backstages.core.dtos.response.traineedto.mapping;
 
 import lombok.Data;
 
 @Data
-public class SelectTrainerDto {
+public class MapUpdateTrainerDto {
 
     private String userName;
 

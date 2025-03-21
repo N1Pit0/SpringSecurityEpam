@@ -1,6 +1,6 @@
 //package com.mygym.crm.backstages.core.services;
 //
-//import com.mygym.crm.backstages.core.dtos.TrainingDto;
+//import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 //import com.mygym.crm.backstages.core.services.configs.ServiceTestConfig;
 //import com.mygym.crm.backstages.domain.models.Training;
 //import com.mygym.crm.backstages.persistence.daos.TrainingDaoImpl;
