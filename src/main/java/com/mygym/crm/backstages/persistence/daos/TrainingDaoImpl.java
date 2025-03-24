@@ -45,7 +45,7 @@ public class TrainingDaoImpl implements TrainingDao {
             logger.warn("No Training found with ID: {}", trainingKey);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting Training with ID: {}", trainingKey, e);
+            logger.error("Error selecting Training with ID: {} with error \n{}", trainingKey, e.getMessage());
             throw e;
         }
     }

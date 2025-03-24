@@ -179,7 +179,7 @@ public class TraineeDaoImpl implements TraineeDao {
             logger.warn("No trainee found with ID: {}", traineeId);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting trainee with ID: {}", traineeId, e);
+            logger.error("Error selecting trainee with ID: {} with message \n" + " {}", traineeId, e.getMessage());
             throw e;
         }
     }

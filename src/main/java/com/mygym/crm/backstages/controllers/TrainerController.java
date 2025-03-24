@@ -12,6 +12,7 @@ import com.mygym.crm.backstages.mapper.TrainerMapper;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,5 +83,16 @@ public class TrainerController {
         if(isPassed) return ResponseEntity.ok().build();
 
         return ResponseEntity.notFound().build();
+    }
+
+    @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
+    public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
+                                               @RequestBody SecurityDto securityDto){
+
+        boolean isPerformed = trainerService.toggleIsActive(securityDto, userName);
+
+        if(isPerformed) return new ResponseEntity<>(HttpStatus.valueOf(200));
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
     }
 }

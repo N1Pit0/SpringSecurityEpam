@@ -86,13 +86,26 @@ public class TraineeController {
     }
 
     @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Void> DeleteTraineeProfile(@PathVariable("userName") String userName,
+    public ResponseEntity<Void> deleteTraineeProfile(@PathVariable("userName") String userName,
                                                      @RequestBody SecurityDto securityDto){
         Optional<Trainee> optionalTrainee = traineeService.deleteWithUserName(securityDto, userName);
 
         if (optionalTrainee.isPresent()) {
 
             return new ResponseEntity<>(HttpStatus.valueOf(204));
+        }
+
+        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
+    }
+
+    @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
+    public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
+                                               @RequestBody SecurityDto securityDto){
+
+        boolean isPerformed = traineeService.toggleIsActive(securityDto, userName);
+
+        if (isPerformed){
+            return new ResponseEntity<>(HttpStatus.valueOf(200));
         }
 
         return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();

@@ -89,7 +89,7 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.warn("No trainer found with ID: {}", trainerId);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting trainer with ID: {}", trainerId, e);
+            logger.error("Error selecting trainer with ID: {} with message \n {}", trainerId, e.getMessage());
             throw e;
         }
     }
@@ -121,7 +121,7 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.warn("No trainer found with username: {}", username);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting trainer with username: {}", username, e);
+            logger.error("Error selecting trainer with username: {} with message \n" + " {}", username, e.getMessage());
             throw e;
         }
     }

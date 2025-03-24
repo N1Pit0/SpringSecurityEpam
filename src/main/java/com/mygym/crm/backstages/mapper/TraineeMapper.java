@@ -18,11 +18,9 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface TraineeMapper {
 
-    // Map from Trainee to SelectTraineeDto
     @Mapping(target = "trainers", expression = "java(mapTrainingsSelectTrainersDto(trainee.getTrainings()))")
     SelectTraineeDto traineeToSelectTraineeDto(Trainee trainee);
 
-    // Map from Trainer to MapSelectTrainerDto
     @Mapping(target = "trainingTypeName", source = "trainingType.trainingTypeName")
     MapSelectTrainerDto trainerToSelectTrainerDto(Trainer trainer);
 
@@ -32,7 +30,6 @@ public interface TraineeMapper {
     @Mapping(target = "trainingTypeName", source = "trainingType.trainingTypeName")
     MapUpdateTrainerDto trainerToUpdateTrainerDto(Trainer trainer);
 
-    // Custom method to map Training entities to Trainer DTOs
     default Set<MapSelectTrainerDto> mapTrainingsSelectTrainersDto(Set<Training> trainings) {
         if (trainings == null || trainings.isEmpty()) {
             return Collections.emptySet();

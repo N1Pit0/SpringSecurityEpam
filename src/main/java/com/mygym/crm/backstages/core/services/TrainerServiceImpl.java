@@ -91,6 +91,18 @@ public class TrainerServiceImpl implements TrainerService{
         newTrainer.setUserId(oldTrainer.getUserId());
         newTrainer.setPassword(oldTrainer.getPassword());
         newTrainer.setUserName(oldTrainer.getUserName());
+        newTrainer.setTrainings(oldTrainer.getTrainings());
+
+        logger.info("Trying to find and set TrainingType while attempting to update trainer for update");
+        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+
+        if(optionalTrainingType.isEmpty()){
+            logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName for update", trainerDto.getTrainingTypeName());
+            return Optional.empty();
+        }
+
+        logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName for update", trainerDto.getTrainingTypeName());
+        newTrainer.setTrainingType(optionalTrainingType.get());
 
         logger.info("Trying to update Trainer with ID: {}", id);
         Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
@@ -119,8 +131,19 @@ public class TrainerServiceImpl implements TrainerService{
         newTrainer.setUserId(oldTrainer.getUserId());
         newTrainer.setPassword(oldTrainer.getPassword());
         newTrainer.setUserName(oldTrainer.getUserName());
-        newTrainer.setTrainings(oldTrainer.getTrainings());
         newTrainer.setIsActive(oldTrainer.getIsActive());
+        newTrainer.setTrainings(oldTrainer.getTrainings());
+
+        logger.info("Trying to find and set TrainingType while attempting to update trainer");
+        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+
+        if(optionalTrainingType.isEmpty()){
+            logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName", trainerDto.getTrainingTypeName());
+            return Optional.empty();
+        }
+
+        logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName", trainerDto.getTrainingTypeName());
+        newTrainer.setTrainingType(optionalTrainingType.get());
 
         logger.info("Trying to update Trainee with userName: {}", userName);
         Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);

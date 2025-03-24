@@ -5,14 +5,14 @@ import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnl
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.exception.SQLGrammarException;
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
@@ -51,5 +51,33 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             logger.error(e.getMessage());
             throw e;
         }
+    }
+
+    @Override
+    public Optional<Set<TrainingType>> getTrainingTypes() {
+        try {
+            Session session = sessionFactory.openSession();
+
+            String sql = """
+                    SELECT t\s
+                    FROM TrainingType t\s
+                    """;
+
+            Set<TrainingType> trainingType = new HashSet<>(session.createQuery(sql.strip(), TrainingType.class)
+                    .getResultList());
+
+            Optional<Set<TrainingType>> optionalTrainingType = Optional.of(trainingType);
+
+            optionalTrainingType.ifPresentOrElse(
+                    (trainingTypes) -> logger.info("Training types found"),
+                    () -> logger.warn("Training types not found")
+            );
+
+            return optionalTrainingType;
+        } catch (HibernateException e){
+            logger.error(e.getMessage());
+            throw e;
+        }
+
     }
 }

@@ -31,4 +31,5 @@ public class TrainingController {
 
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
     }
+
 }
