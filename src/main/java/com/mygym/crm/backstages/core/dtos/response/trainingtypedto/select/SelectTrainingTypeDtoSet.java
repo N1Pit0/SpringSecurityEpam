@@ -10,7 +10,7 @@ public class SelectTrainingTypeDtoSet {
     private Set<SelectTrainingType> trainingTypes;
 
     @Data
-    public static class SelectTrainingType{
+    public static class SelectTrainingType {
 
         private Long trainingTypeId;
 

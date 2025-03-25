@@ -20,13 +20,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Component("applicationFacade")
 public class ApplicationFacade {
+    private static final Logger logger = LoggerFactory.getLogger(ApplicationFacade.class);
     private final TraineeService traineeService;
     private final TrainerService trainerService;
     private final TrainingService trainingService;
-    private static final Logger logger = LoggerFactory.getLogger(ApplicationFacade.class);
 
     @Autowired
     public ApplicationFacade(TraineeService traineeService,
@@ -37,31 +38,31 @@ public class ApplicationFacade {
         this.trainingService = trainingService;
     }
 
-    public void createTrainee(TraineeDto traineeDTO){
+    public void createTrainee(TraineeDto traineeDTO) {
         logger.info("Trying to create new trainee");
         traineeService.create(traineeDTO);
     }
 
-    public void createTrainer(TrainerDto trainerDTO){
+    public void createTrainer(TrainerDto trainerDTO) {
         logger.info("Trying to create new trainer");
         trainerService.create(trainerDTO);
     }
 
-    public void addTraining(TrainingDto trainingDTO){
+    public void addTraining(TrainingDto trainingDTO) {
         logger.info("Trying to add new training");
         trainingService.add(trainingDTO);
     }
 
-    public Trainee selectTrainee(SecurityDto securityDTO, Long id){
+    public Trainee selectTrainee(SecurityDto securityDTO, Long id) {
         logger.info("Trying to get a trainee by id: {}", id);
-        return traineeService.getById(securityDTO,id)
+        return traineeService.getById(securityDTO, id)
                 .orElseThrow(() -> {
                     logger.error("No trainee present with id: {}", id);
                     return new NoTraineeException("No trainee present with id: " + id);
                 });
     }
 
-    public Trainee selectTraineeWithUserName(SecurityDto securityDTO, String userName){
+    public Trainee selectTraineeWithUserName(SecurityDto securityDTO, String userName) {
         logger.info("Trying to get a trainee by name: {}", userName);
         return traineeService.getByUserName(securityDTO, userName)
                 .orElseThrow(() -> {
@@ -70,7 +71,7 @@ public class ApplicationFacade {
                 });
     }
 
-    public Trainer selectTrainer(SecurityDto securityDTO, Long id){
+    public Trainer selectTrainer(SecurityDto securityDTO, Long id) {
         logger.info("Trying to get a trainer by id: {}", id);
         return trainerService.getById(securityDTO, id)
                 .orElseThrow(() -> {
@@ -79,7 +80,7 @@ public class ApplicationFacade {
                 });
     }
 
-    public Trainer selectTrainerWithUserName(SecurityDto securityDTO, String userName){
+    public Trainer selectTrainerWithUserName(SecurityDto securityDTO, String userName) {
         logger.info("Trying to get a trainer by name: {}", userName);
         return trainerService.getByUserName(securityDTO, userName)
                 .orElseThrow(() -> {
@@ -88,7 +89,7 @@ public class ApplicationFacade {
                 });
     }
 
-    public Training selectTraining(Long trainingKey){
+    public Training selectTraining(Long trainingKey) {
         logger.info("Trying to get a training by trainingKey: {}", trainingKey);
         return trainingService.getById(trainingKey)
                 .orElseThrow(() -> {
@@ -97,12 +98,12 @@ public class ApplicationFacade {
                 });
     }
 
-    public void updateTrainee(SecurityDto securityDTO, Long id, TraineeDto traineeDTO){
+    public void updateTrainee(SecurityDto securityDTO, Long id, TraineeDto traineeDTO) {
         logger.info("Trying to update trainee with id {}", id);
         traineeService.update(securityDTO, id, traineeDTO);
     }
 
-    public void updateTrainer(SecurityDto securityDTO, Long id, TrainerDto trainerDTO){
+    public void updateTrainer(SecurityDto securityDTO, Long id, TrainerDto trainerDTO) {
         logger.info("Trying to update trainer with id {}", id);
         trainerService.update(securityDTO, id, trainerDTO);
     }
@@ -112,45 +113,45 @@ public class ApplicationFacade {
         traineeService.delete(securityDTO, id);
     }
 
-    public void deleteTraineeWithUserName(SecurityDto securityDTO, String userName){
+    public void deleteTraineeWithUserName(SecurityDto securityDTO, String userName) {
         logger.info("Trying to delete trainee by name: {}", userName);
         traineeService.deleteWithUserName(securityDTO, userName);
     }
 
-    public void changePasswordForTrainee(SecurityDto securityDTO, String userName, String newPassword){
+    public void changePasswordForTrainee(SecurityDto securityDTO, String userName, String newPassword) {
         logger.info("Trying to change password for trainee with userName {}", userName);
         traineeService.changePassword(securityDTO, userName, newPassword);
     }
 
-    public void changePasswordForTrainer(SecurityDto securityDTO, String userName, String newPassword){
+    public void changePasswordForTrainer(SecurityDto securityDTO, String userName, String newPassword) {
         logger.info("Trying to change password for trainer with userName {}", userName);
         trainerService.changePassword(securityDTO, userName, newPassword);
     }
 
-    public void toggleIsActiveForTrainee(SecurityDto securityDTO, String userName){
+    public void toggleIsActiveForTrainee(SecurityDto securityDTO, String userName) {
         logger.info("Trying to toggle isActive for trainee with userName {}", userName);
         traineeService.toggleIsActive(securityDTO, userName);
     }
 
-    public void toggleIsActiveForTrainer(SecurityDto securityDTO, String userName){
+    public void toggleIsActiveForTrainer(SecurityDto securityDTO, String userName) {
         logger.info("Trying to toggle isActive for trainer with userName {}", userName);
         trainerService.toggleIsActive(securityDTO, userName);
     }
 
-    public List<Training> getTraineeTrainings(SecurityDto securityDTO, String username, LocalDate fromDate,
-                                              LocalDate toDate, String trainerName, String trainingTypeName){
+    public Set<Training> getTraineeTrainings(SecurityDto securityDTO, String username, LocalDate fromDate,
+                                             LocalDate toDate, String trainerName, String trainingTypeName) {
         logger.info("Trying to get traine trainings with username {}", username);
-        return traineeService.getTraineeTrainings(securityDTO, username, fromDate, toDate, trainerName, trainingTypeName);
+        return traineeService.getTraineeTrainings(securityDTO, username, fromDate, toDate, trainerName, trainingTypeName).get();
     }
 
-    public List<Training> getTrainerTrainings(SecurityDto securityDTO, String username, LocalDate fromDate,
-                                              LocalDate toDate, String traineeName){
+    public Set<Training> getTrainerTrainings(SecurityDto securityDTO, String username, LocalDate fromDate,
+                                             LocalDate toDate, String traineeName) {
         logger.info("Trying to get trainer trainings with username {}", username);
-        return trainerService.getTrainerTrainings(securityDTO, username, fromDate, toDate, traineeName);
+        return trainerService.getTrainerTrainings(securityDTO, username, fromDate, toDate, traineeName).get();
     }
 
     public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
-                                                                    String trainerUserName, String traineeUserName){
+                                                                    String trainerUserName, String traineeUserName) {
         logger.info("Trying to get Trainers not matched with Trainee with userName {}", traineeUserName);
         return trainerService.getTrainersNotTrainingTraineesWithUserName(securityDto, trainerUserName, traineeUserName);
     }

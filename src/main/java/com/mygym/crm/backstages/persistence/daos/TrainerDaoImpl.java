@@ -1,5 +1,6 @@
 package com.mygym.crm.backstages.persistence.daos;
 
+import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
@@ -16,16 +17,14 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Repository
 public class TrainerDaoImpl implements TrainerDao {
 
-    private SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(TrainerDaoImpl.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -37,12 +36,12 @@ public class TrainerDaoImpl implements TrainerDao {
         checkTrainer(trainer, Trainer.class);
 
         try {
-            logger.info("Creating trainer with UserName: {}", trainer.getUserName());
+            logger.info("Creating trainer with userName: {}", trainer.getUserName());
             Session session = this.sessionFactory.getCurrentSession();
             Serializable generatedID = session.save(trainer);
 
             if (generatedID != null) {
-                logger.info("Successfully created trainer with UserName: {}", trainer.getUserName());
+                logger.info("Successfully created trainer with userName: {}", trainer.getUserName());
                 return Optional.of(trainer);
             }
         } catch (HibernateError e) {
@@ -95,75 +94,75 @@ public class TrainerDaoImpl implements TrainerDao {
     }
 
     @Override
-    public Optional<Trainer> selectWithUserName(String username) {
-        checkTrainer(username, String.class);
+    public Optional<Trainer> selectWithUserName(String userName) {
+        checkTrainer(userName, String.class);
 
-        logger.info("Attempting to select trainer with username: {}", username);
+        logger.info("Attempting to select trainer with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-             SELECT t FROM Trainer t\s
-             LEFT JOIN FETCH t.trainings tr\s
-             WHERE t.userName = :username
-           """;
+                      SELECT t FROM Trainer t\s
+                      LEFT JOIN FETCH t.trainings tr\s
+                      WHERE t.userName = :userName
+                    """;
 
             Trainer trainer = (Trainer) session.createQuery(sql.strip(), Trainer.class)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .uniqueResult();
 
             if (trainer != null) {
-                logger.info("Successfully selected trainer with username: {}", username);
+                logger.info("Successfully selected trainer with userName: {}", userName);
                 return Optional.of(trainer);
             }
 
-            logger.warn("No trainer found with username: {}", username);
+            logger.warn("No trainer found with userName: {}", userName);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting trainer with username: {} with message \n" + " {}", username, e.getMessage());
+            logger.error("Error selecting trainer with userName: {} with message \n" + " {}", userName, e.getMessage());
             throw e;
         }
     }
 
     @Override
-    public boolean changePassword(String username, String newPassword) {
-        checkTrainer(username, String.class);
+    public boolean changePassword(String userName, String newPassword) {
+        checkTrainer(userName, String.class);
 
-        logger.info("Attempting to change password for trainer with username: {}", username);
+        logger.info("Attempting to change password for trainer with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-                UPDATE Trainer t\s
-                SET t.password = :newPassword\s
-                WHERE t.userName = :username
-               """;
+                     UPDATE Trainer t\s
+                     SET t.password = :newPassword\s
+                     WHERE t.userName = :userName
+                    """;
 
             int affectedRows = session.createQuery(sql.strip())
                     .setParameter("newPassword", newPassword)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .executeUpdate();
 
             if (affectedRows == 1) {
-                logger.info("Successfully changed password for trainer with username: {}", username);
+                logger.info("Successfully changed password for trainer with userName: {}", userName);
                 return true;
             }
 
-            logger.warn("No trainer found to change password with username: {}", username);
+            logger.warn("No trainer found to change password with userName: {}", userName);
             return false;
         } catch (Exception e) {
-            logger.error("Error changing password for trainer with username: {}", username, e);
+            logger.error("Error changing password for trainer with userName: {}", userName, e);
             throw e;
         }
     }
 
     @Override
-    public boolean toggleIsActive(String username) {
-        checkTrainer(username, String.class);
+    public boolean toggleIsActive(String userName) {
+        checkTrainer(userName, String.class);
 
-        logger.info("Attempting to toggle isActive for trainer with username: {}", username);
+        logger.info("Attempting to toggle isActive for trainer with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
@@ -171,15 +170,15 @@ public class TrainerDaoImpl implements TrainerDao {
             String sql = """
                     SELECT t.isActive\s
                     From Trainer t\s
-                    WHERE t.userName = :username
+                    WHERE t.userName = :userName
                     """;
 
             Boolean isActive = (Boolean) session.createQuery(sql.strip(), Boolean.class)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .uniqueResult();
 
             if (isActive == null) {
-                logger.warn("No trainer found to toggle isActive with username: {}", username);
+                logger.warn("No trainer found to toggle isActive with userName: {}", userName);
                 return false;
             }
 
@@ -188,34 +187,34 @@ public class TrainerDaoImpl implements TrainerDao {
             sql = """
                     UPDATE Trainer t\s
                     SET t.isActive = :isActive\s
-                    WHERE t.userName = :username
+                    WHERE t.userName = :userName
                     """;
 
             int affectedRows = session.createQuery(sql.strip())
                     .setParameter("isActive", newIsActive)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .executeUpdate();
 
             if (affectedRows == 1) {
-                logger.info("Successfully toggled isActive for trainer with username: {} from: {} to: {}",
-                        username,
+                logger.info("Successfully toggled isActive for trainer with userName: {} from: {} to: {}",
+                        userName,
                         isActive,
                         newIsActive);
                 return true;
             }
 
-            logger.warn("Failed to toggle isActive for trainer with username: {}", username);
+            logger.warn("Failed to toggle isActive for trainer with userName: {}", userName);
             return false;
 
-        }catch (Exception e) {
-            logger.error("Error toggling isActive for trainer with username: {}", username, e);
+        } catch (Exception e) {
+            logger.error("Error toggling isActive for trainer with userName: {}", userName, e);
             throw e;
         }
     }
 
-    public List<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate,
-                                              String traineeName) {
-        List<Training> result = new ArrayList<>();
+    public Set<Training> getTrainerTrainings(String userName, LocalDate fromDate, LocalDate toDate,
+                                             String traineeName) {
+        Set<Training> result = new HashSet<>();
         Session session = null;
         try {
             session = sessionFactory.getCurrentSession();
@@ -225,10 +224,12 @@ public class TrainerDaoImpl implements TrainerDao {
 
             Join<Training, Trainer> trainerJoin = trainingRoot.join("trainer");
 
+            Join<Training, Trainee> traineeJoin = trainingRoot.join("trainee");
+
             List<Predicate> predicates = new ArrayList<>();
 
-            if (username != null && !username.trim().isEmpty()) {
-                predicates.add(cb.equal(trainerJoin.get("username"), username));
+            if (userName != null && !userName.trim().isEmpty()) {
+                predicates.add(cb.equal(trainerJoin.get("userName"), userName));
             }
 
             if (fromDate != null) {
@@ -240,27 +241,27 @@ public class TrainerDaoImpl implements TrainerDao {
             }
 
             if (traineeName != null && !traineeName.trim().isEmpty()) {
-                predicates.add(cb.equal(trainingRoot.get("traineeName"), traineeName));
+                predicates.add(cb.equal(traineeJoin.get("firstName"), traineeName));
             }
 
             cq.select(trainingRoot).where(predicates.toArray(new Predicate[0]));
 
             TypedQuery<Training> query = session.createQuery(cq);
 
-            result = query.getResultList();
-            logger.info("Retrieved {} training records for user {}.", result.size(), username);
+            result = new HashSet<>(query.getResultList());
+            logger.info("Retrieved {} training records for user {}.", result.size(), userName);
         } catch (Exception e) {
-            logger.error("Error retrieving training records for user {}: {}", username, e.getMessage(), e);
+            logger.error("Error retrieving training records for user {}: {}", userName, e.getMessage(), e);
             throw e;
         }
         return result;
     }
 
     @Override
-    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName){
+    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName) {
         checkTrainer(userName, String.class);
 
-        logger.info("Trying to get Trainers that do not teach trainees with username: {}", userName);
+        logger.info("Trying to get Trainers that do not teach trainees with userName: {}", userName);
 
         List<Trainer> result = new ArrayList<>();
 
@@ -268,21 +269,20 @@ public class TrainerDaoImpl implements TrainerDao {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-                SELECT tr\s
-                FROM Trainer tr\s
-                WHERE NOT EXISTS (
-                    SELECT 1\s
-                    FROM Trainee t\s
-                    JOIN t.trainings trn\s
-                    WHERE trn.trainer = tr AND t.userName = :userName
-                )
-           """;
+                         SELECT tr\s
+                         FROM Trainer tr\s
+                         WHERE NOT EXISTS (
+                             SELECT 1\s
+                             FROM Trainee t\s
+                             JOIN t.trainings trn\s
+                             WHERE trn.trainer = tr AND t.userName = :userName
+                         )
+                    """;
             result = session.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
                     .getResultList();
-        }
-        catch (Exception e) {
-            logger.error("Error retrieving Trainers that do not teach trainees with username: {} : {}", userName, e.getMessage(), e);
+        } catch (Exception e) {
+            logger.error("Error retrieving Trainers that do not teach trainees with userName: {} : {}", userName, e.getMessage(), e);
             throw e;
         }
 
@@ -300,8 +300,8 @@ public class TrainerDaoImpl implements TrainerDao {
                     logger.error("Trainer ID is null");
                     throw new IllegalArgumentException("Trainer ID must not be null");
                 case "java.lang.String":
-                    logger.error("Trainer username is null");
-                    throw new IllegalArgumentException("Trainer username must not be null");
+                    logger.error("Trainer userName is null");
+                    throw new IllegalArgumentException("Trainer userName must not be null");
                 default:
                     throw new IllegalArgumentException("Unexpected type: " + className);
             }

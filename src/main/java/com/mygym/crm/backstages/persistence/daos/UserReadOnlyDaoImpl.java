@@ -18,8 +18,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
-    private SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(UserReadOnlyDaoImpl.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -48,7 +48,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
             return userOptional;
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }
@@ -56,16 +56,16 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
     @Override
     public Long countSpecificUserName(String specificUserName) {
-        try{
+        try {
             Session session = this.sessionFactory.getCurrentSession();
             String sql = """
-                SELECT count(*)\s
-                FROM user_table\s
-                WHERE username LIKE :name
-            """;
+                        SELECT count(*)\s
+                        FROM user_table\s
+                        WHERE username LIKE :name
+                    """;
             return (Long) session.createNativeQuery(sql.strip()).addScalar("count", StandardBasicTypes.LONG)
                     .setParameter("name", specificUserName + "%").uniqueResult();
-        } catch(HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }

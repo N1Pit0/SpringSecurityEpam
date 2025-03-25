@@ -3,11 +3,11 @@ package com.mygym.crm.backstages.core.services;
 import com.mygym.crm.backstages.core.dtos.request.common.UserDto;
 import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
 import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jakarta.validation.Validator;
 
 import java.util.Random;
 import java.util.Set;
@@ -15,9 +15,9 @@ import java.util.Set;
 @Service
 public class UserService {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UserReadOnlyDao userDao;
     private Validator validator;
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     @Autowired
     public void setUserDao(UserReadOnlyDao userDao) {
@@ -29,7 +29,7 @@ public class UserService {
         this.validator = validator;
     }
 
-    public <T> void validateDto(T Dto){
+    public <T> void validateDto(T Dto) {
         Set<ConstraintViolation<T>> constraintViolations = validator.validate(Dto);
         if (!constraintViolations.isEmpty()) {
             StringBuilder sb = new StringBuilder();
@@ -42,7 +42,7 @@ public class UserService {
         }
     }
 
-    public String generateUserName(UserDto userDto){
+    public String generateUserName(UserDto userDto) {
         String baseUserName = userDto.getFirstName() + "." + userDto.getLastName();
 
         Long userNameCount = userDao.countSpecificUserName(baseUserName);
@@ -50,11 +50,11 @@ public class UserService {
         return userNameCount == 0 ? baseUserName : baseUserName + userNameCount;
     }
 
-    public String generatePassword(){
+    public String generatePassword() {
         StringBuilder password = new StringBuilder();
         Random random = new Random();
-        for(int i = 0; i < 10; i++){
-            char c = (char) (random.nextInt(33,127)); //ASCII representation of symbols for password
+        for (int i = 0; i < 10; i++) {
+            char c = (char) (random.nextInt(33, 127)); //ASCII representation of symbols for password
             password.append(c);
         }
 

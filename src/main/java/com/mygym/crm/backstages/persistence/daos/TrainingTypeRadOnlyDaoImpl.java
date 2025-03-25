@@ -17,8 +17,8 @@ import java.util.Set;
 @Repository
 public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
 
-    private SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(TrainingTypeRadOnlyDaoImpl.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -27,7 +27,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
 
     @Override
     public Optional<TrainingType> getTrainingTypeByUserName(String trainingTypeName) {
-        try{
+        try {
             Session session = sessionFactory.openSession();
             String sql = """
                     SELECT t\s
@@ -35,7 +35,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
                     WHERE t.trainingTypeName = :trainingTypeName
                     """;
 
-            TrainingType trainingType = (TrainingType)session.createQuery(sql.strip())
+            TrainingType trainingType = (TrainingType) session.createQuery(sql.strip())
                     .setParameter("trainingTypeName", trainingTypeName)
                     .uniqueResult();
 
@@ -47,7 +47,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             );
 
             return optionalTrainingType;
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }
@@ -74,7 +74,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             );
 
             return optionalTrainingType;
-        } catch (HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }

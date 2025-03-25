@@ -2,7 +2,7 @@ package com.mygym.crm.backstages.repositories.daorepositories;
 
 import java.util.Optional;
 
-public interface BaseUserDao<T, ID>{
+public interface BaseUserDao<T, ID> {
     Optional<T> create(T model);
 
     Optional<T> update(T model);

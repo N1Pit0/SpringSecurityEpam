@@ -19,13 +19,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class TrainingServiceImpl implements TrainingService{
+public class TrainingServiceImpl implements TrainingService {
 
+    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
     private final TrainingDao trainingDAO;
     private final TrainerDao trainerDao;
     private final TraineeDao traineeDao;
     private UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
 
 
     @Autowired

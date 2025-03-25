@@ -1,7 +1,6 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import lombok.Getter;
 import org.hibernate.HibernateError;
@@ -19,9 +18,9 @@ import java.util.Optional;
 @Repository
 public class TrainingDaoImpl implements TrainingDao {
 
+    private static final Logger logger = LoggerFactory.getLogger(TrainingDaoImpl.class);
     @Getter
     private SessionFactory sessionFactory;
-    private static final Logger logger = LoggerFactory.getLogger(TrainingDaoImpl.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {

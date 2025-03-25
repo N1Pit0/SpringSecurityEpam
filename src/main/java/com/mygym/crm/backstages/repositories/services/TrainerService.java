@@ -9,12 +9,13 @@ import com.mygym.crm.backstages.domain.models.Training;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface TrainerService extends UserService<TrainerDto, Trainer> {
 
-    List<Training> getTrainerTrainings(SecurityDto securityDTO, String username, LocalDate fromDate, LocalDate toDate,
-                                       String traineeName);
+    Optional<Set<Training>> getTrainerTrainings(SecurityDto securityDTO, String username, LocalDate fromDate, LocalDate toDate,
+                                                String traineeName);
 
     List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
-                                                             String TrainerUserName,String TraineeUserName);
+                                                             String TrainerUserName, String TraineeUserName);
 }

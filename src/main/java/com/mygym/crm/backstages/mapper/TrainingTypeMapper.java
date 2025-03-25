@@ -3,7 +3,6 @@ package com.mygym.crm.backstages.mapper;
 import com.mygym.crm.backstages.core.dtos.response.trainingtypedto.select.SelectTrainingTypeDtoSet;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -13,8 +12,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface TrainingTypeMapper {
 
-    @Mapping(target = "trainingTypeId", source = "trainingTypeId")
-    @Mapping(target = "trainingTypeName", source = "trainingTypeName")
     SelectTrainingTypeDtoSet.SelectTrainingType trainingTypeToTrainingTypeDto(TrainingType trainingType);
 
     default SelectTrainingTypeDtoSet toTrainingTypeDtoSet(Set<TrainingType> trainingTypeset) {

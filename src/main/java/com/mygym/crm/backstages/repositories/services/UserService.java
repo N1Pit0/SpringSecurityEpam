@@ -1,12 +1,10 @@
 package com.mygym.crm.backstages.repositories.services;
 
-import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
-import com.mygym.crm.backstages.domain.models.Trainer;
 
 import java.util.Optional;
 
-public interface UserService <T, E>{
+public interface UserService<T, E> {
 
     Optional<E> create(T t);
 

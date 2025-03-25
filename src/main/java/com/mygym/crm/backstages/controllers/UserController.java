@@ -20,10 +20,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Void> login(@RequestBody SecurityDto securityDto){
+    public ResponseEntity<Void> login(@RequestBody SecurityDto securityDto) {
         boolean isFound = userSecurityService.authenticate(securityDto, securityDto.getUserName());
 
-        if(isFound){
+        if (isFound) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

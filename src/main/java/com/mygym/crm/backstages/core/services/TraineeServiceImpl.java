@@ -17,15 +17,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TraineeServiceImpl implements TraineeService {
 
+    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImpl.class);
     private final TraineeDao traineeDao;
     private final UserService userService;
-    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImpl.class);
 
     @Autowired
     public TraineeServiceImpl(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService) {
@@ -230,14 +230,14 @@ public class TraineeServiceImpl implements TraineeService {
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public List<Training> getTraineeTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
-                                              LocalDate toDate, String trainerName, String trainingTypeName) {
-        List<Training> trainings = traineeDao.getTraineeTrainings(username, fromDate, toDate, trainerName, trainingTypeName);
+    public Optional<Set<Training>> getTraineeTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
+                                                       LocalDate toDate, String trainerName, String trainingTypeName) {
+        Set<Training> trainings = traineeDao.getTraineeTrainings(username, fromDate, toDate, trainerName, trainingTypeName);
         if (trainings.isEmpty()) {
             logger.warn("No training found for Trainee with UserName: {}", username);
         } else
             logger.info("training record of size: {} was found for Trainee with UserName: {}", trainings.size(), username);
-        return trainings;
+        return Optional.of(trainings);
     }
 
 

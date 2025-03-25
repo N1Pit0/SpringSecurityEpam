@@ -15,8 +15,8 @@ import java.util.Set;
 @Service
 public class TrainingTypeReadOnlyServiceImpl implements TrainingTypeRadOnlyService {
 
-    private TrainingTypeReadOnlyDao trainingTypeReadOnlyDao;
     private static final Logger logger = LoggerFactory.getLogger(TrainingTypeReadOnlyServiceImpl.class);
+    private TrainingTypeReadOnlyDao trainingTypeReadOnlyDao;
 
     @Autowired
     public void setTrainingTypeReadOnlyDao(TrainingTypeReadOnlyDao trainingTypeReadOnlyDao) {
@@ -34,7 +34,7 @@ public class TrainingTypeReadOnlyServiceImpl implements TrainingTypeRadOnlyServi
                     logger.info("trainingTypes has been found");
                     return trainingTypes;
                 })
-                .or(() ->{
+                .or(() -> {
                     logger.info("trainingTypes not found");
                     return Optional.empty();
                 });

@@ -22,7 +22,7 @@ public class Training implements Serializable {
     private Trainer trainer;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id_trainee",  referencedColumnName = "user_id")
+    @JoinColumn(name = "user_id_trainee", referencedColumnName = "user_id")
     private Trainee trainee;
 
     @Column(nullable = false)

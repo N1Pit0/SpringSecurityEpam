@@ -1,14 +1,11 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.annotations.security.SecureMethod;
-import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
-import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
-import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnlyDao;
@@ -23,14 +20,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service("trainerServiceIMPL")
-public class TrainerServiceImpl implements TrainerService{
+public class TrainerServiceImpl implements TrainerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
     private final TrainerDao trainerDao;
     private final UserService userService;
     private final TrainingTypeReadOnlyDao trainingTypeRadOnlyDao;
-    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
 
     @Autowired
     public TrainerServiceImpl(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
@@ -56,7 +54,7 @@ public class TrainerServiceImpl implements TrainerService{
         logger.info("Trying to find and set TrainingType while attempting to create a new trainer");
         Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if(optionalTrainingType.isEmpty()){
+        if (optionalTrainingType.isEmpty()) {
             logger.warn("TrainingType with trainingTypeName {} not found", trainerDto.getTrainingTypeName());
             return Optional.empty();
         }
@@ -96,7 +94,7 @@ public class TrainerServiceImpl implements TrainerService{
         logger.info("Trying to find and set TrainingType while attempting to update trainer for update");
         Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if(optionalTrainingType.isEmpty()){
+        if (optionalTrainingType.isEmpty()) {
             logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName for update", trainerDto.getTrainingTypeName());
             return Optional.empty();
         }
@@ -137,7 +135,7 @@ public class TrainerServiceImpl implements TrainerService{
         logger.info("Trying to find and set TrainingType while attempting to update trainer");
         Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if(optionalTrainingType.isEmpty()){
+        if (optionalTrainingType.isEmpty()) {
             logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName", trainerDto.getTrainingTypeName());
             return Optional.empty();
         }
@@ -159,7 +157,7 @@ public class TrainerServiceImpl implements TrainerService{
         return optionalTrainer;
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public Optional<Trainer> getById(SecurityDto securityDto, Long id) {
@@ -178,10 +176,10 @@ public class TrainerServiceImpl implements TrainerService{
         return trainerOptional;
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName){
+    public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName) {
         logger.info("Trying to find Trainer with UserName: {}", userName);
 
         Optional<Trainer> trainerOptional = trainerDao.selectWithUserName(userName);
@@ -204,11 +202,10 @@ public class TrainerServiceImpl implements TrainerService{
 
         boolean success = trainerDao.changePassword(username, newPassword);
 
-        if(success){
+        if (success) {
             logger.info("Successfully changed password for Trainer with UserName: {}", username);
             return true;
-        }
-        else {
+        } else {
             logger.warn("Failed to change password for Trainer with UserName: {}", username);
             return false;
         }
@@ -222,46 +219,45 @@ public class TrainerServiceImpl implements TrainerService{
 
         boolean success = trainerDao.toggleIsActive(username);
 
-        if(success){
+        if (success) {
             logger.info("Successfully toggled isActive for Trainer with UserName: {}", username);
             return true;
-        }
-        else {
+        } else {
             logger.warn("Failed to toggled isActive for Trainer with UserName: {}", username);
             return false;
         }
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public List<Training> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
-                                              LocalDate toDate, String traineeName) {
-        List<Training> trainings = trainerDao.getTrainerTrainings(username, fromDate, toDate, traineeName);
-        if(trainings.isEmpty()){
+    public Optional<Set<Training>> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
+                                                       LocalDate toDate, String traineeName) {
+        Set<Training> trainings = trainerDao.getTrainerTrainings(username, fromDate, toDate, traineeName);
+        if (trainings.isEmpty()) {
             logger.warn("No training found for Trainer with UserName: {}", username);
-        }
-        else logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
-        return trainings;
+        } else
+            logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
+        return Optional.of(trainings);
     }
 
-    @Transactional(noRollbackFor= HibernateException.class, readOnly = true)
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
                                                                     String trainerUserName, String traineeUserName) {
 
         List<Trainer> trainers = trainerDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
-        if(trainers.isEmpty()){
+        if (trainers.isEmpty()) {
             logger.warn("No trainer found for Trainer with UserName: {}", trainerUserName);
-        }
-        else logger.info("Trainer record of size: {} was found for Trainer not matched with Trainee with username: {}",
-                trainers.size(), traineeUserName);
+        } else
+            logger.info("Trainer record of size: {} was found for Trainer not matched with Trainee with username: {}",
+                    trainers.size(), traineeUserName);
         return trainers;
     }
 
 
-    private Trainer map(TrainerDto trainerDto){
+    private Trainer map(TrainerDto trainerDto) {
         Trainer trainer = new Trainer();
         logger.info("New Trainer, populating it with given trainerDto");
 

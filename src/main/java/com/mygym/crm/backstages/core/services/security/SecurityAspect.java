@@ -3,12 +3,12 @@ package com.mygym.crm.backstages.core.services.security;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.aspectj.lang.annotation.Aspect;
 
 import java.util.Arrays;
 
@@ -26,7 +26,8 @@ public class SecurityAspect {
     }
 
     @Pointcut("@annotation(com.mygym.crm.backstages.annotations.security.SecureMethod)")
-    public void secureMethod() {}
+    public void secureMethod() {
+    }
 
     @Around("secureMethod()")
     public Object validateCredentials(ProceedingJoinPoint joinPoint) throws Throwable {

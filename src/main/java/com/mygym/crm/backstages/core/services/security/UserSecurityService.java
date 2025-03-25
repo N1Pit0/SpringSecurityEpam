@@ -14,8 +14,8 @@ import java.util.Optional;
 @Service
 public class UserSecurityService {
 
-    private UserReadOnlyDao userReadOnlyDao;
     private static final Logger logger = LoggerFactory.getLogger(UserSecurityService.class);
+    private UserReadOnlyDao userReadOnlyDao;
 
     @Autowired
     public void setUserReadOnlyDao(UserReadOnlyDao userReadOnlyDao) {
@@ -35,7 +35,7 @@ public class UserSecurityService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             boolean match = user.getPassword().equals(securityDto.getPassword());
-            if (match){
+            if (match) {
                 logger.info("User with username: {} authenticated", securityDto.getUserName());
                 return true;
             }
@@ -57,15 +57,14 @@ public class UserSecurityService {
             authorizedWithIdMatch = user.getUserId().equals(id);
             authenticatedWIthPasswordMatch = user.getPassword().equals(securityDto.getPassword());
 
-            if (authorizedWithIdMatch && authenticatedWIthPasswordMatch){
+            if (authorizedWithIdMatch && authenticatedWIthPasswordMatch) {
                 logger.info("User with id: {} authenticated", id);
                 return true;
             }
 
-            if(!authorizedWithIdMatch){
+            if (!authorizedWithIdMatch) {
                 logger.info("User with id: {} not authorized", user.getUserId());
-            }
-            else logger.error("User with id: {} not authenticated", user.getUserId());
+            } else logger.error("User with id: {} not authenticated", user.getUserId());
 
         }
         return false;

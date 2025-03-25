@@ -4,7 +4,7 @@ import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import lombok.Data;
 
 @Data
-public class CombineUpdateUserDtoWithSecurityDto<T> {
+public class CombineUserDtoWithSecurityDto<T> {
 
     private T userDto;
 

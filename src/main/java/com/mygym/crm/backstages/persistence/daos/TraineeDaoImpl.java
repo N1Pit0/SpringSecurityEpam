@@ -1,10 +1,10 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
-
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateError;
@@ -18,16 +18,14 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Repository("traineeDaoImpl")
 public class TraineeDaoImpl implements TraineeDao {
 
-    private SessionFactory sessionFactory;
     private static final Logger logger = LoggerFactory.getLogger(TraineeDaoImpl.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
@@ -39,12 +37,12 @@ public class TraineeDaoImpl implements TraineeDao {
         checkTrainee(trainee, Trainee.class);
 
         try {
-            logger.info("Creating trainee with UserName: {}", trainee.getUserName());
+            logger.info("Creating trainee with userName: {}", trainee.getUserName());
             Session session = this.sessionFactory.getCurrentSession();
             Serializable generatedID = session.save(trainee);
 
             if (generatedID != null) {
-                logger.info("Successfully created trainee with UserName: {}", trainee.getUserName());
+                logger.info("Successfully created trainee with userName: {}", trainee.getUserName());
                 return Optional.of(trainee);
             }
         } catch (HibernateError e) {
@@ -73,10 +71,10 @@ public class TraineeDaoImpl implements TraineeDao {
         }
     }
 
-    public Optional<Trainee> updateByUserName(Trainee trainee){
+    public Optional<Trainee> updateByUserName(Trainee trainee) {
         checkTrainee(trainee, Trainee.class);
 
-        try{
+        try {
             logger.info("Updating trainee with userName: {}", trainee.getUserName());
 
             Session session = this.sessionFactory.getCurrentSession();
@@ -104,7 +102,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             return Optional.of(updatedTrainee);
 
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;
         }
@@ -137,26 +135,26 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
-    public Optional<Trainee> deleteWithUserName(String username) {
-        checkTrainee(username, String.class);
+    public Optional<Trainee> deleteWithUserName(String userName) {
+        checkTrainee(userName, String.class);
 
-        logger.info("Attempting to delete trainee with username: {}", username);
+        logger.info("Attempting to delete trainee with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
-            Trainee trainee = selectWithUserName(username).orElse(null);
+            Trainee trainee = selectWithUserName(userName).orElse(null);
             if (trainee != null) {
                 session.delete(trainee);
-                logger.info("Deleted trainee with username: {}", username);
+                logger.info("Deleted trainee with userName: {}", userName);
 
                 return Optional.of(trainee);
 
             } else {
-                logger.warn("No trainee found with username: {} to delete", username);
+                logger.warn("No trainee found with userName: {} to delete", userName);
                 return Optional.empty();
             }
         } catch (HibernateException e) {
-            logger.error("Failed to delete trainee with username: {}. Error: {}", username, e.getMessage(), e);
+            logger.error("Failed to delete trainee with userName: {}. Error: {}", userName, e.getMessage(), e);
             throw e;
         }
     }
@@ -185,77 +183,77 @@ public class TraineeDaoImpl implements TraineeDao {
     }
 
     @Override
-    public Optional<Trainee> selectWithUserName(String username) {
-        checkTrainee(username, String.class);
+    public Optional<Trainee> selectWithUserName(String userName) {
+        checkTrainee(userName, String.class);
 
-        logger.info("Attempting to select trainee with username: {}", username);
+        logger.info("Attempting to select trainee with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-                  SELECT DISTINCT t FROM Trainee t
-                  LEFT JOIN FETCH t.trainings tr
-                  LEFT JOIN FETCH tr.trainer trainer
-                  LEFT JOIN FETCH trainer.trainingType
-                  WHERE t.userName = :username
-                """;
+                      SELECT DISTINCT t FROM Trainee t
+                      LEFT JOIN FETCH t.trainings tr
+                      LEFT JOIN FETCH tr.trainer trainer
+                      LEFT JOIN FETCH trainer.trainingType
+                      WHERE t.userName = :userName
+                    """;
 
             Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .uniqueResult();
 
             if (trainee != null) {
-                logger.info("Successfully selected trainee with username: {}", username);
+                logger.info("Successfully selected trainee with userName: {}", userName);
                 return Optional.of(trainee);
             }
 
-            logger.warn("No trainee found with username: {}", username);
+            logger.warn("No trainee found with userName: {}", userName);
             return Optional.empty();
         } catch (Exception e) {
-            logger.error("Error selecting trainee with username: {}", username, e);
+            logger.error("Error selecting trainee with userName: {}", userName, e);
             throw e;
         }
     }
 
     @Override
-    public boolean changePassword(String username, String newPassword) {
-        checkTrainee(username, String.class);
+    public boolean changePassword(String userName, String newPassword) {
+        checkTrainee(userName, String.class);
 
-        logger.info("Attempting to change password for trainee with username: {}", username);
+        logger.info("Attempting to change password for trainee with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
-                UPDATE Trainee t\s
-                SET t.password = :newPassword\s
-                WHERE t.userName = :username
-               """;
+                     UPDATE Trainee t\s
+                     SET t.password = :newPassword\s
+                     WHERE t.userName = :userName
+                    """;
 
             int affectedRows = session.createQuery(sql.strip())
                     .setParameter("newPassword", newPassword)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .executeUpdate();
 
             if (affectedRows == 1) {
-                logger.info("Successfully changed password for trainee with username: {}", username);
+                logger.info("Successfully changed password for trainee with userName: {}", userName);
                 return true;
             }
 
-            logger.warn("No trainee found to change password with username: {}", username);
+            logger.warn("No trainee found to change password with userName: {}", userName);
             return false;
         } catch (Exception e) {
-            logger.error("Error changing password for trainee with username: {}", username, e);
+            logger.error("Error changing password for trainee with userName: {}", userName, e);
             throw e;
         }
     }
 
     @Override
-    public boolean toggleIsActive(String username) {
-        checkTrainee(username, String.class);
+    public boolean toggleIsActive(String userName) {
+        checkTrainee(userName, String.class);
 
-        logger.info("Attempting to toggle isActive for trainee with username: {}", username);
+        logger.info("Attempting to toggle isActive for trainee with userName: {}", userName);
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
@@ -263,15 +261,15 @@ public class TraineeDaoImpl implements TraineeDao {
             String sql = """
                     SELECT t.isActive\s
                     From Trainee t\s
-                    WHERE t.userName = :username
+                    WHERE t.userName = :userName
                     """;
 
             Boolean isActive = (Boolean) session.createQuery(sql.strip(), Boolean.class)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .uniqueResult();
 
             if (isActive == null) {
-                logger.warn("No trainee found to toggle isActive with username: {}", username);
+                logger.warn("No trainee found to toggle isActive with userName: {}", userName);
                 return false;
             }
 
@@ -280,34 +278,34 @@ public class TraineeDaoImpl implements TraineeDao {
             sql = """
                     UPDATE Trainee t\s
                     SET t.isActive = :isActive\s
-                    WHERE t.userName = :username
+                    WHERE t.userName = :userName
                     """;
 
             int affectedRows = session.createQuery(sql.strip())
                     .setParameter("isActive", newIsActive)
-                    .setParameter("username", username)
+                    .setParameter("userName", userName)
                     .executeUpdate();
 
             if (affectedRows == 1) {
-                logger.info("Successfully toggled isActive for trainee with username: {} from: {} to: {}",
-                        username,
+                logger.info("Successfully toggled isActive for trainee with userName: {} from: {} to: {}",
+                        userName,
                         isActive,
                         newIsActive);
                 return true;
             }
 
-            logger.warn("Failed to toggle isActive for trainee with username: {}", username);
+            logger.warn("Failed to toggle isActive for trainee with userName: {}", userName);
             return false;
 
-        }catch (Exception e) {
-            logger.error("Error toggling isActive for trainee with username: {}", username, e);
+        } catch (Exception e) {
+            logger.error("Error toggling isActive for trainee with userName: {}", userName, e);
             throw e;
         }
     }
 
-    public List<Training> getTraineeTrainings(String username, LocalDate fromDate, LocalDate toDate,
-                                              String trainerName, String trainingTypeName) {
-        List<Training> result = new ArrayList<>();
+    public Set<Training> getTraineeTrainings(String userName, LocalDate fromDate, LocalDate toDate,
+                                             String trainerName, String trainingTypeName) {
+        Set<Training> result = new HashSet<>();
         Session session = null;
         try {
             session = sessionFactory.getCurrentSession();
@@ -319,10 +317,12 @@ public class TraineeDaoImpl implements TraineeDao {
 
             Join<Training, TrainingType> trainingTypeJoin = trainingRoot.join("trainingType");
 
+            Join<Training, Trainer> trainerJoin = trainingRoot.join("trainer");
+
             List<Predicate> predicates = new ArrayList<>();
 
-            if (username != null && !username.trim().isEmpty()) {
-                predicates.add(cb.equal(traineeJoin.get("username"), username));
+            if (userName != null && !userName.trim().isEmpty()) {
+                predicates.add(cb.equal(traineeJoin.get("userName"), userName));
             }
 
             if (fromDate != null) {
@@ -334,7 +334,7 @@ public class TraineeDaoImpl implements TraineeDao {
             }
 
             if (trainerName != null && !trainerName.trim().isEmpty()) {
-                predicates.add(cb.equal(trainingRoot.get("trainerName"), trainerName));
+                predicates.add(cb.equal(trainerJoin.get("firstName"), trainerName));
             }
 
             if (trainingTypeName != null && !trainingTypeName.trim().isEmpty()) {
@@ -345,11 +345,11 @@ public class TraineeDaoImpl implements TraineeDao {
 
             TypedQuery<Training> query = session.createQuery(cq);
 
-            result = query.getResultList();
-            logger.info("Retrieved {} training records for user {}.", result.size(), username);
+            result = new HashSet<>(query.getResultList());
+            logger.info("Retrieved {} training records for user {}.", result.size(), userName);
         } catch (Exception e) {
-            logger.error("Error retrieving training records for user {}: {}", username, e.getMessage(), e);
-             throw e;
+            logger.error("Error retrieving training records for user {}: {}", userName, e.getMessage(), e);
+            throw e;
         }
         return result;
     }
@@ -365,8 +365,8 @@ public class TraineeDaoImpl implements TraineeDao {
                     logger.error("Trainee ID is null");
                     throw new IllegalArgumentException("Trainee ID must not be null");
                 case "java.lang.String":
-                    logger.error("Trainee username is null");
-                    throw new IllegalArgumentException("Trainee username must not be null");
+                    logger.error("Trainee userName is null");
+                    throw new IllegalArgumentException("Trainee userName must not be null");
                 default:
                     throw new IllegalArgumentException("Unexpected type: " + className);
             }
