@@ -3,7 +3,7 @@ package com.mygym.crm.backstages.mapper;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.mapping.MapSelectTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.mapping.MapUpdateTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerDto;
-import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerNotAssignedDtoSet;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrainerNotAssignedDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerTrainingsDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.update.UpdateTrainerDto;
 import com.mygym.crm.backstages.core.dtos.response.trainingtypedto.select.SelectTrainingTypeDtoSet;
@@ -39,26 +39,6 @@ public interface TrainerMapper {
     SelectTrainerTrainingsDtoSet.SelectTrainerTrainingsDto mapTrainingToSelectTrainerTrainingsDto(Training training);
 
     SelectTrainingTypeDtoSet.SelectTrainingType trainingTypeToTrainingTypeDto(TrainingType trainingType);
-
-    @Mapping(target = "trainingTypeName", source = "trainingType.trainingTypeName")
-    SelectTrainerNotAssignedDtoSet.SelectTrainerNotAssignedDto mapTrainerToTrainerNotAssignedDto(Trainer trainer);
-
-    default SelectTrainerNotAssignedDtoSet trainerNotAssignedToSelectTrainerDtoSet(Set<Trainer> trainers) {
-        SelectTrainerNotAssignedDtoSet selectTrainerNotAssignedDtoSet = new SelectTrainerNotAssignedDtoSet();
-
-        if (trainers == null || trainers.isEmpty()) {
-            return selectTrainerNotAssignedDtoSet;
-        }
-
-        Set<SelectTrainerNotAssignedDtoSet.SelectTrainerNotAssignedDto> mappedSet = trainers.stream()
-                .filter(Objects::nonNull)
-                .map(this::mapTrainerToTrainerNotAssignedDto)
-                .collect(Collectors.toSet());
-
-        selectTrainerNotAssignedDtoSet.setNotAssignedTrainers(mappedSet);
-
-        return selectTrainerNotAssignedDtoSet;
-    }
 
     default SelectTrainerTrainingsDtoSet trainingToSelectTrainerTrainingDtoSet(Set<Training> trainings) {
         SelectTrainerTrainingsDtoSet selectTrainerTrainingsDtoSet = new SelectTrainerTrainingsDtoSet();

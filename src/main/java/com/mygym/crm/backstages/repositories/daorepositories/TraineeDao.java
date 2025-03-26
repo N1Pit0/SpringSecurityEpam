@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.repositories.daorepositories;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 
 import java.time.LocalDate;
@@ -17,4 +18,7 @@ public interface TraineeDao extends BaseUserDao<Trainee, Long> {
 
 
     Optional<Trainee> updateByUserName(Trainee trainee);
+
+    Set<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName);
+
 }

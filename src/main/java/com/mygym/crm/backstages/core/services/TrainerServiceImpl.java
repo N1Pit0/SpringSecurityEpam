@@ -241,22 +241,6 @@ public class TrainerServiceImpl implements TrainerService {
         return Optional.of(trainings);
     }
 
-    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
-    @Override
-    public Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
-                                                                    String traineeUserName) {
-
-        Set<Trainer> trainers = trainerDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
-        if (trainers.isEmpty()) {
-            logger.warn("No unassigned trainers found");
-        } else
-            logger.info("Trainer record of size: {} was found for Trainer not matched with Trainee with username: {}",
-                    trainers.size(), traineeUserName);
-        return Optional.of(trainers);
-    }
-
-
     private Trainer map(TrainerDto trainerDto) {
         Trainer trainer = new Trainer();
         logger.info("New Trainer, populating it with given trainerDto");

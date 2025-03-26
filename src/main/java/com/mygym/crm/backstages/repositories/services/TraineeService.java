@@ -4,6 +4,7 @@ package com.mygym.crm.backstages.repositories.services;
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 
 import java.time.LocalDate;
@@ -18,5 +19,7 @@ public interface TraineeService extends UserService<TraineeDto, Trainee> {
 
     Optional<Set<Training>> getTraineeTrainings(SecurityDto securityDTO, String username, LocalDate fromDate,
                                                 LocalDate toDate, String trainerName, String trainingTypeName);
+
+    Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto, String TraineeUserName);
 
 }

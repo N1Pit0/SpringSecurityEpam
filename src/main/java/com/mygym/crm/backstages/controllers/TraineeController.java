@@ -6,8 +6,10 @@ import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeTrainingsDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrainerNotAssignedDtoSet;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
@@ -70,6 +72,22 @@ public class TraineeController {
         return optionalTrainings
                 .map(mapper::trainingToSelectTraineeTrainingDtoSet)
                 .map(trainings -> new ResponseEntity<>(trainings, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping(value = "/{userName:.+}/not-assigned-trainers")
+    public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
+            @PathVariable("userName") String UserName,
+            @RequestBody SecurityDto securityDto){
+
+        Optional<Set<Trainer>> optionalTrainings = traineeService.getTrainersNotTrainingTraineesWithUserName(
+                securityDto,
+                UserName
+        );
+
+        return optionalTrainings
+                .map(mapper::trainerNotAssignedToSelectTrainerDtoSet)
+                .map(trainers -> new ResponseEntity<>(trainers, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

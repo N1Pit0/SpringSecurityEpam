@@ -354,6 +354,38 @@ public class TraineeDaoImpl implements TraineeDao {
         return result;
     }
 
+    @Override
+    public Set<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName) {
+        checkTrainee(userName, String.class);
+
+        logger.info("Trying to get Trainers that do not teach trainees with userName: {}", userName);
+
+        Set<Trainer> result = new HashSet<>();
+
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                         SELECT tr\s
+                         FROM Trainer tr\s
+                         WHERE NOT EXISTS (
+                             SELECT 1\s
+                             FROM Trainee t\s
+                             JOIN t.trainings trn\s
+                             WHERE trn.trainer = tr AND t.userName = :userName
+                         ) AND tr.isActive = true
+                    """;
+            result = new HashSet<>(session.createQuery(sql.strip(), Trainer.class)
+                    .setParameter("userName", userName)
+                    .getResultList());
+        } catch (Exception e) {
+            logger.error("Error retrieving Trainers that do not teach trainees with userName: {} : {}", userName, e.getMessage(), e);
+            throw e;
+        }
+
+        return result;
+    }
+
     private <T> void checkTrainee(T trainee, Class<T> tClass) {
         if (trainee == null) {
             String className = tClass.getName();

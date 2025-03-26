@@ -4,7 +4,6 @@ import com.mygym.crm.backstages.core.dtos.request.ChangePasswordDto;
 import com.mygym.crm.backstages.core.dtos.request.common.CombineUserDtoWithSecurityDto;
 import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerDto;
-import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerNotAssignedDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerTrainingsDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.update.UpdateTrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
@@ -69,22 +68,6 @@ public class TrainerController {
         return optionalTrainings
                 .map(mapper::trainingToSelectTrainerTrainingDtoSet)
                 .map(trainings -> new ResponseEntity<>(trainings, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    @GetMapping(value = "/not-assigned-to-trainee/{traineeUserName:.+}")
-    public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
-                        @PathVariable("traineeUserName") String traineeUserName,
-                        @RequestBody SecurityDto securityDto){
-
-        Optional<Set<Trainer>> optionalTrainings = trainerService.getTrainersNotTrainingTraineesWithUserName(
-                securityDto,
-                traineeUserName
-        );
-
-        return optionalTrainings
-                .map(mapper::trainerNotAssignedToSelectTrainerDtoSet)
-                .map(trainers -> new ResponseEntity<>(trainers, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

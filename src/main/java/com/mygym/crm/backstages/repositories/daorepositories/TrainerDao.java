@@ -11,5 +11,4 @@ public interface TrainerDao extends BaseUserDao<Trainer, Long> {
     Set<Training> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate,
                                       String traineeName);
 
-    Set<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName);
 }

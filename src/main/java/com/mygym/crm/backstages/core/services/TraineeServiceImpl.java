@@ -4,6 +4,7 @@ import com.mygym.crm.backstages.annotations.security.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
+import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTraineeException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
@@ -240,6 +241,20 @@ public class TraineeServiceImpl implements TraineeService {
         return Optional.of(trainings);
     }
 
+    @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
+    @SecureMethod
+    @Override
+    public Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
+                                                                             String traineeUserName) {
+
+        Set<Trainer> trainers = traineeDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
+        if (trainers.isEmpty()) {
+            logger.warn("No unassigned trainers found");
+        } else
+            logger.info("Trainer record of size: {} was found for Trainers not matched with Trainee with username: {}",
+                    trainers.size(), traineeUserName);
+        return Optional.of(trainers);
+    }
 
     private Trainee map(TraineeDto traineeDto) {
         Trainee trainee = new Trainee();
