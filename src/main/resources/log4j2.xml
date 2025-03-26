@@ -7,19 +7,14 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
         </Console>
 
-        <!-- File Appender for General Logs -->
-        <File name="FileLogger" fileName="${sys:APP_ROOT}/logs/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
-        </File>
-
         <!-- File Appender for Service Logs -->
         <File name="FileLoggerServices" fileName="${sys:APP_ROOT}/logs/services/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - TransactionId=%X{transactionId} - %msg%n" />
         </File>
 
         <!-- File Appender for DAO Logs -->
         <File name="FileLoggerDAOs" fileName="${sys:APP_ROOT}/logs/dao/app.log" createOnDemand="true">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - TransactionId=%X{transactionId} - %msg%n" />
         </File>
     </Appenders>
 
@@ -34,12 +29,11 @@
         <Logger name="com.mygym.crm" level="warn" additivity="false">
             <AppenderRef ref="Console" />
         </Logger>
-        <Logger name="com.mygym.crm.backstages" level="info" additivity="false">
-            <AppenderRef ref="FileLogger" />
-        </Logger>
+
         <Logger name="com.mygym.crm.backstages.core.services" level="info" additivity="false">
             <AppenderRef ref="FileLoggerServices" />
         </Logger>
+
         <Logger name="com.mygym.crm.backstages.persistence.daos" level="info" additivity="false">
             <AppenderRef ref="FileLoggerDAOs" />
         </Logger>

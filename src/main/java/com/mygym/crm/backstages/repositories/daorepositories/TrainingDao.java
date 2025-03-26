@@ -8,4 +8,6 @@ public interface TrainingDao {
     Optional<Training> select(Long UserId);
 
     Optional<Training> add(Training training);
+
+    int deleteWithTraineeUsername(String traineeUsername);
 }

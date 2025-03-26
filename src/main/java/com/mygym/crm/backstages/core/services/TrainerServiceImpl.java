@@ -13,14 +13,15 @@ import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service("trainerServiceIMPL")
 public class TrainerServiceImpl implements TrainerService {
@@ -40,174 +41,216 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional
     @Override
     public Optional<Trainer> create(TrainerDto trainerDto) {
-        userService.validateDto(trainerDto);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Trainer newTrainer = map(trainerDto);
-        newTrainer.setIsActive(true);
+        try {
+            Trainer newTrainer = map(trainerDto);
+            newTrainer.setIsActive(true);
 
-        logger.info("Trying to generate new password while attempting to create a new trainer");
-        newTrainer.setPassword(userService.generatePassword());
+            logger.info("Trying to generate new password while attempting to create a new trainer");
+            newTrainer.setPassword(userService.generatePassword());
 
-        logger.info("Trying to generate new username while attempting to create a new trainer");
-        newTrainer.setUserName(userService.generateUserName(trainerDto));
+            logger.info("Trying to generate new username while attempting to create a new trainer");
+            newTrainer.setUserName(userService.generateUserName(trainerDto));
 
-        logger.info("Trying to find and set TrainingType while attempting to create a new trainer");
-        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+            logger.info("Trying to find and set TrainingType while attempting to create a new trainer");
+            Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if (optionalTrainingType.isEmpty()) {
-            logger.warn("TrainingType with trainingTypeName {} not found", trainerDto.getTrainingTypeName());
-            return Optional.empty();
+            if (optionalTrainingType.isEmpty()) {
+                logger.warn("TrainingType with trainingTypeName {} not found", trainerDto.getTrainingTypeName());
+                return Optional.empty();
+            }
+
+            newTrainer.setTrainingType(optionalTrainingType.get());
+            logger.info("TrainingType with trainingTypeName; {} has been found and set", optionalTrainingType.get().getTrainingTypeName());
+
+            logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
+            Optional<Trainer> optionalTrainer = trainerDao.create(newTrainer);
+
+            optionalTrainer.ifPresentOrElse(
+                    (trainer) -> logger.info("trainer with userName: {} has been created", trainer.getUserName()),
+                    () -> logger.warn("trainer with userName: {} was not created", newTrainer.getUserName())
+            );
+
+            return optionalTrainer;
         }
-
-        newTrainer.setTrainingType(optionalTrainingType.get());
-        logger.info("TrainingType with trainingTypeName; {} has been found and set", optionalTrainingType.get().getTrainingTypeName());
-
-        logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
-        Optional<Trainer> optionalTrainer = trainerDao.create(newTrainer);
-
-        optionalTrainer.ifPresentOrElse(
-                (trainer) -> logger.info("trainer with userName: {} has been created", trainer.getUserName()),
-                () -> logger.warn("trainer with userName: {} was not created", newTrainer.getUserName())
-        );
-
-        return optionalTrainer;
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional
     @SecureMethod
     @Override
     public Optional<Trainer> update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
-        userService.validateDto(trainerDto);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
-            logger.error("Trainer with ID: {} not found", id);
-            return new NoTrainerException("could not find trainer with id " + id);
-        });
-        Trainer newTrainer = map(trainerDto);
+        try {
+            Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
+                logger.error("Trainer with ID: {} not found", id);
+                return new NoTrainerException("could not find trainer with id " + id);
+            });
+            Trainer newTrainer = map(trainerDto);
 
-        logger.info("Setting with old UserId Password and UserName");
-        newTrainer.setUserId(oldTrainer.getUserId());
-        newTrainer.setPassword(oldTrainer.getPassword());
-        newTrainer.setUserName(oldTrainer.getUserName());
-        newTrainer.setTrainings(oldTrainer.getTrainings());
+            logger.info("Setting with old UserId Password and UserName");
+            newTrainer.setUserId(oldTrainer.getUserId());
+            newTrainer.setPassword(oldTrainer.getPassword());
+            newTrainer.setUserName(oldTrainer.getUserName());
+            newTrainer.setTrainings(oldTrainer.getTrainings());
 
-        logger.info("Trying to find and set TrainingType while attempting to update trainer for update");
-        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+            logger.info("Trying to find and set TrainingType while attempting to update trainer for update");
+            Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if (optionalTrainingType.isEmpty()) {
-            logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName for update", trainerDto.getTrainingTypeName());
-            return Optional.empty();
+            if (optionalTrainingType.isEmpty()) {
+                logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName for update", trainerDto.getTrainingTypeName());
+                return Optional.empty();
+            }
+
+            logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName for update", trainerDto.getTrainingTypeName());
+            newTrainer.setTrainingType(optionalTrainingType.get());
+
+            logger.info("Trying to update Trainer with ID: {}", id);
+            Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
+
+            optionalTrainer.ifPresentOrElse(
+                    (trainer) -> logger.info("trainer with userName: {} has been updated", trainer.getUserName()),
+                    () -> logger.warn("trainer with userName: {} was not updated", newTrainer.getUserName())
+            );
+
+            return optionalTrainer;
         }
-
-        logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName for update", trainerDto.getTrainingTypeName());
-        newTrainer.setTrainingType(optionalTrainingType.get());
-
-        logger.info("Trying to update Trainer with ID: {}", id);
-        Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
-
-        optionalTrainer.ifPresentOrElse(
-                (trainer) -> logger.info("trainer with userName: {} has been updated", trainer.getUserName()),
-                () -> logger.warn("trainer with userName: {} was not updated", newTrainer.getUserName())
-        );
-
-        return optionalTrainer;
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional
     @SecureMethod
     @Override
     public Optional<Trainer> updateByUserName(SecurityDto securityDto, String userName, TrainerDto trainerDto) {
-        userService.validateDto(trainerDto);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Trainer oldTrainer = getByUserName(securityDto, userName).orElseThrow(() -> {
-            logger.error("Trainer with UserName {} not found", userName);
-            return new NoTrainerException("could not find trainer with UserName " + userName);
-        });
-        Trainer newTrainer = map(trainerDto);
+        try {
+            Trainer oldTrainer = getByUserName(securityDto, userName).orElseThrow(() -> {
+                logger.error("Trainer with UserName {} not found", userName);
+                return new NoTrainerException("could not find trainer with UserName " + userName);
+            });
+            Trainer newTrainer = map(trainerDto);
 
-        logger.info("Setting with old UserId Password and UserName inside updateByUserName for Treainer");
-        newTrainer.setUserId(oldTrainer.getUserId());
-        newTrainer.setPassword(oldTrainer.getPassword());
-        newTrainer.setUserName(oldTrainer.getUserName());
-        newTrainer.setIsActive(oldTrainer.getIsActive());
-        newTrainer.setTrainings(oldTrainer.getTrainings());
+            logger.info("Setting with old UserId Password and UserName inside updateByUserName for Treainer");
+            newTrainer.setUserId(oldTrainer.getUserId());
+            newTrainer.setPassword(oldTrainer.getPassword());
+            newTrainer.setUserName(oldTrainer.getUserName());
+            newTrainer.setIsActive(oldTrainer.getIsActive());
+            newTrainer.setTrainings(oldTrainer.getTrainings());
 
-        logger.info("Trying to find and set TrainingType while attempting to update trainer");
-        Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
+            logger.info("Trying to find and set TrainingType while attempting to update trainer");
+            Optional<TrainingType> optionalTrainingType = trainingTypeRadOnlyDao.getTrainingTypeByUserName(trainerDto.getTrainingTypeName());
 
-        if (optionalTrainingType.isEmpty()) {
-            logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName", trainerDto.getTrainingTypeName());
-            return Optional.empty();
+            if (optionalTrainingType.isEmpty()) {
+                logger.warn("TrainingType with trainingTypeName {} not found for updateByUserName", trainerDto.getTrainingTypeName());
+                return Optional.empty();
+            }
+
+            logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName", trainerDto.getTrainingTypeName());
+            newTrainer.setTrainingType(optionalTrainingType.get());
+
+            logger.info("Trying to update Trainee with userName: {}", userName);
+            Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
+
+            optionalTrainer.ifPresentOrElse(
+                    (trainee) -> {
+                        logger.info("trainee with userName: {} has been updated", trainee.getUserName());
+                        trainee.getTrainings().size();
+                    },
+                    () -> logger.warn("trainee with userName: {} was not updated", newTrainer.getUserName())
+            );
+
+            return optionalTrainer;
         }
-
-        logger.info("TrainingType with trainingTypeName {} has been found for updateByUserName", trainerDto.getTrainingTypeName());
-        newTrainer.setTrainingType(optionalTrainingType.get());
-
-        logger.info("Trying to update Trainee with userName: {}", userName);
-        Optional<Trainer> optionalTrainer = trainerDao.update(newTrainer);
-
-        optionalTrainer.ifPresentOrElse(
-                (trainee) -> {
-                    logger.info("trainee with userName: {} has been updated", trainee.getUserName());
-                    trainee.getTrainings().size();
-                },
-                () -> logger.warn("trainee with userName: {} was not updated", newTrainer.getUserName())
-        );
-
-        return optionalTrainer;
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public Optional<Trainer> getById(SecurityDto securityDto, Long id) {
-        logger.info("Trying to find Trainer with ID: {}", id);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Optional<Trainer> trainerOptional = trainerDao.select(id);
+        try {
+            logger.info("Trying to find Trainer with ID: {}", id);
 
-        trainerOptional.ifPresentOrElse(
-                trainer -> {
-                    trainer.getTrainings().size();
-                    logger.info("Found Trainer with ID: {}", id);
-                },
-                () -> logger.warn("No Trainer found with ID: {}", id)
-        );
+            Optional<Trainer> trainerOptional = trainerDao.select(id);
 
-        return trainerOptional;
+            trainerOptional.ifPresentOrElse(
+                    trainer -> {
+                        trainer.getTrainings().size();
+                        logger.info("Found Trainer with ID: {}", id);
+                    },
+                    () -> logger.warn("No Trainer found with ID: {}", id)
+            );
+
+            return trainerOptional;
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
     public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName) {
-        logger.info("Trying to find Trainer with UserName: {}", userName);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Optional<Trainer> trainerOptional = trainerDao.selectWithUserName(userName);
+        try {
+            logger.info("Trying to find Trainer with UserName: {}", userName);
 
-        trainerOptional.ifPresentOrElse(
-                trainer -> {
-                    trainer.getTrainings().size();
-                    logger.info("Found Trainer with UserName: {}", userName);
-                },
-                () -> logger.warn("No Trainer found with UserName: {}", userName)
-        );
-        return trainerOptional;
+            Optional<Trainer> trainerOptional = trainerDao.selectWithUserName(userName);
+
+            trainerOptional.ifPresentOrElse(
+                    trainer -> {
+                        trainer.getTrainings().size();
+                        logger.info("Found Trainer with UserName: {}", userName);
+                    },
+                    () -> logger.warn("No Trainer found with UserName: {}", userName)
+            );
+            return trainerOptional;
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional
     @SecureMethod
     @Override
     public boolean changePassword(SecurityDto securityDto, String username, String newPassword) {
-        logger.info("Trying to change password for Trainer with UserName: {}", username);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        boolean success = trainerDao.changePassword(username, newPassword);
+        try {
+            logger.info("Trying to change password for Trainer with UserName: {}", username);
 
-        if (success) {
-            logger.info("Successfully changed password for Trainer with UserName: {}", username);
-            return true;
-        } else {
-            logger.warn("Failed to change password for Trainer with UserName: {}", username);
-            return false;
+            boolean success = trainerDao.changePassword(username, newPassword);
+
+            if (success) {
+                logger.info("Successfully changed password for Trainer with UserName: {}", username);
+                return true;
+            } else {
+                logger.warn("Failed to change password for Trainer with UserName: {}", username);
+                return false;
+            }
+        }
+        finally {
+            MDC.remove("transactionId");
         }
     }
 
@@ -215,16 +258,24 @@ public class TrainerServiceImpl implements TrainerService {
     @SecureMethod
     @Override
     public boolean toggleIsActive(SecurityDto securityDto, String username) {
-        logger.info("Trying to toggle isActive for Trainer with UserName: {}", username);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        boolean success = trainerDao.toggleIsActive(username);
+        try {
+            logger.info("Trying to toggle isActive for Trainer with UserName: {}", username);
 
-        if (success) {
-            logger.info("Successfully toggled isActive for Trainer with UserName: {}", username);
-            return true;
-        } else {
-            logger.warn("Failed to toggled isActive for Trainer with UserName: {}", username);
-            return false;
+            boolean success = trainerDao.toggleIsActive(username);
+
+            if (success) {
+                logger.info("Successfully toggled isActive for Trainer with UserName: {}", username);
+                return true;
+            } else {
+                logger.warn("Failed to toggled isActive for Trainer with UserName: {}", username);
+                return false;
+            }
+        }
+        finally {
+            MDC.remove("transactionId");
         }
     }
 
@@ -233,12 +284,20 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public Optional<Set<Training>> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
                                                        LocalDate toDate, String traineeName) {
-        Set<Training> trainings = trainerDao.getTrainerTrainings(username, fromDate, toDate, traineeName);
-        if (trainings.isEmpty()) {
-            logger.warn("No training found for Trainer with UserName: {}", username);
-        } else
-            logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
-        return Optional.of(trainings);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
+
+        try {
+            Set<Training> trainings = trainerDao.getTrainerTrainings(username, fromDate, toDate, traineeName);
+            if (trainings.isEmpty()) {
+                logger.warn("No training found for Trainer with UserName: {}", username);
+            } else
+                logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
+            return Optional.of(trainings);
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     private Trainer map(TrainerDto trainerDto) {

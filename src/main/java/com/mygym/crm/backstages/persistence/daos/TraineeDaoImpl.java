@@ -5,6 +5,8 @@ import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
+import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateError;
@@ -71,6 +73,7 @@ public class TraineeDaoImpl implements TraineeDao {
         }
     }
 
+    @Override
     public Optional<Trainee> updateByUserName(Trainee trainee) {
         checkTrainee(trainee, Trainee.class);
 

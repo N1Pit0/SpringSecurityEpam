@@ -9,4 +9,7 @@ public interface TrainingService {
     Optional<Training> getById(Long id);
 
     Optional<Training> add(TrainingDto t);
+
+    int deleteWithTraineeUsername(String traineeUsername);
+
 }

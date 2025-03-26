@@ -7,6 +7,7 @@ import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrain
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.select.SelectTrainerTrainingsDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.trainerdto.update.UpdateTrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
+import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.NoTrainerException;
@@ -27,11 +28,17 @@ import java.util.Set;
 @RequestMapping(value = "users/trainers")
 public class TrainerController {
     private TrainerService trainerService;
+    private UserService userService;
     private TrainerMapper mapper;
 
     @Autowired
     public void setTrainerService(TrainerService trainerService) {
         this.trainerService = trainerService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -74,6 +81,8 @@ public class TrainerController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<SecurityDto> registerTrainer(@RequestBody TrainerDto trainerDto) {
 
+        userService.validateDto(trainerDto);
+
         Optional<Trainer> optionalTrainer = trainerService.create(trainerDto);
 
         Trainer trainer1 = optionalTrainer.orElseThrow(() -> new NoTrainerException("no trainer"));
@@ -85,6 +94,9 @@ public class TrainerController {
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
     public ResponseEntity<UpdateTrainerDto> updateTrainerProfile(@PathVariable("userName") String userName,
                                                                  @RequestBody CombineUserDtoWithSecurityDto<TrainerDto> updateTrainerDtoWithSecurityDto) {
+
+        userService.validateDto(updateTrainerDtoWithSecurityDto);
+        userService.validateDto(updateTrainerDtoWithSecurityDto.getUserDto());
 
         Optional<Trainer> optionalTrainer = trainerService.updateByUserName(updateTrainerDtoWithSecurityDto.getSecurityDto(),
                 userName,
@@ -99,6 +111,7 @@ public class TrainerController {
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Void> changeLogin(@PathVariable("userName") String userName,
                                             @RequestBody ChangePasswordDto changePasswordDto) {
+        userService.validateDto(changePasswordDto);
 
         boolean isPassed = trainerService.changePassword(
                 new SecurityDto(userName, changePasswordDto.getOldPassword()),

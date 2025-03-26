@@ -69,5 +69,31 @@ public class TrainingDaoImpl implements TrainingDao {
         return Optional.empty();
     }
 
+    public int deleteWithTraineeUsername(String traineeUsername) {
+        try {
+            logger.info("Attempting to delete Training with traineeUsername: {}", traineeUsername);
 
+            Session session = this.sessionFactory.getCurrentSession();
+
+            String sql = """
+                    DELETE FROM Training t
+                    WHERE t.trainee.userName = :traineeUsername
+                    """;
+
+            int deletedCount = session.createQuery(sql.strip())
+                    .setParameter("traineeUsername", traineeUsername)
+                    .executeUpdate();
+
+            if(deletedCount > 0){
+                logger.info("Successfully deleted {} rows", deletedCount);
+            }else {
+                logger.error("Failed to delete Training with traineeUsername: {}", traineeUsername);
+            }
+
+            return deletedCount;
+        }catch (HibernateException e){
+            logger.error(e.getMessage());
+            throw e;
+        }
+    }
 }

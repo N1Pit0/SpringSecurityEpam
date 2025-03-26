@@ -8,6 +8,7 @@ import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrain
 import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrainerNotAssignedDtoSet;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
+import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
@@ -29,6 +30,7 @@ import java.util.Set;
 @RequestMapping(value = "/users/trainees")
 public class TraineeController {
     private TraineeService traineeService;
+    private UserService userService;
     private TraineeMapper mapper;
 
     @Autowired
@@ -39,6 +41,11 @@ public class TraineeController {
     @Autowired
     public void setMapper(TraineeMapper mapper) {
         this.mapper = mapper;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
@@ -93,6 +100,7 @@ public class TraineeController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<SecurityDto> registerTrainee(@RequestBody TraineeDto traineeDto) {
+        userService.validateDto(traineeDto);
 
         Optional<Trainee> optionalTrainee = traineeService.create(traineeDto);
 
@@ -105,6 +113,9 @@ public class TraineeController {
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
     public ResponseEntity<UpdateTraineeDto> updateTraineeProfile(@PathVariable("userName") String userName,
                          @RequestBody CombineUserDtoWithSecurityDto<TraineeDto> updateTraineeDtoWithSecurityDto) {
+
+        userService.validateDto(updateTraineeDtoWithSecurityDto);
+        userService.validateDto(updateTraineeDtoWithSecurityDto.getUserDto());
 
         Optional<Trainee> optionalTrainee = traineeService.updateByUserName(updateTraineeDtoWithSecurityDto.getSecurityDto(),
                 userName,
@@ -119,6 +130,8 @@ public class TraineeController {
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Void> changeLogin(@PathVariable("userName") String userName,
                                             @RequestBody ChangePasswordDto changePasswordDto) {
+
+        userService.validateDto(changePasswordDto);
 
         boolean isPassed = traineeService.changePassword(
                 new SecurityDto(userName, changePasswordDto.getOldPassword()),

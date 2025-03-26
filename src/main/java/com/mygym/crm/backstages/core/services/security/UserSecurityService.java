@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class UserSecurityService {
+public class  UserSecurityService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserSecurityService.class);
     private UserReadOnlyDao userReadOnlyDao;

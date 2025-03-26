@@ -5,6 +5,7 @@ import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
+import com.mygym.crm.backstages.exceptions.NoTrainerException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
@@ -12,25 +13,27 @@ import com.mygym.crm.backstages.repositories.services.TrainingService;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TrainingServiceImpl implements TrainingService {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingServiceImpl.class);
-    private final TrainingDao trainingDAO;
+    private final TrainingDao trainingDao;
     private final TrainerDao trainerDao;
     private final TraineeDao traineeDao;
     private UserService userService;
 
 
     @Autowired
-    public TrainingServiceImpl(TrainingDao trainingDAO, TrainerDao trainerDao, TraineeDao traineeDao) {
-        this.trainingDAO = trainingDAO;
+    public TrainingServiceImpl(TrainingDao trainingDao, TrainerDao trainerDao, TraineeDao traineeDao) {
+        this.trainingDao = trainingDao;
         this.trainerDao = trainerDao;
         this.traineeDao = traineeDao;
     }
@@ -43,53 +46,97 @@ public class TrainingServiceImpl implements TrainingService {
     @Transactional
     @Override
     public Optional<Training> add(TrainingDto trainingDto) {
-        userService.validateDto(trainingDto);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Training newTraining = new Training();
-        logger.info("New Training, populating it with given traineeDTO");
+        try{
+            Training newTraining = new Training();
+            logger.info("New Training, populating it with given traineeDTO");
 
-        newTraining.setTrainingName(trainingDto.getTrainingName());
-        newTraining.setTrainingDate(trainingDto.getTrainingDate());
-        newTraining.setTrainingDuration(trainingDto.getTrainingDuration());
+            newTraining.setTrainingName(trainingDto.getTrainingName());
+            newTraining.setTrainingDate(trainingDto.getTrainingDate());
+            newTraining.setTrainingDuration(trainingDto.getTrainingDuration());
 
-        Trainer trainer = trainerDao.select(trainingDto.getTrainerId()).orElse(null);
-        Trainee trainee = traineeDao.select(trainingDto.getTraineeId()).orElse(null);
-        assert trainer != null;
-        TrainingType trainingType = trainer.getTrainingType();
+            Trainer trainer = trainerDao.select(trainingDto.getTrainerId()).orElseThrow( () -> {
+                logger.error("Trainer with id {} not found", trainingDto.getTrainerId());
+                return new NoTrainerException("Could not found the Trainer");
+            });
+            Trainee trainee = traineeDao.select(trainingDto.getTraineeId()).orElseThrow( () -> {
+                logger.error("Trainee with id {} not found", trainingDto.getTraineeId());
+                return new NoTrainerException("Could not found the Trainee");
+            });
 
-        newTraining.setTrainer(trainer);
-        newTraining.setTrainee(trainee);
-        newTraining.setTrainingType(trainingType);
+            TrainingType trainingType = trainer.getTrainingType();
 
-        logger.info("Trying to new create training");
-        Optional<Training> optionalTraining = trainingDAO.add(newTraining);
+            newTraining.setTrainer(trainer);
+            newTraining.setTrainee(trainee);
+            newTraining.setTrainingType(trainingType);
 
-        optionalTraining.ifPresentOrElse(
-                (training) -> logger.info("Training with trainingId: {} has been created", training.getId()),
-                () -> logger.warn("Training could not be created")
-        );
+            logger.info("Trying to new create training");
+            Optional<Training> optionalTraining = trainingDao.add(newTraining);
 
-        return optionalTraining;
+            optionalTraining.ifPresentOrElse(
+                    (training) -> logger.info("Training with trainingId: {} has been created", training.getId()),
+                    () -> logger.warn("Training could not be created")
+            );
+
+            return optionalTraining;
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
+    }
+
+    @Transactional
+    @Override
+    public int deleteWithTraineeUsername(String traineeUsername) {
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
+
+        try {
+            int deletedRows = trainingDao.deleteWithTraineeUsername(traineeUsername);
+
+            if (deletedRows > 0) {
+                logger.info("deleted {} number of rows for Training with trainee userName: {}", deletedRows, traineeUsername);
+            } else {
+                logger.warn("Could not delete the rows for Training for given trainee userName: {}", traineeUsername);
+            }
+
+            return deletedRows;
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @Override
     public Optional<Training> getById(Long id) {
-        logger.info("Trying to find Training with ID: {}", id);
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Optional<Training> trainingOptional = trainingDAO.select(id);
+        try {
+            logger.info("Trying to find Training with ID: {}", id);
 
-        trainingOptional.ifPresentOrElse(
-                training -> {
-                    training.getTrainee().getUserId();
-                    training.getTrainer().getUserId();
-                    training.getTrainingType().getTrainingTypeId();
-                    logger.info("Found Training with ID: {}", id);
-                },
-                () -> logger.warn("No training found with ID: {}", id)
-        );
+            Optional<Training> trainingOptional = trainingDao.select(id);
 
-        return trainingOptional;
+            trainingOptional.ifPresentOrElse(
+                    training -> {
+                        training.getTrainee().getUserId();
+                        training.getTrainer().getUserId();
+                        training.getTrainingType().getTrainingTypeId();
+                        logger.info("Found Training with ID: {}", id);
+                    },
+                    () -> logger.warn("No training found with ID: {}", id)
+            );
+
+            return trainingOptional;
+        }
+        finally {
+            MDC.remove("transactionId");
+        }
     }
+    
+    
 
 }
