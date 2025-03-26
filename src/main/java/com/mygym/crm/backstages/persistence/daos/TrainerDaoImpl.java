@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -258,12 +259,12 @@ public class TrainerDaoImpl implements TrainerDao {
     }
 
     @Override
-    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName) {
+    public Set<Trainer> getTrainersNotTrainingTraineesWithUserName(String userName) {
         checkTrainer(userName, String.class);
 
         logger.info("Trying to get Trainers that do not teach trainees with userName: {}", userName);
 
-        List<Trainer> result = new ArrayList<>();
+        Set<Trainer> result = new HashSet<>();
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
@@ -276,11 +277,11 @@ public class TrainerDaoImpl implements TrainerDao {
                              FROM Trainee t\s
                              JOIN t.trainings trn\s
                              WHERE trn.trainer = tr AND t.userName = :userName
-                         )
+                         ) AND tr.isActive = true
                     """;
-            result = session.createQuery(sql.strip(), Trainer.class)
+            result = new HashSet<>(session.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
-                    .getResultList();
+                    .getResultList());
         } catch (Exception e) {
             logger.error("Error retrieving Trainers that do not teach trainees with userName: {} : {}", userName, e.getMessage(), e);
             throw e;

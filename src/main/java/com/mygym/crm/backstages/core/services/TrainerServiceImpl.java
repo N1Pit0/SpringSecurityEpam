@@ -244,16 +244,16 @@ public class TrainerServiceImpl implements TrainerService {
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
     @SecureMethod
     @Override
-    public List<Trainer> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
-                                                                    String trainerUserName, String traineeUserName) {
+    public Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
+                                                                    String traineeUserName) {
 
-        List<Trainer> trainers = trainerDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
+        Set<Trainer> trainers = trainerDao.getTrainersNotTrainingTraineesWithUserName(traineeUserName);
         if (trainers.isEmpty()) {
-            logger.warn("No trainer found for Trainer with UserName: {}", trainerUserName);
+            logger.warn("No unassigned trainers found");
         } else
             logger.info("Trainer record of size: {} was found for Trainer not matched with Trainee with username: {}",
                     trainers.size(), traineeUserName);
-        return trainers;
+        return Optional.of(trainers);
     }
 
 

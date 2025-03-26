@@ -7,9 +7,9 @@ public class MapUpdateTrainerDto {
 
     private String userName;
 
-    private String FirstName;
+    private String firstName;
 
-    private String LastName;
+    private String lastName;
 
     private String trainingTypeName;
 }
