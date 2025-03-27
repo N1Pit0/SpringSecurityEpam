@@ -10,7 +10,7 @@ import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.exceptions.NoTrainerException;
+import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.mapper.TrainerMapper;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -12,7 +12,7 @@ import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;

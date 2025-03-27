@@ -2,12 +2,11 @@ package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.annotations.security.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
-import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.exceptions.NoTraineeException;
+import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.repositories.services.TraineeService;
 import com.mygym.crm.backstages.repositories.services.TrainerService;
