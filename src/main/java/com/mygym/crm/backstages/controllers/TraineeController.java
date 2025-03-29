@@ -14,7 +14,7 @@ import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
-import com.mygym.crm.backstages.repositories.services.TraineeService;
+import com.mygym.crm.backstages.interfaces.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
@@ -50,7 +51,8 @@ public class TraineeController {
 
     @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName,
-                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException {
+                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException{
+        userService.validateDto(securityDto);
 
         Optional<Trainee> optionalTrainee = traineeService.getByUserName(securityDto, userName);
 
@@ -66,6 +68,8 @@ public class TraineeController {
                         @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
                         @RequestParam(name = "trainerName", required = false) String trainerName,
                         @RequestParam(name = "trainingTypename", required = false) String trainingTypename) {
+
+        userService.validateDto(securityDto);
 
         Optional<Set<Training>> optionalTrainings = traineeService.getTraineeTrainings(
                 securityDto,
@@ -86,6 +90,8 @@ public class TraineeController {
     public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
             @PathVariable("userName") String UserName,
             @RequestBody SecurityDto securityDto){
+
+        userService.validateDto(securityDto);
 
         Optional<Set<Trainer>> optionalTrainings = traineeService.getTrainersNotTrainingTraineesWithUserName(
                 securityDto,
@@ -116,6 +122,7 @@ public class TraineeController {
 
         userService.validateDto(updateTraineeDtoWithSecurityDto);
         userService.validateDto(updateTraineeDtoWithSecurityDto.getUserDto());
+        userService.validateDto(updateTraineeDtoWithSecurityDto.getSecurityDto());
 
         Optional<Trainee> optionalTrainee = traineeService.updateByUserName(updateTraineeDtoWithSecurityDto.getSecurityDto(),
                 userName,
@@ -124,7 +131,7 @@ public class TraineeController {
         return optionalTrainee
                 .map(mapper::traineeToUpdateTraineeDto)
                 .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.valueOf(405)).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.valueOf(409)).build());
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
@@ -147,6 +154,8 @@ public class TraineeController {
     @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Void> deleteTraineeProfile(@PathVariable("userName") String userName,
                                                      @RequestBody SecurityDto securityDto) {
+        userService.validateDto(securityDto);
+
         Optional<Trainee> optionalTrainee = traineeService.deleteWithUserName(securityDto, userName);
 
         if (optionalTrainee.isPresent()) {
@@ -160,6 +169,7 @@ public class TraineeController {
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
     public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
                                                @RequestBody SecurityDto securityDto) {
+        userService.validateDto(securityDto);
 
         boolean isPerformed = traineeService.toggleIsActive(securityDto, userName);
 

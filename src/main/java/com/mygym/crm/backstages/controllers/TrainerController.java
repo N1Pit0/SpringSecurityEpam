@@ -12,7 +12,7 @@ import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.mapper.TrainerMapper;
-import com.mygym.crm.backstages.repositories.services.TrainerService;
+import com.mygym.crm.backstages.interfaces.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -50,6 +50,8 @@ public class TrainerController {
     public ResponseEntity<SelectTrainerDto> getTrainerProfile(@PathVariable("userName") String userName,
                                                               @RequestBody SecurityDto securityDto) {
 
+        userService.validateDto(securityDto);
+
         Optional<Trainer> optionalTrainer = trainerService.getByUserName(securityDto, userName);
 
         return optionalTrainer.map(mapper::trainerToSelectTrainerDto)
@@ -63,6 +65,8 @@ public class TrainerController {
                         @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
                         @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
                         @RequestParam(name = "traineeName", required = false) String traineeName) {
+
+        userService.validateDto(securityDto);
 
         Optional<Set<Training>> optionalTrainings = trainerService.getTrainerTrainings(
                 securityDto,
@@ -97,6 +101,7 @@ public class TrainerController {
 
         userService.validateDto(updateTrainerDtoWithSecurityDto);
         userService.validateDto(updateTrainerDtoWithSecurityDto.getUserDto());
+        userService.validateDto(updateTrainerDtoWithSecurityDto.getSecurityDto());
 
         Optional<Trainer> optionalTrainer = trainerService.updateByUserName(updateTrainerDtoWithSecurityDto.getSecurityDto(),
                 userName,
@@ -127,6 +132,8 @@ public class TrainerController {
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
     public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
                                                @RequestBody SecurityDto securityDto) {
+
+        userService.validateDto(securityDto);
 
         boolean isPerformed = trainerService.toggleIsActive(securityDto, userName);
 

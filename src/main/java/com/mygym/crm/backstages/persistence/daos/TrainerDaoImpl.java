@@ -3,7 +3,7 @@ package com.mygym.crm.backstages.persistence.daos;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
+import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateError;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Repository

@@ -1,7 +1,7 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.TrainingType;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnlyDao;
+import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

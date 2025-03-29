@@ -2,13 +2,14 @@ package com.mygym.crm.backstages.core.services.security;
 
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.common.User;
-import com.mygym.crm.backstages.repositories.daorepositories.UserReadOnlyDao;
+import com.mygym.crm.backstages.interfaces.daorepositories.UserReadOnlyDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 @Service
@@ -23,11 +24,11 @@ public class  UserSecurityService {
     }
 
     @Transactional(readOnly = true)
-    public boolean authenticate(SecurityDto securityDto, String username) {
+    public boolean authenticate(SecurityDto securityDto, String username) throws AccessDeniedException {
 
         if (!securityDto.getUserName().equals(username)) {
             logger.error("UserName {} is not authorized to perform the action", securityDto.getUserName());
-            return false;
+            throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
         }
 
         Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
@@ -45,7 +46,7 @@ public class  UserSecurityService {
     }
 
     @Transactional(readOnly = true)
-    public boolean authenticate(SecurityDto securityDto, Long id) {
+    public boolean authenticate(SecurityDto securityDto, Long id) throws AccessDeniedException {
 
         Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
         boolean authorizedWithIdMatch = false;
@@ -64,6 +65,7 @@ public class  UserSecurityService {
 
             if (!authorizedWithIdMatch) {
                 logger.info("User with id: {} not authorized", user.getUserId());
+                throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
             } else logger.error("User with id: {} not authenticated", user.getUserId());
 
         }

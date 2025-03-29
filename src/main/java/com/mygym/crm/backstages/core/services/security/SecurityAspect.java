@@ -10,6 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.Arrays;
 
 
@@ -62,11 +63,11 @@ public class SecurityAspect {
         } else if (id != null) {
             isAuthenticated = userSecurityService.authenticate(securityDto, id);
         } else {
-            throw new SecurityException("Neither username nor id was provided");
+            throw new AuthenticationException("Neither username nor id was provided");
         }
 
         if (!isAuthenticated) {
-            throw new SecurityException("Invalid credentials provided");
+            throw new AuthenticationException("Invalid credentials provided");
         }
 
         return joinPoint.proceed();

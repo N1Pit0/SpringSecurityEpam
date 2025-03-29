@@ -1,8 +1,8 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.domain.models.TrainingType;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainingTypeReadOnlyDao;
-import com.mygym.crm.backstages.repositories.services.TrainingTypeRadOnlyService;
+import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
+import com.mygym.crm.backstages.interfaces.services.TrainingTypeRadOnlyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;

@@ -4,9 +4,8 @@ import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
-import com.mygym.crm.backstages.repositories.daorepositories.TraineeDao;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainerDao;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
+import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
+import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateError;
@@ -213,9 +212,9 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found with userName: {}", userName);
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error selecting trainee with userName: {}", userName, e);
-            throw e;
+            throw new NoTraineeException(e.getMessage());
         }
     }
 

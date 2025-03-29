@@ -1,7 +1,7 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Training;
-import com.mygym.crm.backstages.repositories.daorepositories.TrainingDao;
+import com.mygym.crm.backstages.interfaces.daorepositories.TrainingDao;
 import lombok.Getter;
 import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;

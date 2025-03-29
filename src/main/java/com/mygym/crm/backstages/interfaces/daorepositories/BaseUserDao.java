@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.repositories.daorepositories;
+package com.mygym.crm.backstages.interfaces.daorepositories;
 
 import java.util.Optional;
 

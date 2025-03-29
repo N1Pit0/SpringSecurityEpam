@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.repositories.services;
+package com.mygym.crm.backstages.interfaces.services;
 
 import com.mygym.crm.backstages.domain.models.TrainingType;
 
