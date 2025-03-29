@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.TrainingType;
+import com.mygym.crm.backstages.exceptions.custom.NoTrainingTypeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -49,7 +50,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             return optionalTrainingType;
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new NoTrainingTypeException(e.getMessage());
         }
     }
 
@@ -76,7 +77,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             return optionalTrainingType;
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new NoTrainingTypeException(e.getMessage());
         }
 
     }

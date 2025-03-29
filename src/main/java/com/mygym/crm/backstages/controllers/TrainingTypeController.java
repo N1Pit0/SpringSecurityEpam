@@ -2,6 +2,7 @@ package com.mygym.crm.backstages.controllers;
 
 import com.mygym.crm.backstages.core.dtos.response.trainingtypedto.select.SelectTrainingTypeDtoSet;
 import com.mygym.crm.backstages.domain.models.TrainingType;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.mapper.TrainingTypeMapper;
 import com.mygym.crm.backstages.interfaces.services.TrainingTypeRadOnlyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,6 @@ public class TrainingTypeController {
         return optionalTrainingTypes
                 .map(trainingTypeMapper::toTrainingTypeDtoSet)
                 .map((trainingTypes) -> new ResponseEntity<>(trainingTypes, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.valueOf(405)));
+                .orElseThrow(() -> new NoResourceException("No training types found"));
     }
 }

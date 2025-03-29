@@ -1,6 +1,7 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.common.User;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.interfaces.daorepositories.UserReadOnlyDao;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -51,7 +52,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new NoResourceException(e.getMessage());
         }
     }
 

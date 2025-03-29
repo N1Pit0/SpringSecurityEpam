@@ -3,6 +3,7 @@ package com.mygym.crm.backstages.controllers;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.core.services.security.UserSecurityService;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,6 @@ public class UserController {
         if (isFound) {
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.notFound().build();
+        throw new NoResourceException("No User found");
     }
 }

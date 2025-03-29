@@ -12,7 +12,10 @@ import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
 import com.mygym.crm.backstages.interfaces.services.TraineeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +25,6 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.AuthenticationException;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
@@ -58,7 +60,7 @@ public class TraineeController {
 
         return optionalTrainee.map(mapper::traineeToSelectTraineeDto)
                 .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new NoResourceException("No resource found for " + userName));
     }
 
     @GetMapping(value = "/{userName:.+}/list-trainee-trainings", consumes = "application/json", produces = "application/json")
@@ -83,7 +85,7 @@ public class TraineeController {
         return optionalTrainings
                 .map(mapper::trainingToSelectTraineeTrainingDtoSet)
                 .map(trainings -> new ResponseEntity<>(trainings, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new NoResourceException("No resource found for " + userName));
     }
 
     @GetMapping(value = "/{userName:.+}/not-assigned-trainers")
@@ -101,7 +103,7 @@ public class TraineeController {
         return optionalTrainings
                 .map(mapper::trainerNotAssignedToSelectTrainerDtoSet)
                 .map(trainers -> new ResponseEntity<>(trainers, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new NoResourceException("No resource found for " + UserName));
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -110,7 +112,7 @@ public class TraineeController {
 
         Optional<Trainee> optionalTrainee = traineeService.create(traineeDto);
 
-        Trainee trainee = optionalTrainee.orElseThrow(() -> new NoTraineeException("no trainee"));
+        Trainee trainee = optionalTrainee.orElseThrow(() -> new ResourceCreationException("could not create Trainer"));
 
         return new ResponseEntity<>(new SecurityDto(trainee.getUserName(), trainee.getPassword()),
                 HttpStatus.CREATED);
@@ -131,7 +133,7 @@ public class TraineeController {
         return optionalTrainee
                 .map(mapper::traineeToUpdateTraineeDto)
                 .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.valueOf(409)).build());
+                .orElseThrow(() -> new ResourceCreationException("could not update Trainee Profile"));
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
@@ -148,7 +150,7 @@ public class TraineeController {
 
         if (isPassed) return ResponseEntity.ok().build();
 
-        return ResponseEntity.notFound().build();
+        throw new ResourceUpdateException("could not update Trainee Profile");
     }
 
     @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
@@ -163,7 +165,7 @@ public class TraineeController {
             return new ResponseEntity<>(HttpStatus.valueOf(204));
         }
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
+        throw new ResourceCreationException("could not delete Trainee Profile");
     }
 
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
@@ -177,7 +179,7 @@ public class TraineeController {
             return new ResponseEntity<>(HttpStatus.valueOf(200));
         }
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
+        throw new ResourceCreationException("could not update Trainee Profile");
     }
 
 }

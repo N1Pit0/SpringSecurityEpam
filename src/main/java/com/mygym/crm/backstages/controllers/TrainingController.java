@@ -3,6 +3,7 @@ package com.mygym.crm.backstages.controllers;
 import com.mygym.crm.backstages.core.dtos.request.trainingdto.TrainingDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.interfaces.services.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class TrainingController {
             return ResponseEntity.ok().build();
         }
 
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        throw new ResourceCreationException("could not create Training");
     }
 
 }

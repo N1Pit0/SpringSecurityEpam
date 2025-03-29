@@ -4,11 +4,10 @@ import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
-import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
+import com.mygym.crm.backstages.exceptions.custom.*;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,9 +45,9 @@ public class TraineeDaoImpl implements TraineeDao {
                 logger.info("Successfully created trainee with userName: {}", trainee.getUserName());
                 return Optional.of(trainee);
             }
-        } catch (HibernateError e) {
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw new HibernateException(e);
+            throw new ResourceCreationException(e.getMessage());
         }
 
         return Optional.empty();
@@ -68,7 +67,7 @@ public class TraineeDaoImpl implements TraineeDao {
             return Optional.of(newTrainee);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
@@ -106,7 +105,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
@@ -131,7 +130,7 @@ public class TraineeDaoImpl implements TraineeDao {
             }
         } catch (HibernateException e) {
             logger.error("Failed to delete trainee with ID: {}. Error: {}", traineeId, e.getMessage(), e);
-            throw e;
+            throw new ResourceDeletionException(e.getMessage());
         }
 
     }
@@ -157,7 +156,7 @@ public class TraineeDaoImpl implements TraineeDao {
             }
         } catch (HibernateException e) {
             logger.error("Failed to delete trainee with userName: {}. Error: {}", userName, e.getMessage(), e);
-            throw e;
+            throw new ResourceDeletionException(e.getMessage());
         }
     }
 
@@ -178,9 +177,9 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found with ID: {}", traineeId);
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error selecting trainee with ID: {} with message \n" + " {}", traineeId, e.getMessage());
-            throw e;
+            throw new NoTraineeException("No trainee found with id" + traineeId);
         }
     }
 
@@ -201,7 +200,7 @@ public class TraineeDaoImpl implements TraineeDao {
                       WHERE t.userName = :userName
                     """;
 
-            Trainee trainee = (Trainee) session.createQuery(sql.strip(), Trainee.class)
+            Trainee trainee = session.createQuery(sql.strip(), Trainee.class)
                     .setParameter("userName", userName)
                     .uniqueResult();
 
@@ -245,9 +244,9 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found to change password with userName: {}", userName);
             return false;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error changing password for trainee with userName: {}", userName, e);
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
@@ -266,7 +265,7 @@ public class TraineeDaoImpl implements TraineeDao {
                     WHERE t.userName = :userName
                     """;
 
-            Boolean isActive = (Boolean) session.createQuery(sql.strip(), Boolean.class)
+            Boolean isActive = session.createQuery(sql.strip(), Boolean.class)
                     .setParameter("userName", userName)
                     .uniqueResult();
 
@@ -299,16 +298,16 @@ public class TraineeDaoImpl implements TraineeDao {
             logger.warn("Failed to toggle isActive for trainee with userName: {}", userName);
             return false;
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error toggling isActive for trainee with userName: {}", userName, e);
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
     public Set<Training> getTraineeTrainings(String userName, LocalDate fromDate, LocalDate toDate,
                                              String trainerName, String trainingTypeName) {
-        Set<Training> result = new HashSet<>();
-        Session session = null;
+        Set<Training> result;
+        Session session;
         try {
             session = sessionFactory.getCurrentSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -349,9 +348,9 @@ public class TraineeDaoImpl implements TraineeDao {
 
             result = new HashSet<>(query.getResultList());
             logger.info("Retrieved {} training records for user {}.", result.size(), userName);
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error retrieving training records for user {}: {}", userName, e.getMessage(), e);
-            throw e;
+            throw new NoResourceException(e.getMessage());
         }
         return result;
     }
@@ -362,7 +361,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
         logger.info("Trying to get Trainers that do not teach trainees with userName: {}", userName);
 
-        Set<Trainer> result = new HashSet<>();
+        Set<Trainer> result;
 
         try {
             Session session = this.sessionFactory.getCurrentSession();
@@ -380,11 +379,10 @@ public class TraineeDaoImpl implements TraineeDao {
             result = new HashSet<>(session.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
                     .getResultList());
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error retrieving Trainers that do not teach trainees with userName: {} : {}", userName, e.getMessage(), e);
-            throw e;
+            throw new NoResourceException(e.getMessage());
         }
-
         return result;
     }
 

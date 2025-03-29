@@ -10,7 +10,9 @@ import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.mapper.TrainerMapper;
 import com.mygym.crm.backstages.interfaces.services.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class TrainerController {
 
         return optionalTrainer.map(mapper::trainerToSelectTrainerDto)
                 .map((trainer) -> new ResponseEntity<>(trainer, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new NoResourceException("No resource found for " + userName));
     }
 
     @GetMapping(value = "/{userName:.+}/list-trainer-trainings")
@@ -79,7 +81,7 @@ public class TrainerController {
         return optionalTrainings
                 .map(mapper::trainingToSelectTrainerTrainingDtoSet)
                 .map(trainings -> new ResponseEntity<>(trainings, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new NoResourceException("No resource found for " + userName));
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -89,7 +91,7 @@ public class TrainerController {
 
         Optional<Trainer> optionalTrainer = trainerService.create(trainerDto);
 
-        Trainer trainer1 = optionalTrainer.orElseThrow(() -> new NoTrainerException("no trainer"));
+        Trainer trainer1 = optionalTrainer.orElseThrow(() -> new ResourceCreationException("could not create Trainer"));
 
         return new ResponseEntity<>(new SecurityDto(trainer1.getUserName(), trainer1.getPassword()),
                 HttpStatus.CREATED);
@@ -110,7 +112,7 @@ public class TrainerController {
         return optionalTrainer
                 .map(mapper::trainerToUpdateTrainerDto)
                 .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.valueOf(405)).build());
+                .orElseThrow(() -> new ResourceCreationException("could not update Trainer Profile"));
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
@@ -126,7 +128,7 @@ public class TrainerController {
 
         if (isPassed) return ResponseEntity.ok().build();
 
-        return ResponseEntity.notFound().build();
+       throw new ResourceCreationException("could not update Trainer Profile");
     }
 
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
@@ -139,6 +141,6 @@ public class TrainerController {
 
         if (isPerformed) return new ResponseEntity<>(HttpStatus.valueOf(200));
 
-        return ResponseEntity.status(HttpStatusCode.valueOf(405)).build();
+        throw new ResourceCreationException("could not update Trainer Profile");
     }
 }

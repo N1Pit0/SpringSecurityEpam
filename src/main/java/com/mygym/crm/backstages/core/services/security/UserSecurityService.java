@@ -5,12 +5,14 @@ import com.mygym.crm.backstages.domain.models.common.User;
 import com.mygym.crm.backstages.interfaces.daorepositories.UserReadOnlyDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class  UserSecurityService {
@@ -26,49 +28,65 @@ public class  UserSecurityService {
     @Transactional(readOnly = true)
     public boolean authenticate(SecurityDto securityDto, String username) throws AccessDeniedException {
 
-        if (!securityDto.getUserName().equals(username)) {
-            logger.error("UserName {} is not authorized to perform the action", securityDto.getUserName());
-            throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
-        }
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            boolean match = user.getPassword().equals(securityDto.getPassword());
-            if (match) {
-                logger.info("User with username: {} authenticated", securityDto.getUserName());
-                return true;
+        try {
+            if (!securityDto.getUserName().equals(username)) {
+                logger.error("UserName {} is not authorized to perform the action", securityDto.getUserName());
+                throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
             }
+
+            Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
+
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                boolean match = user.getPassword().equals(securityDto.getPassword());
+                if (match) {
+                    logger.info("User with username: {} authenticated", securityDto.getUserName());
+                    return true;
+                }
+            }
+            logger.error("User with username: {} not authenticated", securityDto.getUserName());
+            return false;
         }
-        logger.error("User with username: {} not authenticated", securityDto.getUserName());
-        return false;
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 
     @Transactional(readOnly = true)
     public boolean authenticate(SecurityDto securityDto, Long id) throws AccessDeniedException {
 
-        Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
-        boolean authorizedWithIdMatch = false;
-        boolean authenticatedWIthPasswordMatch = false;
+        String transactionId = UUID.randomUUID().toString();
+        MDC.put("transactionId", transactionId);
 
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
+        try{
+            Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
+            boolean authorizedWithIdMatch = false;
+            boolean authenticatedWIthPasswordMatch = false;
 
-            authorizedWithIdMatch = user.getUserId().equals(id);
-            authenticatedWIthPasswordMatch = user.getPassword().equals(securityDto.getPassword());
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
 
-            if (authorizedWithIdMatch && authenticatedWIthPasswordMatch) {
-                logger.info("User with id: {} authenticated", id);
-                return true;
+                authorizedWithIdMatch = user.getUserId().equals(id);
+                authenticatedWIthPasswordMatch = user.getPassword().equals(securityDto.getPassword());
+
+                if (authorizedWithIdMatch && authenticatedWIthPasswordMatch) {
+                    logger.info("User with id: {} authenticated", id);
+                    return true;
+                }
+
+                if (!authorizedWithIdMatch) {
+                    logger.info("User with id: {} not authorized", user.getUserId());
+                    throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
+                } else logger.error("User with id: {} not authenticated", user.getUserId());
+
             }
-
-            if (!authorizedWithIdMatch) {
-                logger.info("User with id: {} not authorized", user.getUserId());
-                throw new AccessDeniedException("UserName " + securityDto.getUserName() + " is not authorized to perform the action");
-            } else logger.error("User with id: {} not authenticated", user.getUserId());
-
+            return false;
         }
-        return false;
+        finally {
+            MDC.remove("transactionId");
+        }
     }
 }

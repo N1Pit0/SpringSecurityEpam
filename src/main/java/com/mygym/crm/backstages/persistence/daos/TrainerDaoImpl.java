@@ -3,10 +3,12 @@ package com.mygym.crm.backstages.persistence.daos;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,9 +46,9 @@ public class TrainerDaoImpl implements TrainerDao {
                 logger.info("Successfully created trainer with userName: {}", trainer.getUserName());
                 return Optional.of(trainer);
             }
-        } catch (HibernateError e) {
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new ResourceCreationException(e.getMessage());
         }
 
         return Optional.empty();
@@ -66,7 +68,7 @@ public class TrainerDaoImpl implements TrainerDao {
             return Optional.ofNullable(newTrainer);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
@@ -87,9 +89,9 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found with ID: {}", trainerId);
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error selecting trainer with ID: {} with message \n {}", trainerId, e.getMessage());
-            throw e;
+            throw new NoTrainerException("No trainer found with id" + trainerId);
         }
     }
 
@@ -108,7 +110,7 @@ public class TrainerDaoImpl implements TrainerDao {
                       WHERE t.userName = :userName
                     """;
 
-            Trainer trainer = (Trainer) session.createQuery(sql.strip(), Trainer.class)
+            Trainer trainer = session.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
                     .uniqueResult();
 
@@ -119,9 +121,9 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found with userName: {}", userName);
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error selecting trainer with userName: {} with message \n" + " {}", userName, e.getMessage());
-            throw e;
+            throw new NoTrainerException("No trainer found with userName" + userName);
         }
     }
 
@@ -152,9 +154,9 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found to change password with userName: {}", userName);
             return false;
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error changing password for trainer with userName: {}", userName, e);
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
@@ -173,7 +175,7 @@ public class TrainerDaoImpl implements TrainerDao {
                     WHERE t.userName = :userName
                     """;
 
-            Boolean isActive = (Boolean) session.createQuery(sql.strip(), Boolean.class)
+            Boolean isActive = session.createQuery(sql.strip(), Boolean.class)
                     .setParameter("userName", userName)
                     .uniqueResult();
 
@@ -206,16 +208,16 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.warn("Failed to toggle isActive for trainer with userName: {}", userName);
             return false;
 
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error toggling isActive for trainer with userName: {}", userName, e);
-            throw e;
+            throw new ResourceUpdateException(e.getMessage());
         }
     }
 
     public Set<Training> getTrainerTrainings(String userName, LocalDate fromDate, LocalDate toDate,
                                              String traineeName) {
-        Set<Training> result = new HashSet<>();
-        Session session = null;
+        Set<Training> result;
+        Session session;
         try {
             session = sessionFactory.getCurrentSession();
             CriteriaBuilder cb = session.getCriteriaBuilder();

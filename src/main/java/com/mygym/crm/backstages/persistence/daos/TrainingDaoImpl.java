@@ -1,6 +1,9 @@
 package com.mygym.crm.backstages.persistence.daos;
 
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.NoTrainingException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
+import com.mygym.crm.backstages.exceptions.custom.ResourceDeletionException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingDao;
 import lombok.Getter;
 import org.hibernate.HibernateError;
@@ -15,11 +18,11 @@ import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.util.Optional;
 
+@Getter
 @Repository
 public class TrainingDaoImpl implements TrainingDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingDaoImpl.class);
-    @Getter
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -43,9 +46,9 @@ public class TrainingDaoImpl implements TrainingDao {
 
             logger.warn("No Training found with ID: {}", trainingKey);
             return Optional.empty();
-        } catch (Exception e) {
+        } catch (HibernateException e) {
             logger.error("Error selecting Training with ID: {} with error \n{}", trainingKey, e.getMessage());
-            throw e;
+            throw new NoTrainingException(e.getMessage());
         }
     }
 
@@ -61,9 +64,9 @@ public class TrainingDaoImpl implements TrainingDao {
 
                 return Optional.of(training);
             }
-        } catch (HibernateError e) {
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
-            throw new HibernateException(e);
+            throw new ResourceCreationException(e.getMessage());
         }
 
         return Optional.empty();
@@ -93,7 +96,7 @@ public class TrainingDaoImpl implements TrainingDao {
             return deletedCount;
         }catch (HibernateException e){
             logger.error(e.getMessage());
-            throw e;
+            throw new ResourceDeletionException(e.getMessage());
         }
     }
 }

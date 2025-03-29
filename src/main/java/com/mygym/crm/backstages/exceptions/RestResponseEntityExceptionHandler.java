@@ -1,8 +1,7 @@
 package com.mygym.crm.backstages.exceptions;
 
-import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
-import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
-import com.mygym.crm.backstages.exceptions.custom.NoTrainingException;
+import com.mygym.crm.backstages.exceptions.custom.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +56,27 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(409), request);
+    }
+
+    @ExceptionHandler(value = {NoResourceException.class})
+    protected ResponseEntity<Object> handleNoResourceException(NoResourceException ex, WebRequest request){
+        String bodyOfResponse = ex.getMessage();
+
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(404), request);
+    }
+
+    @ExceptionHandler(value = {DataIntegrityViolationException.class})
+    protected ResponseEntity<Object> handeDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
+        String bodyOfResponse = ex.getMessage();
+
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(500), request);
+    }
+
+    @ExceptionHandler(value = {ResourceCreationException.class, ResourceUpdateException.class, ResourceDeletionException.class})
+    protected ResponseEntity<Object> handleResourceEventException(RuntimeException ex, WebRequest request){
+        String bodyOfResponse = ex.getMessage();
+
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(500), request);
     }
 
 }
