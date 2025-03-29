@@ -16,15 +16,15 @@ import java.nio.file.AccessDeniedException;
 @ControllerAdvice
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = { AuthenticationException.class})
-    protected ResponseEntity<Object> handleSecurityException(AuthenticationException ex, WebRequest request){
+    @ExceptionHandler(value = {AuthenticationException.class})
+    protected ResponseEntity<Object> handleSecurityException(AuthenticationException ex, WebRequest request) {
         String bodyOfResponse = "Security Exception | invalid password or userName";
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(401), request);
     }
 
-    @ExceptionHandler(value = { AccessDeniedException.class})
-    protected ResponseEntity<Object> handleSecurityException(AccessDeniedException ex, WebRequest request){
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    protected ResponseEntity<Object> handleSecurityException(AccessDeniedException ex, WebRequest request) {
         String bodyOfResponse = "Security Exception | You are not authorized to access this resource";
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(403), request);
@@ -38,42 +38,42 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     }
 
     @ExceptionHandler(value = {NoTraineeException.class})
-    protected ResponseEntity<Object> handleNoTraineeException(NoTraineeException ex, WebRequest request){
+    protected ResponseEntity<Object> handleNoTraineeException(NoTraineeException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(409), request);
     }
 
     @ExceptionHandler(value = {NoTrainerException.class})
-    protected ResponseEntity<Object> handleNoTrainerException(NoTrainerException ex, WebRequest request){
+    protected ResponseEntity<Object> handleNoTrainerException(NoTrainerException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(409), request);
     }
 
     @ExceptionHandler(value = {NoTrainingException.class})
-    protected ResponseEntity<Object> handleNoTrainingException(NoTrainingException ex, WebRequest request){
+    protected ResponseEntity<Object> handleNoTrainingException(NoTrainingException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(409), request);
     }
 
     @ExceptionHandler(value = {NoResourceException.class})
-    protected ResponseEntity<Object> handleNoResourceException(NoResourceException ex, WebRequest request){
+    protected ResponseEntity<Object> handleNoResourceException(NoResourceException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(404), request);
     }
 
     @ExceptionHandler(value = {DataIntegrityViolationException.class})
-    protected ResponseEntity<Object> handeDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request){
+    protected ResponseEntity<Object> handeDataIntegrityViolationException(DataIntegrityViolationException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(500), request);
     }
 
     @ExceptionHandler(value = {ResourceCreationException.class, ResourceUpdateException.class, ResourceDeletionException.class})
-    protected ResponseEntity<Object> handleResourceEventException(RuntimeException ex, WebRequest request){
+    protected ResponseEntity<Object> handleResourceEventException(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = ex.getMessage();
 
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatusCode.valueOf(500), request);

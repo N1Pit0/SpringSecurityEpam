@@ -49,7 +49,7 @@ public class TrainingServiceImpl implements TrainingService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             Training newTraining = new Training();
             logger.info("New Training, populating it with given traineeDTO");
 
@@ -57,11 +57,11 @@ public class TrainingServiceImpl implements TrainingService {
             newTraining.setTrainingDate(trainingDto.getTrainingDate());
             newTraining.setTrainingDuration(trainingDto.getTrainingDuration());
 
-            Trainer trainer = trainerDao.select(trainingDto.getTrainerId()).orElseThrow( () -> {
+            Trainer trainer = trainerDao.select(trainingDto.getTrainerId()).orElseThrow(() -> {
                 logger.error("Trainer with id {} not found", trainingDto.getTrainerId());
                 return new NoTrainerException("Could not found the Trainer");
             });
-            Trainee trainee = traineeDao.select(trainingDto.getTraineeId()).orElseThrow( () -> {
+            Trainee trainee = traineeDao.select(trainingDto.getTraineeId()).orElseThrow(() -> {
                 logger.error("Trainee with id {} not found", trainingDto.getTraineeId());
                 return new NoTrainerException("Could not found the Trainee");
             });
@@ -81,8 +81,7 @@ public class TrainingServiceImpl implements TrainingService {
             );
 
             return optionalTraining;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -103,8 +102,7 @@ public class TrainingServiceImpl implements TrainingService {
             }
 
             return deletedRows;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -131,12 +129,10 @@ public class TrainingServiceImpl implements TrainingService {
             );
 
             return trainingOptional;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
-    
-    
+
 
 }

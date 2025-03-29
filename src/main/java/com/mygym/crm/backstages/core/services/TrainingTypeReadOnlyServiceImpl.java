@@ -43,8 +43,7 @@ public class TrainingTypeReadOnlyServiceImpl implements TrainingTypeRadOnlyServi
                         logger.info("trainingTypes not found");
                         return Optional.empty();
                     });
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }

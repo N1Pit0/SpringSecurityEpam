@@ -5,8 +5,8 @@ import com.mygym.crm.backstages.core.dtos.request.common.CombineUserDtoWithSecur
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeTrainingsDtoSet;
-import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrainerNotAssignedDtoSet;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
 import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
@@ -16,12 +16,11 @@ import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
-import com.mygym.crm.backstages.mapper.TraineeMapper;
 import com.mygym.crm.backstages.interfaces.services.TraineeService;
+import com.mygym.crm.backstages.mapper.TraineeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +52,7 @@ public class TraineeController {
 
     @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName,
-                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException{
+                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException {
         userService.validateDto(securityDto);
 
         Optional<Trainee> optionalTrainee = traineeService.getByUserName(securityDto, userName);
@@ -65,11 +64,11 @@ public class TraineeController {
 
     @GetMapping(value = "/{userName:.+}/list-trainee-trainings", consumes = "application/json", produces = "application/json")
     public ResponseEntity<SelectTraineeTrainingsDtoSet> getTraineeTrainings(@PathVariable("userName") String userName,
-                        @RequestBody SecurityDto securityDto,
-                        @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
-                        @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
-                        @RequestParam(name = "trainerName", required = false) String trainerName,
-                        @RequestParam(name = "trainingTypename", required = false) String trainingTypename) {
+                                                                            @RequestBody SecurityDto securityDto,
+                                                                            @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
+                                                                            @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
+                                                                            @RequestParam(name = "trainerName", required = false) String trainerName,
+                                                                            @RequestParam(name = "trainingTypename", required = false) String trainingTypename) {
 
         userService.validateDto(securityDto);
 
@@ -91,7 +90,7 @@ public class TraineeController {
     @GetMapping(value = "/{userName:.+}/not-assigned-trainers")
     public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
             @PathVariable("userName") String UserName,
-            @RequestBody SecurityDto securityDto){
+            @RequestBody SecurityDto securityDto) {
 
         userService.validateDto(securityDto);
 
@@ -120,7 +119,7 @@ public class TraineeController {
 
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
     public ResponseEntity<UpdateTraineeDto> updateTraineeProfile(@PathVariable("userName") String userName,
-                         @RequestBody CombineUserDtoWithSecurityDto<TraineeDto> updateTraineeDtoWithSecurityDto) {
+                                                                 @RequestBody CombineUserDtoWithSecurityDto<TraineeDto> updateTraineeDtoWithSecurityDto) {
 
         userService.validateDto(updateTraineeDtoWithSecurityDto);
         userService.validateDto(updateTraineeDtoWithSecurityDto.getUserDto());

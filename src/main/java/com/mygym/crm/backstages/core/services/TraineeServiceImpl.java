@@ -68,8 +68,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return optionalTrainee;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -81,7 +80,7 @@ public class TraineeServiceImpl implements TraineeService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             Trainee oldTrainee = getById(securityDto, id).orElseThrow(() -> {
                 logger.error("Trainee with ID: {} not found", id);
                 return new NoTraineeException("could not find trainee with id " + id);
@@ -107,8 +106,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return optionalTrainee;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -146,8 +144,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return optionalTrainee;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -175,7 +172,7 @@ public class TraineeServiceImpl implements TraineeService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             logger.info("Trying to delete Trainee with ID: {}", id);
             Optional<Trainee> optionalTrainee = traineeDao.delete(id);
 
@@ -185,8 +182,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return optionalTrainee;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -198,7 +194,7 @@ public class TraineeServiceImpl implements TraineeService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             logger.info("Trying to delete Trainee with userName: {}", userName);
             Optional<Trainee> optionalTrainee = traineeDao.deleteWithUserName(userName);
 
@@ -208,8 +204,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return optionalTrainee;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -221,7 +216,7 @@ public class TraineeServiceImpl implements TraineeService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             logger.info("Trying to find Trainee with ID: {}", id);
 
             Optional<Trainee> traineeOptional = traineeDao.select(id);
@@ -235,8 +230,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return traineeOptional;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -261,8 +255,7 @@ public class TraineeServiceImpl implements TraineeService {
             );
 
             return traineeOptional;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -286,8 +279,7 @@ public class TraineeServiceImpl implements TraineeService {
                 logger.warn("Failed to change password for Trainee with UserName: {}", username);
                 return false;
             }
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -311,8 +303,7 @@ public class TraineeServiceImpl implements TraineeService {
                 logger.warn("Failed to toggled isActive for Trainee with UserName: {}", username);
                 return false;
             }
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -332,8 +323,7 @@ public class TraineeServiceImpl implements TraineeService {
             } else
                 logger.info("training record of size: {} was found for Trainee with UserName: {}", trainings.size(), username);
             return Optional.of(trainings);
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -354,8 +344,7 @@ public class TraineeServiceImpl implements TraineeService {
                 logger.info("Trainer record of size: {} was found for Trainers not matched with Trainee with username: {}",
                         trainers.size(), traineeUserName);
             return Optional.of(trainers);
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }

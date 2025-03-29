@@ -74,8 +74,7 @@ public class TrainerServiceImpl implements TrainerService {
             );
 
             return optionalTrainer;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -120,8 +119,7 @@ public class TrainerServiceImpl implements TrainerService {
             );
 
             return optionalTrainer;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -170,8 +168,7 @@ public class TrainerServiceImpl implements TrainerService {
             );
 
             return optionalTrainer;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -197,8 +194,7 @@ public class TrainerServiceImpl implements TrainerService {
             );
 
             return trainerOptional;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -223,8 +219,7 @@ public class TrainerServiceImpl implements TrainerService {
                     () -> logger.warn("No Trainer found with UserName: {}", userName)
             );
             return trainerOptional;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -248,8 +243,7 @@ public class TrainerServiceImpl implements TrainerService {
                 logger.warn("Failed to change password for Trainer with UserName: {}", username);
                 return false;
             }
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -273,8 +267,7 @@ public class TrainerServiceImpl implements TrainerService {
                 logger.warn("Failed to toggled isActive for Trainer with UserName: {}", username);
                 return false;
             }
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -294,8 +287,7 @@ public class TrainerServiceImpl implements TrainerService {
             } else
                 logger.info("training record of size: {} was found for Trainer with UserName: {}", trainings.size(), username);
             return Optional.of(trainings);
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }

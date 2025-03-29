@@ -6,7 +6,6 @@ import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.interfaces.services.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

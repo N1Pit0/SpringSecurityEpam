@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class  UserSecurityService {
+public class UserSecurityService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserSecurityService.class);
     private UserReadOnlyDao userReadOnlyDao;
@@ -49,8 +49,7 @@ public class  UserSecurityService {
             }
             logger.error("User with username: {} not authenticated", securityDto.getUserName());
             return false;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }
@@ -61,7 +60,7 @@ public class  UserSecurityService {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
-        try{
+        try {
             Optional<User> userOptional = userReadOnlyDao.findByUserName(securityDto.getUserName());
             boolean authorizedWithIdMatch = false;
             boolean authenticatedWIthPasswordMatch = false;
@@ -84,8 +83,7 @@ public class  UserSecurityService {
 
             }
             return false;
-        }
-        finally {
+        } finally {
             MDC.remove("transactionId");
         }
     }

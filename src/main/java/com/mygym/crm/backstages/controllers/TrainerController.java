@@ -11,14 +11,12 @@ import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
-import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
-import com.mygym.crm.backstages.mapper.TrainerMapper;
 import com.mygym.crm.backstages.interfaces.services.TrainerService;
+import com.mygym.crm.backstages.mapper.TrainerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,10 +61,10 @@ public class TrainerController {
 
     @GetMapping(value = "/{userName:.+}/list-trainer-trainings")
     public ResponseEntity<SelectTrainerTrainingsDtoSet> getTrainerTrainings(@PathVariable("userName") String userName,
-                        @RequestBody SecurityDto securityDto,
-                        @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
-                        @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
-                        @RequestParam(name = "traineeName", required = false) String traineeName) {
+                                                                            @RequestBody SecurityDto securityDto,
+                                                                            @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
+                                                                            @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
+                                                                            @RequestParam(name = "traineeName", required = false) String traineeName) {
 
         userService.validateDto(securityDto);
 
@@ -128,7 +126,7 @@ public class TrainerController {
 
         if (isPassed) return ResponseEntity.ok().build();
 
-       throw new ResourceCreationException("could not update Trainer Profile");
+        throw new ResourceCreationException("could not update Trainer Profile");
     }
 
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")

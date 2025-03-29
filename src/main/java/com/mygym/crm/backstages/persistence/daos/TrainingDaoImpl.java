@@ -6,7 +6,6 @@ import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceDeletionException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingDao;
 import lombok.Getter;
-import org.hibernate.HibernateError;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -87,14 +86,14 @@ public class TrainingDaoImpl implements TrainingDao {
                     .setParameter("traineeUsername", traineeUsername)
                     .executeUpdate();
 
-            if(deletedCount > 0){
+            if (deletedCount > 0) {
                 logger.info("Successfully deleted {} rows", deletedCount);
-            }else {
+            } else {
                 logger.error("Failed to delete Training with traineeUsername: {}", traineeUsername);
             }
 
             return deletedCount;
-        }catch (HibernateException e){
+        } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw new ResourceDeletionException(e.getMessage());
         }
