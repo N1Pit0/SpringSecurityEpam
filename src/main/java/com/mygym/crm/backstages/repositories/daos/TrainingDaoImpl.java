@@ -1,20 +1,18 @@
-package com.mygym.crm.backstages.persistence.daos;
+package com.mygym.crm.backstages.repositories.daos;
 
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainingException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceDeletionException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import lombok.Getter;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.Optional;
 
 @Getter
@@ -22,12 +20,9 @@ import java.util.Optional;
 public class TrainingDaoImpl implements TrainingDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingDaoImpl.class);
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<Training> select(Long trainingKey) {
@@ -35,8 +30,7 @@ public class TrainingDaoImpl implements TrainingDao {
         logger.info("Attempting to select Training with ID: {}", trainingKey);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Training training = session.get(Training.class, trainingKey);
+            Training training = entityManager.find(Training.class, trainingKey);
 
             if (training != null) {
                 logger.info("Successfully selected Training with ID: {}", trainingKey);
@@ -55,34 +49,29 @@ public class TrainingDaoImpl implements TrainingDao {
     public Optional<Training> add(Training training) {
         try {
             logger.info("Creating training with id: {}", training.getId());
-            Session session = this.sessionFactory.getCurrentSession();
-            Serializable generatedID = session.save(training);
 
-            if (generatedID != null) {
-                logger.info("Successfully created trainer with id: {}", training.getId());
+            entityManager.persist(training);
 
-                return Optional.of(training);
-            }
+            logger.info("Successfully created trainer with id: {}", training.getId());
+
+            return Optional.of(training);
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
 
-        return Optional.empty();
     }
 
     public int deleteWithTraineeUsername(String traineeUsername) {
         try {
             logger.info("Attempting to delete Training with traineeUsername: {}", traineeUsername);
 
-            Session session = this.sessionFactory.getCurrentSession();
-
             String sql = """
                     DELETE FROM Training t
                     WHERE t.trainee.userName = :traineeUsername
                     """;
 
-            int deletedCount = session.createQuery(sql.strip())
+            int deletedCount = entityManager.createQuery(sql.strip())
                     .setParameter("traineeUsername", traineeUsername)
                     .executeUpdate();
 

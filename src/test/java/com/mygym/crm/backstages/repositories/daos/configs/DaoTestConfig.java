@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos.configs;
+package com.mygym.crm.backstages.repositories.daos.configs;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

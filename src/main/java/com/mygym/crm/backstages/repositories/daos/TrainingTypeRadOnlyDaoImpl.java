@@ -1,14 +1,13 @@
-package com.mygym.crm.backstages.persistence.daos;
+package com.mygym.crm.backstages.repositories.daos;
 
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainingTypeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashSet;
@@ -19,26 +18,22 @@ import java.util.Set;
 public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingTypeRadOnlyDaoImpl.class);
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<TrainingType> getTrainingTypeByUserName(String trainingTypeName) {
         try {
-            Session session = sessionFactory.openSession();
             String sql = """
                     SELECT t\s
                     FROM TrainingType t\s
                     WHERE t.trainingTypeName = :trainingTypeName
                     """;
 
-            TrainingType trainingType = (TrainingType) session.createQuery(sql.strip())
+            TrainingType trainingType = (TrainingType) entityManager.createQuery(sql.strip())
                     .setParameter("trainingTypeName", trainingTypeName)
-                    .uniqueResult();
+                    .getSingleResult();
 
             Optional<TrainingType> optionalTrainingType = Optional.ofNullable(trainingType);
 
@@ -57,14 +52,13 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
     @Override
     public Optional<Set<TrainingType>> getTrainingTypes() {
         try {
-            Session session = sessionFactory.openSession();
 
             String sql = """
                     SELECT t\s
                     FROM TrainingType t\s
                     """;
 
-            Set<TrainingType> trainingType = new HashSet<>(session.createQuery(sql.strip(), TrainingType.class)
+            Set<TrainingType> trainingType = new HashSet<>(entityManager.createQuery(sql.strip(), TrainingType.class)
                     .getResultList());
 
             Optional<Set<TrainingType>> optionalTrainingType = Optional.of(trainingType);

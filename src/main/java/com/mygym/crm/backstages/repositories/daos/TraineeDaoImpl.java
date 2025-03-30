@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos;
+package com.mygym.crm.backstages.repositories.daos;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
@@ -6,17 +6,15 @@ import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.exceptions.custom.*;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -25,12 +23,9 @@ import java.util.*;
 public class TraineeDaoImpl implements TraineeDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TraineeDaoImpl.class);
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<Trainee> create(Trainee trainee) {
@@ -38,19 +33,16 @@ public class TraineeDaoImpl implements TraineeDao {
 
         try {
             logger.info("Creating trainee with userName: {}", trainee.getUserName());
-            Session session = this.sessionFactory.getCurrentSession();
-            Serializable generatedID = session.save(trainee);
+            entityManager.persist(trainee);
 
-            if (generatedID != null) {
-                logger.info("Successfully created trainee with userName: {}", trainee.getUserName());
-                return Optional.of(trainee);
-            }
+            logger.info("Successfully created trainee with userName: {}", trainee.getUserName());
+            return Optional.of(trainee);
+
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
 
-        return Optional.empty();
     }
 
     @Override
@@ -60,9 +52,8 @@ public class TraineeDaoImpl implements TraineeDao {
         try {
             logger.info("Updating trainee: {} and userName: {}", trainee.getUserId(), trainee.getUserName());
 
-            Session session = this.sessionFactory.getCurrentSession();
-            Trainee newTrainee = (Trainee) session.merge(trainee);
-            session.flush();
+            Trainee newTrainee = entityManager.merge(trainee); // JPA merge
+            entityManager.flush(); // Optional flush
 
             return Optional.of(newTrainee);
         } catch (HibernateException e) {
@@ -78,26 +69,24 @@ public class TraineeDaoImpl implements TraineeDao {
         try {
             logger.info("Updating trainee with userName: {}", trainee.getUserName());
 
-            Session session = this.sessionFactory.getCurrentSession();
-
             String sql = """
-                    UPDATE Trainee
-                    SET
-                        firstName=:firstName,
-                        lastName=:lastName,
-                        isActive=:isActive,
-                        dateOfBirth=:dateOfBirth,
-                        address=:address,
-                    WHERE userName =:userName
-                    """;
-            Trainee updatedTrainee = (Trainee) session.createQuery(sql.strip())
+                    UPDATE Trainee t
+                    SET t.firstName = :firstName,
+                        t.lastName = :lastName,
+                        t.isActive = :isActive,
+                        t.dateOfBirth = :dateOfBirth,
+                        t.address = :address
+                    WHERE t.userName = :userName
+                """;
+
+            Trainee updatedTrainee = (Trainee) entityManager.createQuery(sql.strip())
                     .setParameter("userName", trainee.getUserName())
                     .setParameter("firstName", trainee.getFirstName())
                     .setParameter("lastName", trainee.getLastName())
                     .setParameter("isActive", trainee.getIsActive())
                     .setParameter("dateOfBirth", trainee.getDateOfBirth())
                     .setParameter("address", trainee.getAddress())
-                    .uniqueResult();
+                    .getSingleResult();
 
             logger.info("Successfully update trainee with userName: {}", trainee.getUserName());
 
@@ -116,10 +105,11 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to delete trainee with ID: {}", traineeId);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Trainee trainee = session.get(Trainee.class, traineeId);
+
+            Trainee trainee = entityManager.find(Trainee.class, traineeId);
+
             if (trainee != null) {
-                session.delete(trainee);
+                entityManager.remove(trainee);
                 logger.info("Deleted trainee with ID: {}", traineeId);
 
                 return Optional.of(trainee);
@@ -142,10 +132,9 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to delete trainee with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
             Trainee trainee = selectWithUserName(userName).orElse(null);
             if (trainee != null) {
-                session.delete(trainee);
+                entityManager.remove(trainee);
                 logger.info("Deleted trainee with userName: {}", userName);
 
                 return Optional.of(trainee);
@@ -167,8 +156,7 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to select trainee with ID: {}", traineeId);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Trainee trainee = session.get(Trainee.class, traineeId);
+            Trainee trainee = entityManager.find(Trainee.class, traineeId);
 
             if (trainee != null) {
                 logger.info("Successfully selected trainee with ID: {}", traineeId);
@@ -190,7 +178,6 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to select trainee with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                       SELECT DISTINCT t FROM Trainee t
@@ -200,9 +187,9 @@ public class TraineeDaoImpl implements TraineeDao {
                       WHERE t.userName = :userName
                     """;
 
-            Trainee trainee = session.createQuery(sql.strip(), Trainee.class)
+            Trainee trainee = entityManager.createQuery(sql.strip(), Trainee.class)
                     .setParameter("userName", userName)
-                    .uniqueResult();
+                    .getSingleResult();
 
             if (trainee != null) {
                 logger.info("Successfully selected trainee with userName: {}", userName);
@@ -224,7 +211,6 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to change password for trainee with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                      UPDATE Trainee t\s
@@ -232,7 +218,7 @@ public class TraineeDaoImpl implements TraineeDao {
                      WHERE t.userName = :userName
                     """;
 
-            int affectedRows = session.createQuery(sql.strip())
+            int affectedRows = entityManager.createQuery(sql.strip())
                     .setParameter("newPassword", newPassword)
                     .setParameter("userName", userName)
                     .executeUpdate();
@@ -257,7 +243,6 @@ public class TraineeDaoImpl implements TraineeDao {
         logger.info("Attempting to toggle isActive for trainee with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                     SELECT t.isActive\s
@@ -265,9 +250,9 @@ public class TraineeDaoImpl implements TraineeDao {
                     WHERE t.userName = :userName
                     """;
 
-            Boolean isActive = session.createQuery(sql.strip(), Boolean.class)
+            Boolean isActive = entityManager.createQuery(sql.strip(), Boolean.class)
                     .setParameter("userName", userName)
-                    .uniqueResult();
+                    .getSingleResult();
 
             if (isActive == null) {
                 logger.warn("No trainee found to toggle isActive with userName: {}", userName);
@@ -282,7 +267,7 @@ public class TraineeDaoImpl implements TraineeDao {
                     WHERE t.userName = :userName
                     """;
 
-            int affectedRows = session.createQuery(sql.strip())
+            int affectedRows = entityManager.createQuery(sql.strip())
                     .setParameter("isActive", newIsActive)
                     .setParameter("userName", userName)
                     .executeUpdate();
@@ -307,10 +292,9 @@ public class TraineeDaoImpl implements TraineeDao {
     public Set<Training> getTraineeTrainings(String userName, LocalDate fromDate, LocalDate toDate,
                                              String trainerName, String trainingTypeName) {
         Set<Training> result;
-        Session session;
+
         try {
-            session = sessionFactory.getCurrentSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             CriteriaQuery<Training> cq = cb.createQuery(Training.class);
             Root<Training> trainingRoot = cq.from(Training.class);
 
@@ -344,7 +328,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             cq.select(trainingRoot).where(predicates.toArray(new Predicate[0]));
 
-            TypedQuery<Training> query = session.createQuery(cq);
+            TypedQuery<Training> query = entityManager.createQuery(cq);
 
             result = new HashSet<>(query.getResultList());
             logger.info("Retrieved {} training records for user {}.", result.size(), userName);
@@ -364,7 +348,6 @@ public class TraineeDaoImpl implements TraineeDao {
         Set<Trainer> result;
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                          SELECT tr\s
@@ -376,7 +359,7 @@ public class TraineeDaoImpl implements TraineeDao {
                              WHERE trn.trainer = tr AND t.userName = :userName
                          ) AND tr.isActive = true
                     """;
-            result = new HashSet<>(session.createQuery(sql.strip(), Trainer.class)
+            result = new HashSet<>(entityManager.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
                     .getResultList());
         } catch (HibernateException e) {

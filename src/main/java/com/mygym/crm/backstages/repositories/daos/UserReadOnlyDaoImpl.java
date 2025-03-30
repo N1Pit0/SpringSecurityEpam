@@ -1,15 +1,13 @@
-package com.mygym.crm.backstages.persistence.daos;
+package com.mygym.crm.backstages.repositories.daos;
 
 import com.mygym.crm.backstages.domain.models.common.User;
 import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.interfaces.daorepositories.UserReadOnlyDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.type.StandardBasicTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,25 +18,22 @@ import java.util.Optional;
 public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
     private static final Logger logger = LoggerFactory.getLogger(UserReadOnlyDaoImpl.class);
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     public Optional<User> findByUserName(String username) {
         try {
-            Session session = this.sessionFactory.getCurrentSession();
+
             String sql = """
                     SELECT u\s
                     FROM User u\s
                     WHERE u.userName = :username
                     """;
 
-            User user = (User) session.createQuery(sql.strip())
+            User user = entityManager.createQuery(sql, User.class)
                     .setParameter("username", username)
-                    .uniqueResult();
+                    .getSingleResult();
 
             Optional<User> userOptional = Optional.ofNullable(user);
 
@@ -58,14 +53,16 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
     @Override
     public Long countSpecificUserName(String specificUserName) {
         try {
-            Session session = this.sessionFactory.getCurrentSession();
+
             String sql = """
                         SELECT count(*)\s
-                        FROM user_table\s
-                        WHERE username LIKE :name
+                        FROM User\s
+                        WHERE userName LIKE :name
                     """;
-            return (Long) session.createNativeQuery(sql.strip()).addScalar("count", StandardBasicTypes.LONG)
-                    .setParameter("name", specificUserName + "%").uniqueResult();
+            return ((Number) entityManager
+                    .createQuery(sql)
+                    .setParameter("name", specificUserName + "%")
+                    .getSingleResult()).longValue();
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw e;

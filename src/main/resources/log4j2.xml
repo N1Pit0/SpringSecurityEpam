@@ -8,12 +8,12 @@
         </Console>
 
         <!-- File Appender for Service Logs -->
-        <File name="FileLoggerServices" fileName="${sys:APP_ROOT}/logs/services/app.log" createOnDemand="true">
+        <File name="FileLoggerServices" fileName="logs/services/app.log" createOnDemand="true">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - TransactionId=%X{transactionId} - %msg%n" />
         </File>
 
         <!-- File Appender for DAO Logs -->
-        <File name="FileLoggerDAOs" fileName="${sys:APP_ROOT}/logs/dao/app.log" createOnDemand="true">
+        <File name="FileLoggerDAOs" fileName="logs/dao/app.log" createOnDemand="true">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - TransactionId=%X{transactionId} - %msg%n" />
         </File>
     </Appenders>

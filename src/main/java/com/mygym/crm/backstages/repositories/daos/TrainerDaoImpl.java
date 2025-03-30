@@ -1,4 +1,4 @@
-package com.mygym.crm.backstages.persistence.daos;
+package com.mygym.crm.backstages.repositories.daos;
 
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
@@ -7,17 +7,15 @@ import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,12 +24,9 @@ import java.util.*;
 public class TrainerDaoImpl implements TrainerDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainerDaoImpl.class);
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Optional<Trainer> create(Trainer trainer) {
@@ -39,19 +34,17 @@ public class TrainerDaoImpl implements TrainerDao {
 
         try {
             logger.info("Creating trainer with userName: {}", trainer.getUserName());
-            Session session = this.sessionFactory.getCurrentSession();
-            Serializable generatedID = session.save(trainer);
+            entityManager.persist(trainer);
 
-            if (generatedID != null) {
-                logger.info("Successfully created trainer with userName: {}", trainer.getUserName());
-                return Optional.of(trainer);
-            }
+            logger.info("Successfully created trainer with userName: {}", trainer.getUserName());
+
+            return Optional.of(trainer);
+
         } catch (HibernateException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
 
-        return Optional.empty();
     }
 
     @Override
@@ -61,9 +54,8 @@ public class TrainerDaoImpl implements TrainerDao {
         try {
             logger.info("Updating trainer: {}", trainer.getUserId());
 
-            Session session = this.sessionFactory.getCurrentSession();
-            Trainer newTrainer = (Trainer) session.merge(trainer);
-            session.flush();
+            Trainer newTrainer = entityManager.merge(trainer); // JPA merge
+            entityManager.flush(); // Optional flush
 
             return Optional.ofNullable(newTrainer);
         } catch (HibernateException e) {
@@ -79,8 +71,7 @@ public class TrainerDaoImpl implements TrainerDao {
         logger.info("Attempting to select trainer with ID: {}", trainerId);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Trainer trainer = session.get(Trainer.class, trainerId);
+            Trainer trainer = entityManager.find(Trainer.class, trainerId);
 
             if (trainer != null) {
                 logger.info("Successfully selected trainer with ID: {}", trainerId);
@@ -102,7 +93,6 @@ public class TrainerDaoImpl implements TrainerDao {
         logger.info("Attempting to select trainer with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                       SELECT t FROM Trainer t\s
@@ -110,9 +100,9 @@ public class TrainerDaoImpl implements TrainerDao {
                       WHERE t.userName = :userName
                     """;
 
-            Trainer trainer = session.createQuery(sql.strip(), Trainer.class)
+            Trainer trainer = entityManager.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
-                    .uniqueResult();
+                    .getSingleResult();
 
             if (trainer != null) {
                 logger.info("Successfully selected trainer with userName: {}", userName);
@@ -134,7 +124,6 @@ public class TrainerDaoImpl implements TrainerDao {
         logger.info("Attempting to change password for trainer with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                      UPDATE Trainer t\s
@@ -142,7 +131,7 @@ public class TrainerDaoImpl implements TrainerDao {
                      WHERE t.userName = :userName
                     """;
 
-            int affectedRows = session.createQuery(sql.strip())
+            int affectedRows = entityManager.createQuery(sql.strip())
                     .setParameter("newPassword", newPassword)
                     .setParameter("userName", userName)
                     .executeUpdate();
@@ -167,7 +156,6 @@ public class TrainerDaoImpl implements TrainerDao {
         logger.info("Attempting to toggle isActive for trainer with userName: {}", userName);
 
         try {
-            Session session = this.sessionFactory.getCurrentSession();
 
             String sql = """
                     SELECT t.isActive\s
@@ -175,9 +163,9 @@ public class TrainerDaoImpl implements TrainerDao {
                     WHERE t.userName = :userName
                     """;
 
-            Boolean isActive = session.createQuery(sql.strip(), Boolean.class)
+            Boolean isActive = entityManager.createQuery(sql.strip(), Boolean.class)
                     .setParameter("userName", userName)
-                    .uniqueResult();
+                    .getSingleResult();
 
             if (isActive == null) {
                 logger.warn("No trainer found to toggle isActive with userName: {}", userName);
@@ -192,7 +180,7 @@ public class TrainerDaoImpl implements TrainerDao {
                     WHERE t.userName = :userName
                     """;
 
-            int affectedRows = session.createQuery(sql.strip())
+            int affectedRows = entityManager.createQuery(sql.strip())
                     .setParameter("isActive", newIsActive)
                     .setParameter("userName", userName)
                     .executeUpdate();
@@ -217,10 +205,9 @@ public class TrainerDaoImpl implements TrainerDao {
     public Set<Training> getTrainerTrainings(String userName, LocalDate fromDate, LocalDate toDate,
                                              String traineeName) {
         Set<Training> result;
-        Session session;
         try {
-            session = sessionFactory.getCurrentSession();
-            CriteriaBuilder cb = session.getCriteriaBuilder();
+
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
             CriteriaQuery<Training> cq = cb.createQuery(Training.class);
             Root<Training> trainingRoot = cq.from(Training.class);
 
@@ -248,7 +235,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
             cq.select(trainingRoot).where(predicates.toArray(new Predicate[0]));
 
-            TypedQuery<Training> query = session.createQuery(cq);
+            TypedQuery<Training> query = entityManager.createQuery(cq);
 
             result = new HashSet<>(query.getResultList());
             logger.info("Retrieved {} training records for user {}.", result.size(), userName);
