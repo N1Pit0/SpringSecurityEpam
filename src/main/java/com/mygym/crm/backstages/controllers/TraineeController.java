@@ -18,6 +18,9 @@ import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
 import com.mygym.crm.backstages.interfaces.services.TraineeService;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -51,6 +54,15 @@ public class TraineeController {
     }
 
     @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Get a Trainee profile", description = "Gets a single Trainee profile and all its dependencies with specific userName")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched the single Trainee profile"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName,
                                                               @RequestBody SecurityDto securityDto) throws NoTraineeException {
         userService.validateDto(securityDto);
@@ -63,6 +75,15 @@ public class TraineeController {
     }
 
     @GetMapping(value = "/{userName:.+}/list-trainee-trainings", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Get Trainings of Trainees", description = "Gets the list of Trainings that are of specific Trainee on given filters as query params")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched the list of Trainings"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SelectTraineeTrainingsDtoSet> getTraineeTrainings(@PathVariable("userName") String userName,
                                                                             @RequestBody SecurityDto securityDto,
                                                                             @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
@@ -88,6 +109,15 @@ public class TraineeController {
     }
 
     @GetMapping(value = "/{userName:.+}/not-assigned-trainers")
+    @Operation(summary = "Get Trainers not for Trainees", description = "Gets the list of Trainers that are not teaching specific Trainee")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched the list of Trainers"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
             @PathVariable("userName") String UserName,
             @RequestBody SecurityDto securityDto) {
@@ -106,6 +136,15 @@ public class TraineeController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Create a new Trainee user", description = "Create a Trainee object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created a new Trainee"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SecurityDto> registerTrainee(@RequestBody TraineeDto traineeDto) {
         userService.validateDto(traineeDto);
 
@@ -118,6 +157,15 @@ public class TraineeController {
     }
 
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Update Trainee user", description = "Updates an existing Trainee Object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated an existing Trainee object"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<UpdateTraineeDto> updateTraineeProfile(@PathVariable("userName") String userName,
                                                                  @RequestBody CombineUserDtoWithSecurityDto<TraineeDto> updateTraineeDtoWithSecurityDto) {
 
@@ -136,6 +184,15 @@ public class TraineeController {
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Change password of Trainee user", description = "Changes password of an existing Trainee Object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully changed the password of user"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<Void> changeLogin(@PathVariable("userName") String userName,
                                             @RequestBody ChangePasswordDto changePasswordDto) {
 
@@ -153,6 +210,15 @@ public class TraineeController {
     }
 
     @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Delete Trainee user", description = "Deletes an existing Trainee Object from the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Successfully deleted an existing Trainee"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<Void> deleteTraineeProfile(@PathVariable("userName") String userName,
                                                      @RequestBody SecurityDto securityDto) {
         userService.validateDto(securityDto);
@@ -168,6 +234,15 @@ public class TraineeController {
     }
 
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
+    @Operation(summary = "Update Trainee user", description = "Performs an action that lets user turn on and off their active status.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully toggled isActive button"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
                                                @RequestBody SecurityDto securityDto) {
         userService.validateDto(securityDto);

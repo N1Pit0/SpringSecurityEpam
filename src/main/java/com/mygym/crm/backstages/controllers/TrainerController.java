@@ -14,6 +14,9 @@ import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.interfaces.services.TrainerService;
 import com.mygym.crm.backstages.mapper.TrainerMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -47,6 +50,15 @@ public class TrainerController {
     }
 
     @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Get a Trainer profile", description = "Gets a single Trainer profile and all its dependencies with specific userName")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched the single Trainer profile"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SelectTrainerDto> getTrainerProfile(@PathVariable("userName") String userName,
                                                               @RequestBody SecurityDto securityDto) {
 
@@ -60,6 +72,15 @@ public class TrainerController {
     }
 
     @GetMapping(value = "/{userName:.+}/list-trainer-trainings")
+    @Operation(summary = "Get Trainings of Trainers", description = "Gets the list of Trainings that are of specific Trainers on given filters as query params")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched the list of Trainings"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SelectTrainerTrainingsDtoSet> getTrainerTrainings(@PathVariable("userName") String userName,
                                                                             @RequestBody SecurityDto securityDto,
                                                                             @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
@@ -83,6 +104,15 @@ public class TrainerController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Create a new Trainer user", description = "Create a Trainer object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created a new Trainer"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<SecurityDto> registerTrainer(@RequestBody TrainerDto trainerDto) {
 
         userService.validateDto(trainerDto);
@@ -96,6 +126,15 @@ public class TrainerController {
     }
 
     @PutMapping(value = {"/{userName:.+}"}, consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Update Trainer user", description = "Updates an existing Trainer Object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully updated an existing Trainer object"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<UpdateTrainerDto> updateTrainerProfile(@PathVariable("userName") String userName,
                                                                  @RequestBody CombineUserDtoWithSecurityDto<TrainerDto> updateTrainerDtoWithSecurityDto) {
 
@@ -114,6 +153,15 @@ public class TrainerController {
     }
 
     @PutMapping(value = "/{userName:.+}/change-login", consumes = "application/json", produces = "application/json")
+    @Operation(summary = "Change password of Trainer user", description = "Changes password of an existing Trainer Object and save it in the database.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully changed the password of user"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<Void> changeLogin(@PathVariable("userName") String userName,
                                             @RequestBody ChangePasswordDto changePasswordDto) {
         userService.validateDto(changePasswordDto);
@@ -130,6 +178,15 @@ public class TrainerController {
     }
 
     @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
+    @Operation(summary = "Update Trainer user", description = "Performs an action that lets user turn on and off their active status.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully toggled isActive button"),
+            @ApiResponse(responseCode = "401", description = "You are not authorized to view the resource"),
+            @ApiResponse(responseCode = "403", description = "Accessing the resource you were trying to reach is forbidden"),
+            @ApiResponse(responseCode = "404", description = "The resource you were trying to reach is not found"),
+            @ApiResponse(responseCode = "409", description = "The Trainer resource is not there OR could not perform the action"),
+            @ApiResponse(responseCode = "500", description = "Application failed to process the request")
+    })
     public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
                                                @RequestBody SecurityDto securityDto) {
 

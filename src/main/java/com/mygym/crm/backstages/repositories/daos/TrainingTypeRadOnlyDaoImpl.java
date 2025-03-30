@@ -5,6 +5,7 @@ import com.mygym.crm.backstages.exceptions.custom.NoTrainingTypeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +44,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             );
 
             return optionalTrainingType;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new NoTrainingTypeException(e.getMessage());
         }
@@ -69,7 +70,7 @@ public class TrainingTypeRadOnlyDaoImpl implements TrainingTypeReadOnlyDao {
             );
 
             return optionalTrainingType;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new NoTrainingTypeException(e.getMessage());
         }

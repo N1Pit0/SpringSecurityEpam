@@ -5,6 +5,7 @@ import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.interfaces.daorepositories.UserReadOnlyDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
 
             return userOptional;
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new NoResourceException(e.getMessage());
         }
@@ -63,7 +64,7 @@ public class UserReadOnlyDaoImpl implements UserReadOnlyDao {
                     .createQuery(sql)
                     .setParameter("name", specificUserName + "%")
                     .getSingleResult()).longValue();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw e;
         }

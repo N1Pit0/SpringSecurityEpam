@@ -7,6 +7,7 @@ import com.mygym.crm.backstages.exceptions.custom.ResourceDeletionException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import lombok.Getter;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class TrainingDaoImpl implements TrainingDao {
 
             logger.warn("No Training found with ID: {}", trainingKey);
             return Optional.empty();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error selecting Training with ID: {} with error \n{}", trainingKey, e.getMessage());
             throw new NoTrainingException(e.getMessage());
         }
@@ -55,7 +56,7 @@ public class TrainingDaoImpl implements TrainingDao {
             logger.info("Successfully created trainer with id: {}", training.getId());
 
             return Optional.of(training);
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
@@ -82,7 +83,7 @@ public class TrainingDaoImpl implements TrainingDao {
             }
 
             return deletedCount;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceDeletionException(e.getMessage());
         }
