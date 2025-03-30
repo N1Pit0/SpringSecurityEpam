@@ -34,7 +34,7 @@
             <AppenderRef ref="FileLoggerServices" />
         </Logger>
 
-        <Logger name="com.mygym.crm.backstages.persistence.daos" level="info" additivity="false">
+        <Logger name="com.mygym.crm.backstages.repositories.daos" level="info" additivity="false">
             <AppenderRef ref="FileLoggerDAOs" />
         </Logger>
     </Loggers>

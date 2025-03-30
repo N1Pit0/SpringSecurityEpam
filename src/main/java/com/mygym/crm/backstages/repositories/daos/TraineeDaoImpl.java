@@ -8,6 +8,7 @@ import com.mygym.crm.backstages.exceptions.custom.*;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateException;
@@ -38,7 +39,7 @@ public class TraineeDaoImpl implements TraineeDao {
             logger.info("Successfully created trainee with userName: {}", trainee.getUserName());
             return Optional.of(trainee);
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
@@ -56,7 +57,7 @@ public class TraineeDaoImpl implements TraineeDao {
             entityManager.flush(); // Optional flush
 
             return Optional.of(newTrainee);
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -92,7 +93,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             return Optional.of(updatedTrainee);
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -118,7 +119,7 @@ public class TraineeDaoImpl implements TraineeDao {
                 logger.warn("No trainee found with ID: {} to delete", traineeId);
                 return Optional.empty();
             }
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Failed to delete trainee with ID: {}. Error: {}", traineeId, e.getMessage(), e);
             throw new ResourceDeletionException(e.getMessage());
         }
@@ -143,7 +144,7 @@ public class TraineeDaoImpl implements TraineeDao {
                 logger.warn("No trainee found with userName: {} to delete", userName);
                 return Optional.empty();
             }
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Failed to delete trainee with userName: {}. Error: {}", userName, e.getMessage(), e);
             throw new ResourceDeletionException(e.getMessage());
         }
@@ -165,7 +166,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found with ID: {}", traineeId);
             return Optional.empty();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error selecting trainee with ID: {} with message \n" + " {}", traineeId, e.getMessage());
             throw new NoTraineeException("No trainee found with id" + traineeId);
         }
@@ -198,7 +199,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found with userName: {}", userName);
             return Optional.empty();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error selecting trainee with userName: {}", userName, e);
             throw new NoTraineeException(e.getMessage());
         }
@@ -230,7 +231,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             logger.warn("No trainee found to change password with userName: {}", userName);
             return false;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error changing password for trainee with userName: {}", userName, e);
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -283,7 +284,7 @@ public class TraineeDaoImpl implements TraineeDao {
             logger.warn("Failed to toggle isActive for trainee with userName: {}", userName);
             return false;
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error toggling isActive for trainee with userName: {}", userName, e);
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -332,7 +333,7 @@ public class TraineeDaoImpl implements TraineeDao {
 
             result = new HashSet<>(query.getResultList());
             logger.info("Retrieved {} training records for user {}.", result.size(), userName);
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error retrieving training records for user {}: {}", userName, e.getMessage(), e);
             throw new NoResourceException(e.getMessage());
         }
@@ -362,7 +363,7 @@ public class TraineeDaoImpl implements TraineeDao {
             result = new HashSet<>(entityManager.createQuery(sql.strip(), Trainer.class)
                     .setParameter("userName", userName)
                     .getResultList());
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error retrieving Trainers that do not teach trainees with userName: {} : {}", userName, e.getMessage(), e);
             throw new NoResourceException(e.getMessage());
         }

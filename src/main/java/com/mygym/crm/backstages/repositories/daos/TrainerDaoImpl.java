@@ -3,12 +3,14 @@ package com.mygym.crm.backstages.repositories.daos;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
+import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.hibernate.HibernateException;
@@ -40,7 +42,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
             return Optional.of(trainer);
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceCreationException(e.getMessage());
         }
@@ -58,7 +60,7 @@ public class TrainerDaoImpl implements TrainerDao {
             entityManager.flush(); // Optional flush
 
             return Optional.ofNullable(newTrainer);
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error(e.getMessage());
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -80,7 +82,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found with ID: {}", trainerId);
             return Optional.empty();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error selecting trainer with ID: {} with message \n {}", trainerId, e.getMessage());
             throw new NoTrainerException("No trainer found with id" + trainerId);
         }
@@ -111,7 +113,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found with userName: {}", userName);
             return Optional.empty();
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error selecting trainer with userName: {} with message \n" + " {}", userName, e.getMessage());
             throw new NoTrainerException("No trainer found with userName" + userName);
         }
@@ -143,7 +145,7 @@ public class TrainerDaoImpl implements TrainerDao {
 
             logger.warn("No trainer found to change password with userName: {}", userName);
             return false;
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error changing password for trainer with userName: {}", userName, e);
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -196,7 +198,7 @@ public class TrainerDaoImpl implements TrainerDao {
             logger.warn("Failed to toggle isActive for trainer with userName: {}", userName);
             return false;
 
-        } catch (HibernateException e) {
+        } catch (PersistenceException e) {
             logger.error("Error toggling isActive for trainer with userName: {}", userName, e);
             throw new ResourceUpdateException(e.getMessage());
         }
@@ -239,9 +241,9 @@ public class TrainerDaoImpl implements TrainerDao {
 
             result = new HashSet<>(query.getResultList());
             logger.info("Retrieved {} training records for user {}.", result.size(), userName);
-        } catch (Exception e) {
+        } catch (PersistenceException e) {
             logger.error("Error retrieving training records for user {}: {}", userName, e.getMessage(), e);
-            throw e;
+            throw new NoResourceException("No trianings");
         }
         return result;
     }
