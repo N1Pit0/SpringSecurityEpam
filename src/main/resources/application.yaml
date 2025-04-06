@@ -1,0 +1,67 @@
+
+
+spring:
+  application:
+    name: CustomerRelationshipManager
+
+  # Common JPA/Hibernate Configuration (shared across all environments)
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  profiles:
+    active: local # Default active profile
+server:
+  servlet:
+    context-path: /customerRelationShipManager
+---
+# Local Profile Configuration
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    url: jdbc:postgresql://localhost:5432/CustomerRelationshipManager
+    username: local_user
+    password: local_password
+    driver-class-name: org.postgresql.Driver
+
+---
+# Development Profile Configuration
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dev-db
+    username: dev_user
+    password: dev_password
+    driver-class-name: org.postgresql.Driver
+
+---
+# Staging Profile Configuration
+spring:
+  config:
+    activate:
+      on-profile: stg
+  datasource:
+    url: jdbc:postgresql://stg-db-server:5432/stg-db
+    username: stg_user
+    password: stg_password
+    driver-class-name: org.postgresql.Driver
+
+---
+# Production Profile Configuration
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:postgresql://prod-db-server:5432/prod-db
+    username: prod_user
+    password: prod_password
+    driver-class-name: org.postgresql.Driver
