@@ -1,4 +1,20 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /api-docs
 
+server:
+  servlet:
+    context-path: /CustomerRelationShipManager
 
 spring:
   application:
@@ -7,7 +23,7 @@ spring:
   # Common JPA/Hibernate Configuration (shared across all environments)
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -15,9 +31,6 @@ spring:
 
   profiles:
     active: local # Default active profile
-server:
-  servlet:
-    context-path: /customerRelationShipManager
 ---
 # Local Profile Configuration
 spring:
@@ -26,8 +39,8 @@ spring:
       on-profile: local
   datasource:
     url: jdbc:postgresql://localhost:5432/CustomerRelationshipManager
-    username: local_user
-    password: local_password
+    username: user
+    password: pass
     driver-class-name: org.postgresql.Driver
 
 ---
