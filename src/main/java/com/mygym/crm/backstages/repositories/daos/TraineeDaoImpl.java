@@ -11,7 +11,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -71,14 +70,14 @@ public class TraineeDaoImpl implements TraineeDao {
             logger.info("Updating trainee with userName: {}", trainee.getUserName());
 
             String sql = """
-                    UPDATE Trainee t
-                    SET t.firstName = :firstName,
-                        t.lastName = :lastName,
-                        t.isActive = :isActive,
-                        t.dateOfBirth = :dateOfBirth,
-                        t.address = :address
-                    WHERE t.userName = :userName
-                """;
+                        UPDATE Trainee t
+                        SET t.firstName = :firstName,
+                            t.lastName = :lastName,
+                            t.isActive = :isActive,
+                            t.dateOfBirth = :dateOfBirth,
+                            t.address = :address
+                        WHERE t.userName = :userName
+                    """;
 
             Trainee updatedTrainee = (Trainee) entityManager.createQuery(sql.strip())
                     .setParameter("userName", trainee.getUserName())

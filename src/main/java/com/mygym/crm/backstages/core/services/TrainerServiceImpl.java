@@ -1,8 +1,6 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.annotations.security.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
@@ -80,14 +78,13 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainer> update(SecurityDto securityDto, Long id, TrainerDto trainerDto) {
+    public Optional<Trainer> update(Long id, TrainerDto trainerDto) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
         try {
-            Trainer oldTrainer = getById(securityDto, id).orElseThrow(() -> {
+            Trainer oldTrainer = getById(id).orElseThrow(() -> {
                 logger.error("Trainer with ID: {} not found", id);
                 return new NoTrainerException("could not find trainer with id " + id);
             });
@@ -125,14 +122,13 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainer> updateByUserName(SecurityDto securityDto, String userName, TrainerDto trainerDto) {
+    public Optional<Trainer> updateByUserName(String userName, TrainerDto trainerDto) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
         try {
-            Trainer oldTrainer = getByUserName(securityDto, userName).orElseThrow(() -> {
+            Trainer oldTrainer = getByUserName(userName).orElseThrow(() -> {
                 logger.error("Trainer with UserName {} not found", userName);
                 return new NoTrainerException("could not find trainer with UserName " + userName);
             });
@@ -174,9 +170,8 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Trainer> getById(SecurityDto securityDto, Long id) {
+    public Optional<Trainer> getById(Long id) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -200,9 +195,8 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Trainer> getByUserName(SecurityDto securityDto, String userName) {
+    public Optional<Trainer> getByUserName(String userName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -225,9 +219,8 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public boolean changePassword(SecurityDto securityDto, String username, String newPassword) {
+    public boolean changePassword(String username, String newPassword) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -249,9 +242,8 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public boolean toggleIsActive(SecurityDto securityDto, String username) {
+    public boolean toggleIsActive(String username) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -273,9 +265,8 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Set<Training>> getTrainerTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
+    public Optional<Set<Training>> getTrainerTrainings(String username, LocalDate fromDate,
                                                        LocalDate toDate, String traineeName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);

@@ -1,16 +1,12 @@
 package com.mygym.crm.backstages.core.services;
 
-import com.mygym.crm.backstages.annotations.security.SecureMethod;
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
 import com.mygym.crm.backstages.interfaces.services.TraineeService;
-import com.mygym.crm.backstages.interfaces.services.TrainerService;
-import com.mygym.crm.backstages.interfaces.services.TrainingService;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,16 +27,11 @@ public class TraineeServiceImpl implements TraineeService {
     private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImpl.class);
     private final TraineeDao traineeDao;
     private final UserService userService;
-    private final TrainerService trainerService;
-    private final TrainingService trainingService;
 
     @Autowired
-    public TraineeServiceImpl(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService,
-                              TrainerService trainerService, TrainingService trainingService) {
+    public TraineeServiceImpl(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
-        this.trainerService = trainerService;
-        this.trainingService = trainingService;
     }
 
     @Transactional
@@ -74,14 +65,13 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainee> update(SecurityDto securityDto, Long id, TraineeDto traineeDto) {
+    public Optional<Trainee> update(Long id, TraineeDto traineeDto) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
         try {
-            Trainee oldTrainee = getById(securityDto, id).orElseThrow(() -> {
+            Trainee oldTrainee = getById(id).orElseThrow(() -> {
                 logger.error("Trainee with ID: {} not found", id);
                 return new NoTraineeException("could not find trainee with id " + id);
             });
@@ -112,14 +102,13 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainee> updateByUserName(SecurityDto securityDto, String userName, TraineeDto traineeDto) {
+    public Optional<Trainee> updateByUserName(String userName, TraineeDto traineeDto) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
         try {
-            Trainee oldTrainee = getByUserName(securityDto, userName).orElseThrow(() -> {
+            Trainee oldTrainee = getByUserName(userName).orElseThrow(() -> {
                 logger.error("Trainee with UserName {} not found", userName);
                 return new NoTraineeException("could not find trainee with UserName " + userName);
             });
@@ -149,26 +138,9 @@ public class TraineeServiceImpl implements TraineeService {
         }
     }
 
-//    public Optional<Set<Trainer>> updateTraineeTrainers(SecurityDto securityDto, String userName,
-//                                                        Set<String> trainerUserNames) {
-//        logger.info("Trying to delete Trainings with Trainee userName: {}", userName);
-//
-//        int deletedRows = trainingService.deleteWithTraineeUsername(userName);
-//
-//        if (deletedRows > 0) logger.info("Successfully deleted Trainings with Trainee userName: {}", userName);
-//        else logger.warn("Failed to delete Trainings with Trainee userName: {}", userName);
-//
-//        for (String trainerUserName : trainerUserNames) {
-//            Optional<Trainer> optionalTrainer = trainerService.getByUserName(trainerUserName);
-//            trainingService.add()
-//        }
-//
-//    }
-
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainee> delete(SecurityDto securityDto, Long id) {
+    public Optional<Trainee> delete(Long id) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -188,9 +160,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public Optional<Trainee> deleteWithUserName(SecurityDto securityDto, String userName) {
+    public Optional<Trainee> deleteWithUserName(String userName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -210,9 +181,9 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
+
     @Override
-    public Optional<Trainee> getById(SecurityDto securityDto, Long id) {
+    public Optional<Trainee> getById(Long id) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -236,9 +207,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Trainee> getByUserName(SecurityDto securityDto, String userName) {
+    public Optional<Trainee> getByUserName(String userName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -248,9 +218,7 @@ public class TraineeServiceImpl implements TraineeService {
             Optional<Trainee> traineeOptional = traineeDao.selectWithUserName(userName);
 
             traineeOptional.ifPresentOrElse(
-                    trainee -> {
-                        logger.info("Found Trainee with UserName: {}", userName);
-                    },
+                    trainee -> logger.info("Found Trainee with UserName: {}", userName),
                     () -> logger.warn("No Trainee found with UserName: {}", userName)
             );
 
@@ -261,9 +229,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public boolean changePassword(SecurityDto securityDto, String username, String newPassword) {
+    public boolean changePassword(String username, String newPassword) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -285,9 +252,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional
-    @SecureMethod
     @Override
-    public boolean toggleIsActive(SecurityDto securityDto, String username) {
+    public boolean toggleIsActive(String username) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 
@@ -309,9 +275,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Set<Training>> getTraineeTrainings(SecurityDto securityDto, String username, LocalDate fromDate,
+    public Optional<Set<Training>> getTraineeTrainings(String username, LocalDate fromDate,
                                                        LocalDate toDate, String trainerName, String trainingTypeName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
@@ -329,10 +294,8 @@ public class TraineeServiceImpl implements TraineeService {
     }
 
     @Transactional(noRollbackFor = HibernateException.class, readOnly = true)
-    @SecureMethod
     @Override
-    public Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(SecurityDto securityDto,
-                                                                             String traineeUserName) {
+    public Optional<Set<Trainer>> getTrainersNotTrainingTraineesWithUserName(String traineeUserName) {
         String transactionId = UUID.randomUUID().toString();
         MDC.put("transactionId", transactionId);
 

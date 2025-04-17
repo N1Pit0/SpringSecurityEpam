@@ -6,7 +6,6 @@ import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyD
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PersistenceException;
-import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;

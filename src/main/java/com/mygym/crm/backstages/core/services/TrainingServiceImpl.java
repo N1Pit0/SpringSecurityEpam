@@ -28,7 +28,6 @@ public class TrainingServiceImpl implements TrainingService {
     private final TrainingDao trainingDao;
     private final TrainerDao trainerDao;
     private final TraineeDao traineeDao;
-    private UserService userService;
 
 
     @Autowired
@@ -36,11 +35,6 @@ public class TrainingServiceImpl implements TrainingService {
         this.trainingDao = trainingDao;
         this.trainerDao = trainerDao;
         this.traineeDao = traineeDao;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
     }
 
     @Transactional

@@ -6,8 +6,8 @@ import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTraineeTrainingsDtoSet;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.select.SelectTrainerNotAssignedDtoSet;
+import com.mygym.crm.backstages.core.dtos.response.traineedto.select.TraineeCredentialsDto;
 import com.mygym.crm.backstages.core.dtos.response.traineedto.update.UpdateTraineeDto;
-import com.mygym.crm.backstages.core.dtos.security.SecurityDto;
 import com.mygym.crm.backstages.core.services.UserService;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
@@ -53,7 +53,7 @@ public class TraineeController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/{userName:.+}", produces = "application/json")
     @Operation(summary = "Get a Trainee profile", description = "Gets a single Trainee profile and all its dependencies with specific userName")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully fetched the single Trainee profile"),
@@ -63,11 +63,9 @@ public class TraineeController {
             @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
-    public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName,
-                                                              @RequestBody SecurityDto securityDto) throws NoTraineeException {
-        userService.validateDto(securityDto);
+    public ResponseEntity<SelectTraineeDto> getTraineeProfile(@PathVariable("userName") String userName) throws NoTraineeException {
 
-        Optional<Trainee> optionalTrainee = traineeService.getByUserName(securityDto, userName);
+        Optional<Trainee> optionalTrainee = traineeService.getByUserName(userName);
 
         return optionalTrainee.map(mapper::traineeToSelectTraineeDto)
                 .map((trainee) -> new ResponseEntity<>(trainee, HttpStatus.OK))
@@ -85,16 +83,13 @@ public class TraineeController {
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
     public ResponseEntity<SelectTraineeTrainingsDtoSet> getTraineeTrainings(@PathVariable("userName") String userName,
-                                                                            @RequestBody SecurityDto securityDto,
                                                                             @RequestParam(name = "periodFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodFrom,
                                                                             @RequestParam(name = "periodTo", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate periodTo,
                                                                             @RequestParam(name = "trainerName", required = false) String trainerName,
                                                                             @RequestParam(name = "trainingTypename", required = false) String trainingTypename) {
 
-        userService.validateDto(securityDto);
 
         Optional<Set<Training>> optionalTrainings = traineeService.getTraineeTrainings(
-                securityDto,
                 userName,
                 periodFrom,
                 periodTo,
@@ -119,13 +114,9 @@ public class TraineeController {
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
     public ResponseEntity<SelectTrainerNotAssignedDtoSet> getTrainersNotTrainingTraineesWithUserName(
-            @PathVariable("userName") String UserName,
-            @RequestBody SecurityDto securityDto) {
-
-        userService.validateDto(securityDto);
+            @PathVariable("userName") String UserName) {
 
         Optional<Set<Trainer>> optionalTrainings = traineeService.getTrainersNotTrainingTraineesWithUserName(
-                securityDto,
                 UserName
         );
 
@@ -145,14 +136,14 @@ public class TraineeController {
             @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
-    public ResponseEntity<SecurityDto> registerTrainee(@RequestBody TraineeDto traineeDto) {
+    public ResponseEntity<TraineeCredentialsDto> registerTrainee(@RequestBody TraineeDto traineeDto) {
         userService.validateDto(traineeDto);
 
         Optional<Trainee> optionalTrainee = traineeService.create(traineeDto);
 
         Trainee trainee = optionalTrainee.orElseThrow(() -> new ResourceCreationException("could not create Trainer"));
 
-        return new ResponseEntity<>(new SecurityDto(trainee.getUserName(), trainee.getPassword()),
+        return new ResponseEntity<>(new TraineeCredentialsDto(trainee.getUserName(), trainee.getPassword()),
                 HttpStatus.CREATED);
     }
 
@@ -171,9 +162,8 @@ public class TraineeController {
 
         userService.validateDto(updateTraineeDtoWithSecurityDto);
         userService.validateDto(updateTraineeDtoWithSecurityDto.getUserDto());
-        userService.validateDto(updateTraineeDtoWithSecurityDto.getSecurityDto());
 
-        Optional<Trainee> optionalTrainee = traineeService.updateByUserName(updateTraineeDtoWithSecurityDto.getSecurityDto(),
+        Optional<Trainee> optionalTrainee = traineeService.updateByUserName(
                 userName,
                 updateTraineeDtoWithSecurityDto.getUserDto());
 
@@ -199,7 +189,6 @@ public class TraineeController {
         userService.validateDto(changePasswordDto);
 
         boolean isPassed = traineeService.changePassword(
-                new SecurityDto(userName, changePasswordDto.getOldPassword()),
                 userName,
                 changePasswordDto.getNewPassword()
         );
@@ -209,7 +198,7 @@ public class TraineeController {
         throw new ResourceUpdateException("could not update Trainee Profile");
     }
 
-    @DeleteMapping(value = "/{userName:.+}", consumes = "application/json", produces = "application/json")
+    @DeleteMapping(value = "/{userName:.+}", produces = "application/json")
     @Operation(summary = "Delete Trainee user", description = "Deletes an existing Trainee Object from the database.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Successfully deleted an existing Trainee"),
@@ -219,11 +208,9 @@ public class TraineeController {
             @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
-    public ResponseEntity<Void> deleteTraineeProfile(@PathVariable("userName") String userName,
-                                                     @RequestBody SecurityDto securityDto) {
-        userService.validateDto(securityDto);
+    public ResponseEntity<Void> deleteTraineeProfile(@PathVariable("userName") String userName) {
 
-        Optional<Trainee> optionalTrainee = traineeService.deleteWithUserName(securityDto, userName);
+        Optional<Trainee> optionalTrainee = traineeService.deleteWithUserName(userName);
 
         if (optionalTrainee.isPresent()) {
 
@@ -233,7 +220,7 @@ public class TraineeController {
         throw new ResourceCreationException("could not delete Trainee Profile");
     }
 
-    @PatchMapping(value = "/{userName:.+}/toggleActive", consumes = "application/json")
+    @PatchMapping(value = "/{userName:.+}/toggleActive")
     @Operation(summary = "Update Trainee user", description = "Performs an action that lets user turn on and off their active status.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully toggled isActive button"),
@@ -243,11 +230,9 @@ public class TraineeController {
             @ApiResponse(responseCode = "409", description = "The Trainee resource is not there OR could not perform the action"),
             @ApiResponse(responseCode = "500", description = "Application failed to process the request")
     })
-    public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName,
-                                               @RequestBody SecurityDto securityDto) {
-        userService.validateDto(securityDto);
+    public ResponseEntity<Void> toggleIsActive(@PathVariable("userName") String userName) {
 
-        boolean isPerformed = traineeService.toggleIsActive(securityDto, userName);
+        boolean isPerformed = traineeService.toggleIsActive(userName);
 
         if (isPerformed) {
             return new ResponseEntity<>(HttpStatus.valueOf(200));

@@ -19,7 +19,7 @@ public class DataBaseHealthIndicator implements HealthIndicator {
 
     @Override
     public Health getHealth(boolean includeDetails) {
-                return HealthIndicator.super.getHealth(includeDetails);
+        return HealthIndicator.super.getHealth(includeDetails);
     }
 
     @Override
