@@ -1,5 +1,6 @@
 package com.mygym.crm.backstages.config;
 
+import com.mygym.crm.backstages.core.services.security.filter.BruteForceProtectionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,12 +12,20 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
+
+    private BruteForceProtectionFilter bruteForceProtectionFilter;
+
+    @Autowired
+    public void setBruteForceProtectionFilter(BruteForceProtectionFilter bruteForceProtectionFilter) {
+        this.bruteForceProtectionFilter = bruteForceProtectionFilter;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,6 +43,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/users/trainees", "/users/trainers").authenticated()
                         .anyRequest().authenticated()
                 )
+                .addFilterBefore(bruteForceProtectionFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
