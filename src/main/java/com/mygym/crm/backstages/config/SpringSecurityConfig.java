@@ -1,6 +1,8 @@
 package com.mygym.crm.backstages.config;
 
 import com.mygym.crm.backstages.core.services.security.filter.BruteForceProtectionFilter;
+import com.mygym.crm.backstages.core.services.security.CustomAuthenticationFailureHandler;
+import com.mygym.crm.backstages.core.services.security.CustomAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,10 +23,20 @@ import javax.sql.DataSource;
 public class SpringSecurityConfig {
 
     private BruteForceProtectionFilter bruteForceProtectionFilter;
+    private CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
+
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Autowired
     public void setBruteForceProtectionFilter(BruteForceProtectionFilter bruteForceProtectionFilter) {
         this.bruteForceProtectionFilter = bruteForceProtectionFilter;
+    public void setCustomAuthenticationFailureHandler(CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
+    }
+
+    @Autowired
+    public void setCustomAuthenticationSuccessHandler(CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) {
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
     }
 
     @Bean
@@ -35,7 +47,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/users/trainees", "/users/trainers").permitAll()
                         // Permit unauthenticated access to homepage and public pages
-                        .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/", "/home", "/login").permitAll()
                         // For other methods on /users/trainees and /users/trainers, authentication is required
                         .requestMatchers(HttpMethod.GET, "/users/trainees", "/users/trainers").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/users/trainees", "/users/trainers").authenticated()
@@ -43,10 +55,10 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/users/trainees", "/users/trainers").authenticated()
                         .anyRequest().authenticated()
                 )
-                .addFilterBefore(bruteForceProtectionFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .permitAll()
+                        .failureHandler(customAuthenticationFailureHandler)
+                        .successHandler(customAuthenticationSuccessHandler)
                 )
                 .logout(LogoutConfigurer::permitAll);
 
