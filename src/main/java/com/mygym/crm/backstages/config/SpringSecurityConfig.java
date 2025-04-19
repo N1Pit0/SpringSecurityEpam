@@ -1,5 +1,6 @@
 package com.mygym.crm.backstages.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,13 +8,9 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.sql.DataSource;
 
@@ -47,8 +44,22 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+    public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+        JdbcUserDetailsManager jdbcManager = new JdbcUserDetailsManager(dataSource);
+
+        // Custom query for User authentication (username, password, enabled)
+        jdbcManager.setUsersByUsernameQuery(
+                "SELECT username, password, enabled FROM user_table WHERE username = ?"
+        );
+
+        // Custom query for Role/Authority retrieval for authenticated users
+        jdbcManager.setAuthoritiesByUsernameQuery(
+                "SELECT u.username, a.authority FROM user_table u JOIN authorities_table a ON u.user_id = a.user_id WHERE u.username = ?"
+        );
+
+        // Optional: Configure custom queries for creating and deleting users (if needed)
+
+        return jdbcManager;
     }
 
 }

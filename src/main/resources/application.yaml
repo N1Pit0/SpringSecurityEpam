@@ -14,7 +14,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:
@@ -35,8 +35,8 @@ spring:
       on-profile: local
   datasource:
     url: jdbc:postgresql://localhost:5432/CustomerRelationshipManager
-    username: local_userName
-    password: local_password
+    username: local
+    password: local
     driver-class-name: org.postgresql.Driver
 
 management:
