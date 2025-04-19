@@ -7,6 +7,7 @@ import jakarta.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
@@ -18,6 +19,7 @@ public class UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private UserReadOnlyDao userDao;
     private Validator validator;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public void setUserDao(UserReadOnlyDao userDao) {
@@ -27,6 +29,11 @@ public class UserService {
     @Autowired
     public void setValidator(Validator validator) {
         this.validator = validator;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     public <T> void validateDto(T Dto) {
@@ -58,6 +65,10 @@ public class UserService {
             password.append(c);
         }
 
-        return password.toString();
+        return encodePassword(password.toString());
+    }
+
+    public String encodePassword(String plainTextPassword) {
+        return passwordEncoder.encode(plainTextPassword);
     }
 }

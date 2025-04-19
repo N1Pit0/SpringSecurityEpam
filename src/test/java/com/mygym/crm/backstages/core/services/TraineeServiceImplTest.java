@@ -22,11 +22,11 @@
 //public class TraineeServiceImplTest {
 //
 //    @Autowired
-//    private TraineeServiceImpl traineeService;
+//    private TraineeServiceImplCommon traineeService;
 //    @Autowired
 //    private TraineeDaoImpl traineeDao;
 //    @Autowired
-//    private UserService userService;
+//    private CommonUserService userService;
 //    private TraineeDto traineeDto;
 //
 //    @Before
@@ -43,7 +43,7 @@
 //        traineeDto.setActive(true);
 //        traineeDto.setDateOfBirth(LocalDate.of(1990, 1, 1));
 //        traineeDto.setAddress("123 Main St");
-////        UserService.uniqueID = 1L;
+////        CommonUserService.uniqueID = 1L;
 //    }
 //
 //    @Test

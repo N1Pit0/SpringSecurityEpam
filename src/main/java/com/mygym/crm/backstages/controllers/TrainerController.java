@@ -12,7 +12,7 @@ import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
-import com.mygym.crm.backstages.interfaces.services.TrainerService;
+import com.mygym.crm.backstages.interfaces.services.TrainerServiceCommon;
 import com.mygym.crm.backstages.mapper.TrainerMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,12 +30,12 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "users/trainers")
 public class TrainerController {
-    private TrainerService trainerService;
+    private TrainerServiceCommon trainerService;
     private UserService userService;
     private TrainerMapper mapper;
 
     @Autowired
-    public void setTrainerService(TrainerService trainerService) {
+    public void setTrainerService(TrainerServiceCommon trainerService) {
         this.trainerService = trainerService;
     }
 

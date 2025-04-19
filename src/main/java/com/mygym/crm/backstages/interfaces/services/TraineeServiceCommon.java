@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
-public interface TraineeService extends UserService<TraineeDto, Trainee> {
+public interface TraineeServiceCommon extends CommonUserService<TraineeDto, Trainee> {
 
     Optional<Trainee> delete(Long id);
 

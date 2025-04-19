@@ -20,11 +20,11 @@
 //@ContextConfiguration(classes = {ServiceTestConfig.class})
 //public class TrainerServiceImplTest {
 //    @Autowired
-//    private TrainerServiceImpl trainerService;
+//    private TrainerServiceImplCommon trainerService;
 //    @Autowired
 //    private TrainerDaoImpl trainerDao;
 //    @Autowired
-//    private UserService userService;
+//    private CommonUserService userService;
 //    private TrainerDto trainerDto;
 //
 ////    @Before
@@ -40,7 +40,7 @@
 //        trainerDto.setLastName("Doe");
 //        trainerDto.setActive(true);
 //
-////        UserService.uniqueID = 1L;
+////        CommonUserService.uniqueID = 1L;
 //    }
 //
 //    @Test

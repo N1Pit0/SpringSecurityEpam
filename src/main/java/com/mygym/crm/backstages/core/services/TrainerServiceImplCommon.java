@@ -7,7 +7,7 @@ import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
-import com.mygym.crm.backstages.interfaces.services.TrainerService;
+import com.mygym.crm.backstages.interfaces.services.TrainerServiceCommon;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +22,15 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service("trainerServiceIMPL")
-public class TrainerServiceImpl implements TrainerService {
+public class TrainerServiceImplCommon implements TrainerServiceCommon {
 
-    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TrainerServiceImplCommon.class);
     private final TrainerDao trainerDao;
     private final UserService userService;
     private final TrainingTypeReadOnlyDao trainingTypeRadOnlyDao;
 
     @Autowired
-    public TrainerServiceImpl(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
+    public TrainerServiceImplCommon(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
         this.trainerDao = trainerDao;
         this.userService = userService;
         this.trainingTypeRadOnlyDao = trainingTypeRadOnlyDao;
@@ -227,7 +227,7 @@ public class TrainerServiceImpl implements TrainerService {
         try {
             logger.info("Trying to change password for Trainer with UserName: {}", username);
 
-            boolean success = trainerDao.changePassword(username, newPassword);
+            boolean success = trainerDao.changePassword(username, userService.encodePassword(newPassword));
 
             if (success) {
                 logger.info("Successfully changed password for Trainer with UserName: {}", username);

@@ -2,7 +2,7 @@ package com.mygym.crm.backstages.interfaces.services;
 
 import java.util.Optional;
 
-public interface UserService<T, E> {
+public interface CommonUserService<T, E> {
 
     Optional<E> create(T t);
 

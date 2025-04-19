@@ -6,7 +6,7 @@ import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
-import com.mygym.crm.backstages.interfaces.services.TraineeService;
+import com.mygym.crm.backstages.interfaces.services.TraineeServiceCommon;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +22,14 @@ import java.util.Set;
 import java.util.UUID;
 
 @Service
-public class TraineeServiceImpl implements TraineeService {
+public class TraineeServiceImplCommon implements TraineeServiceCommon {
 
-    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImplCommon.class);
     private final TraineeDao traineeDao;
     private final UserService userService;
 
     @Autowired
-    public TraineeServiceImpl(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService) {
+    public TraineeServiceImplCommon(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
     }
@@ -237,7 +237,7 @@ public class TraineeServiceImpl implements TraineeService {
         try {
             logger.info("Trying to change password for Trainee with UserName: {}", username);
 
-            boolean success = traineeDao.changePassword(username, newPassword);
+            boolean success = traineeDao.changePassword(username, userService.encodePassword(newPassword));
 
             if (success) {
                 logger.info("Successfully changed password for Trainee with UserName: {}", username);

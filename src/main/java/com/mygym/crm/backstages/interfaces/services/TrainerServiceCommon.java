@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
-public interface TrainerService extends UserService<TrainerDto, Trainer> {
+public interface TrainerServiceCommon extends CommonUserService<TrainerDto, Trainer> {
 
     Optional<Set<Training>> getTrainerTrainings(String username, LocalDate fromDate, LocalDate toDate,
                                                 String traineeName);

@@ -21,6 +21,12 @@ spring:
 
   profiles:
     active: local # Default active profile
+
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        TRACE
 ---
 # Local Profile Configuration
 spring:

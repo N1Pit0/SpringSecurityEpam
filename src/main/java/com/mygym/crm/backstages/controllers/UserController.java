@@ -10,7 +10,7 @@ public class UserController {
     private UserService userService;
 
 //    @Autowired
-//    public void setUserService(UserService userService) {
+//    public void setUserService(CommonUserService userService) {
 //        this.userService = userService;
 //    }
 //

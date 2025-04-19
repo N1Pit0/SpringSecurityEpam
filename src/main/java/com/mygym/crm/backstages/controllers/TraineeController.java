@@ -16,7 +16,7 @@ import com.mygym.crm.backstages.exceptions.custom.NoResourceException;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceCreationException;
 import com.mygym.crm.backstages.exceptions.custom.ResourceUpdateException;
-import com.mygym.crm.backstages.interfaces.services.TraineeService;
+import com.mygym.crm.backstages.interfaces.services.TraineeServiceCommon;
 import com.mygym.crm.backstages.mapper.TraineeMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -34,12 +34,12 @@ import java.util.Set;
 @RestController
 @RequestMapping(value = "/users/trainees")
 public class TraineeController {
-    private TraineeService traineeService;
+    private TraineeServiceCommon traineeService;
     private UserService userService;
     private TraineeMapper mapper;
 
     @Autowired
-    public void setTraineeService(TraineeService traineeService) {
+    public void setTraineeService(TraineeServiceCommon traineeService) {
         this.traineeService = traineeService;
     }
 
