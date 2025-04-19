@@ -23,10 +23,6 @@ public class SpringSecurityConfig {
 
         http
                 .csrf(Customizer.withDefaults())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll()
-                )
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/users/trainees", "/users/trainers").permitAll()
                         // Permit unauthenticated access to homepage and public pages
@@ -37,6 +33,10 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/users/trainees", "/users/trainers").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/users/trainees", "/users/trainers").authenticated()
                         .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll);
 
@@ -57,7 +57,6 @@ public class SpringSecurityConfig {
                 "SELECT u.username, a.authority FROM user_table u JOIN authorities_table a ON u.user_id = a.user_id WHERE u.username = ?"
         );
 
-        // Optional: Configure custom queries for creating and deleting users (if needed)
 
         return jdbcManager;
     }
