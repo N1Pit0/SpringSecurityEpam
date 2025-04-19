@@ -1,0 +1,18 @@
+package com.mygym.crm.backstages.interfaces.services.security;
+
+public interface LoginAttemptService {
+
+<<<<<<< HEAD
+    void loginFailed(String userName);
+
+    boolean isBlocked(String userName);
+
+    public void loginSuccessful(String userName);
+=======
+    void loginFailed(String username);
+
+    boolean isBlocked(String username);
+
+    void loginSuccessful(String userName);
+>>>>>>> ff59202 (added brutforce protector. It keeps tracks of loggin attempt of the same user but fails to prevent any more)
+}

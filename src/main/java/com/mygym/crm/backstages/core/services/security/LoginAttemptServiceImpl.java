@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LoginAttemptServiceImpl implements LoginAttemptService {
 
     private static final int MAX_ATTEMPT = 3; // Maximum allowed failed attempts
-    private static final long LOCK_TIME_DURATION = 5 * 60 * 1000; // Locks the account for 15 minutes in milliseconds
+    private static final long LOCK_TIME_DURATION = 5 * 60 * 1000; // Locks the account for 5 minutes in milliseconds
 
     private final Map<String, FailedLoginInfo> attemptsCache = new ConcurrentHashMap<>();
 
@@ -20,6 +20,7 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
     public void loginFailed(String userName) {
         FailedLoginInfo info = attemptsCache.getOrDefault(userName, new FailedLoginInfo());
         info.incrementAttempts();
+        info.setPreviousToLastFailedTime(info.lastFailedTime);
         info.setLastFailedTime(System.currentTimeMillis());
         attemptsCache.put(userName, info);
         System.out.println("inside loginFailed");
@@ -37,7 +38,7 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         // Check if the user has exceeded the max attempts threshold
         if (info.getAttempts() >= MAX_ATTEMPT) {
             System.out.println(info.getLastFailedTime());
-            long lockTime = info.getLastFailedTime() + LOCK_TIME_DURATION;
+            long lockTime = info.getPreviousToLastFailedTime() + LOCK_TIME_DURATION;
             if (lockTime > System.currentTimeMillis()) {
                 return true; // User is still in lockout period
             } else {
@@ -58,6 +59,7 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
     @Setter
     private static class FailedLoginInfo {
         private int attempts = 0;
+        private long previousToLastFailedTime = 0;
         private long lastFailedTime;
 
         public void incrementAttempts() {

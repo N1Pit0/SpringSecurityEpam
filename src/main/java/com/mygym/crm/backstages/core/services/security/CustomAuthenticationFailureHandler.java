@@ -31,12 +31,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
             loginAttemptService.loginFailed(username);
             System.out.println("inside onAuthenticationFailure");
 
-            // Check if user has exceeded maximum attempts
-            if (loginAttemptService.isBlocked(username)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User account is locked due to too many failed attempts.");
-                System.out.println("user blocked");
-                return;
-            }
         }
 
         super.onAuthenticationFailure(request, response, exception);

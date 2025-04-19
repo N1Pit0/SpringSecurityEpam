@@ -1,8 +1,8 @@
 package com.mygym.crm.backstages.config;
 
-import com.mygym.crm.backstages.core.services.security.filter.BruteForceProtectionFilter;
 import com.mygym.crm.backstages.core.services.security.CustomAuthenticationFailureHandler;
 import com.mygym.crm.backstages.core.services.security.CustomAuthenticationSuccessHandler;
+import com.mygym.crm.backstages.core.services.security.filter.BruteForceProtectionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,6 +29,9 @@ public class SpringSecurityConfig {
     @Autowired
     public void setBruteForceProtectionFilter(BruteForceProtectionFilter bruteForceProtectionFilter) {
         this.bruteForceProtectionFilter = bruteForceProtectionFilter;
+    }
+
+    @Autowired
     public void setCustomAuthenticationFailureHandler(CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
