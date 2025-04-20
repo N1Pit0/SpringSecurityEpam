@@ -1,11 +1,13 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.request.traineedto.TraineeDto;
+import com.mygym.crm.backstages.domain.models.Authorities;
 import com.mygym.crm.backstages.domain.models.Trainee;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.exceptions.custom.NoTraineeException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TraineeDao;
+import com.mygym.crm.backstages.interfaces.services.AuthoritiesService;
 import com.mygym.crm.backstages.interfaces.services.TraineeServiceCommon;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
@@ -27,11 +29,13 @@ public class TraineeServiceImplCommon implements TraineeServiceCommon {
     private static final Logger logger = LoggerFactory.getLogger(TraineeServiceImplCommon.class);
     private final TraineeDao traineeDao;
     private final UserService userService;
+    private final AuthoritiesService authoritiesService;
 
     @Autowired
-    public TraineeServiceImplCommon(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService) {
+    public TraineeServiceImplCommon(@Qualifier("traineeDaoImpl") TraineeDao traineeDao, UserService userService, AuthoritiesService authoritiesService) {
         this.traineeDao = traineeDao;
         this.userService = userService;
+        this.authoritiesService = authoritiesService;
     }
 
     @Transactional
@@ -54,7 +58,15 @@ public class TraineeServiceImplCommon implements TraineeServiceCommon {
             Optional<Trainee> optionalTrainee = traineeDao.create(newTrainee);
 
             optionalTrainee.ifPresentOrElse(
-                    (trainee) -> logger.info("trainee with userName: {} has been created", trainee.getUserName()),
+                    (trainee) -> {
+
+                        Authorities userauthorities = new Authorities();
+                        userauthorities.setAuthority("ROLE_USER");
+                        userauthorities.setUser(newTrainee);
+                        authoritiesService.createAuthority(userauthorities);
+
+                        logger.info("trainee with userName: {} has been created", trainee.getUserName());
+                    },
                     () -> logger.warn("trainee with userName: {} was not created", newTrainee.getUserName())
             );
 
@@ -83,6 +95,7 @@ public class TraineeServiceImplCommon implements TraineeServiceCommon {
             newTrainee.setUserName(oldTrainee.getUserName());
             newTrainee.setTrainings(oldTrainee.getTrainings());
             newTrainee.setIsActive(oldTrainee.getIsActive());
+            newTrainee.setAuthorities(oldTrainee.getAuthorities());
 
             logger.info("Trying to update Trainee with ID: {}", id);
             Optional<Trainee> optionalTrainee = traineeDao.update(newTrainee);
@@ -120,6 +133,7 @@ public class TraineeServiceImplCommon implements TraineeServiceCommon {
             newTrainee.setUserName(oldTrainee.getUserName());
             newTrainee.setTrainings(oldTrainee.getTrainings());
             newTrainee.setIsActive(oldTrainee.getIsActive());
+            newTrainee.setAuthorities(oldTrainee.getAuthorities());
 
             logger.info("Trying to update Trainee with userName: {}", userName);
             Optional<Trainee> optionalTrainee = traineeDao.update(newTrainee);

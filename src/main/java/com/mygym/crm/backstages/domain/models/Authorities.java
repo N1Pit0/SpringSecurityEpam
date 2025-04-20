@@ -2,9 +2,12 @@ package com.mygym.crm.backstages.domain.models;
 
 import com.mygym.crm.backstages.domain.models.common.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Entity
 @Table(name = "authorities_table")
 public class Authorities {

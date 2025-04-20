@@ -45,7 +45,9 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .csrf(Customizer.withDefaults())
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/users/trainees", "/users/trainers")
+                )
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers(HttpMethod.POST, "/users/trainees", "/users/trainers").permitAll()
                         // Permit unauthenticated access to homepage and public pages

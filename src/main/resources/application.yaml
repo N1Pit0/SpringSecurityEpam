@@ -6,7 +6,7 @@ springdoc:
 
 server:
   servlet:
-    context-path: /CustomerRelationShipManager
+    context-path: /CustomerRelationshipManager
 
 spring:
   application:

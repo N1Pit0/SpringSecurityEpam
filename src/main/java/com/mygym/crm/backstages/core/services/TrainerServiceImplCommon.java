@@ -1,12 +1,14 @@
 package com.mygym.crm.backstages.core.services;
 
 import com.mygym.crm.backstages.core.dtos.request.trainerdto.TrainerDto;
+import com.mygym.crm.backstages.domain.models.Authorities;
 import com.mygym.crm.backstages.domain.models.Trainer;
 import com.mygym.crm.backstages.domain.models.Training;
 import com.mygym.crm.backstages.domain.models.TrainingType;
 import com.mygym.crm.backstages.exceptions.custom.NoTrainerException;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainerDao;
 import com.mygym.crm.backstages.interfaces.daorepositories.TrainingTypeReadOnlyDao;
+import com.mygym.crm.backstages.interfaces.services.AuthoritiesService;
 import com.mygym.crm.backstages.interfaces.services.TrainerServiceCommon;
 import org.hibernate.HibernateException;
 import org.slf4j.Logger;
@@ -28,12 +30,14 @@ public class TrainerServiceImplCommon implements TrainerServiceCommon {
     private final TrainerDao trainerDao;
     private final UserService userService;
     private final TrainingTypeReadOnlyDao trainingTypeRadOnlyDao;
+    private final AuthoritiesService authoritiesService;
 
     @Autowired
-    public TrainerServiceImplCommon(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao) {
+    public TrainerServiceImplCommon(TrainerDao trainerDao, UserService userService, TrainingTypeReadOnlyDao trainingTypeRadOnlyDao, AuthoritiesService authoritiesService) {
         this.trainerDao = trainerDao;
         this.userService = userService;
         this.trainingTypeRadOnlyDao = trainingTypeRadOnlyDao;
+        this.authoritiesService = authoritiesService;
     }
 
     @Transactional
@@ -63,13 +67,22 @@ public class TrainerServiceImplCommon implements TrainerServiceCommon {
             newTrainer.setTrainingType(optionalTrainingType.get());
             logger.info("TrainingType with trainingTypeName; {} has been found and set", optionalTrainingType.get().getTrainingTypeName());
 
+
             logger.info("Trying to create new trainer with UserName: {}", newTrainer.getUserName());
             Optional<Trainer> optionalTrainer = trainerDao.create(newTrainer);
 
+
             optionalTrainer.ifPresentOrElse(
-                    (trainer) -> logger.info("trainer with userName: {} has been created", trainer.getUserName()),
-                    () -> logger.warn("trainer with userName: {} was not created", newTrainer.getUserName())
-            );
+                    (trainer) -> {
+
+                        Authorities userauthorities = new Authorities();
+                        userauthorities.setAuthority("ROLE_USER");
+                        userauthorities.setUser(trainer);
+                        authoritiesService.createAuthority(userauthorities);
+
+                        logger.info("trainer with userName: {} has been created", trainer.getUserName());
+                    },
+                    () -> logger.warn("trainer with userName: {} was not created", newTrainer.getUserName()));
 
             return optionalTrainer;
         } finally {
