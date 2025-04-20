@@ -57,6 +57,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/users/trainees", "/users/trainers").authenticated()
                         .anyRequest().authenticated()
                 )
+                .addFilterBefore(bruteForceProtectionFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .failureHandler(customAuthenticationFailureHandler)

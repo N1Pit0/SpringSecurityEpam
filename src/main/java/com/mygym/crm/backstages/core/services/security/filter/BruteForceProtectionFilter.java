@@ -24,14 +24,10 @@ public class BruteForceProtectionFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        System.out.println("inside the custom security filter");
         // Intercept requests targeting the login endpoint
-        System.out.println(httpRequest.getRequestURI());
-        System.out.println(httpRequest.getMethod());
         if ("/CustomerRelationShipManager/error".equals(httpRequest.getRequestURI()) && httpRequest.getMethod().equalsIgnoreCase("POST")) {
             String username = httpRequest.getParameter("username");
             System.out.println(username);
-            System.out.println("inside the custom security filter's if statement");
             if (username != null && loginAttemptService.isBlocked(username)) {
                 // If the user is blocked, stop further processing
                 httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "User account is locked due to too many failed login attempts.");

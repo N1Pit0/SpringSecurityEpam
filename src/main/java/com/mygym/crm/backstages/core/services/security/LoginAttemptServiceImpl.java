@@ -23,7 +23,6 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         info.setPreviousToLastFailedTime(info.lastFailedTime);
         info.setLastFailedTime(System.currentTimeMillis());
         attemptsCache.put(userName, info);
-        System.out.println("inside loginFailed");
 
     }
 
@@ -32,8 +31,6 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
         if (!attemptsCache.containsKey(userName)) return false;
 
         FailedLoginInfo info = attemptsCache.get(userName);
-        System.out.println("inside isBlocked");
-        System.out.println(info.attempts + " attempts");
 
         // Check if the user has exceeded the max attempts threshold
         if (info.getAttempts() >= MAX_ATTEMPT) {
@@ -52,7 +49,6 @@ public class LoginAttemptServiceImpl implements LoginAttemptService {
     @Override
     public void loginSuccessful(String userName) {
         attemptsCache.remove(userName);
-        System.out.println("inside loginSuccessful");
     }
 
     @Getter

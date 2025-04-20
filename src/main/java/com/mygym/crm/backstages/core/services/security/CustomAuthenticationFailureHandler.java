@@ -29,7 +29,6 @@ public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationF
         // Track failed login attempts only when credentials are invalid
         if (exception instanceof BadCredentialsException) {
             loginAttemptService.loginFailed(username);
-            System.out.println("inside onAuthenticationFailure");
 
         }
 
